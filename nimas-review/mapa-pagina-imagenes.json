@@ -1,0 +1,4724 @@
+{
+  "generatedAt": "2026-11-17T21:03:06.578Z",
+  "package": "9781669952961NIMAS_corregido",
+  "totals": {
+    "matched": 68,
+    "review": 218
+  },
+  "records": [
+    {
+      "lesson": 1,
+      "label": "L01",
+      "page": 1,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/L01/PHE27_SE_L01_p001_01.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L01_p001_01.png"
+      ],
+      "status": "matched"
+    },
+    {
+      "lesson": 1,
+      "label": "L01",
+      "page": 2,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/L01/PHE27_SE_L01_p002_01.png",
+        "images/L01/PHE27_SE_L01_p002_02.png",
+        "images/L01/PHE27_SE_L01_p002_03.png",
+        "images/L01/PHE27_SE_L01_p002_04.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L01_p002_01.png",
+        "PHE27_SE_L01_p002_02.png",
+        "PHE27_SE_L01_p002_03.png",
+        "PHE27_SE_L01_p002_04.png"
+      ],
+      "status": "matched"
+    },
+    {
+      "lesson": 1,
+      "label": "L01",
+      "page": 3,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/L01/PHE27_SE_L01_p003_01.png",
+        "images/L01/PHE27_SE_L01_p003_02.png",
+        "images/L01/PHE27_SE_L01_p003_03.png",
+        "images/L01/PHE27_SE_L01_p003_04.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L01_p003_01.png",
+        "PHE27_SE_L01_p003_02.png",
+        "PHE27_SE_L01_p003_03.png",
+        "PHE27_SE_L01_p003_04.png"
+      ],
+      "status": "matched"
+    },
+    {
+      "lesson": 1,
+      "label": "L01",
+      "page": 4,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/L01/PHE27_SE_L01_p004_02.png",
+        "images/L01/PHE27_SE_L01_p004_01.png",
+        "images/L01/PHE27_SE_L01_p004_03.png",
+        "images/L01/PHE27_SE_L01_p004_04.png",
+        "images/L01/PHE27_SE_L01_p004_05.png",
+        "images/L01/PHE27_SE_L01_p004_06.png",
+        "images/L01/PHE27_SE_L01_p004_07.png",
+        "images/L01/PHE27_SE_L01_p004_09.png",
+        "images/L01/PHE27_SE_L01_p004_08.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L01_p004_01.png",
+        "PHE27_SE_L01_p004_02.png",
+        "PHE27_SE_L01_p004_03.png",
+        "PHE27_SE_L01_p004_04.png",
+        "PHE27_SE_L01_p004_05.png",
+        "PHE27_SE_L01_p004_06.png",
+        "PHE27_SE_L01_p004_07.png",
+        "PHE27_SE_L01_p004_08.png",
+        "PHE27_SE_L01_p004_09.png"
+      ],
+      "status": "matched"
+    },
+    {
+      "lesson": 1,
+      "label": "L01",
+      "page": 5,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/L01/PHE27_SE_L01_p005_02.png",
+        "images/L01/PHE27_SE_L01_p005_01.png",
+        "images/L01/PHE27_SE_L01_p005_05.png",
+        "images/L01/PHE27_SE_L01_p005_06.png",
+        "images/L01/PHE27_SE_L01_p005_04.png",
+        "images/L01/PHE27_SE_L01_p005_03.png",
+        "images/L01/PHE27_SE_L01_p005_08.png",
+        "images/L01/PHE27_SE_L01_p005_07.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L01_p005_01.png",
+        "PHE27_SE_L01_p005_02.png",
+        "PHE27_SE_L01_p005_03.png",
+        "PHE27_SE_L01_p005_04.png",
+        "PHE27_SE_L01_p005_05.png",
+        "PHE27_SE_L01_p005_06.png",
+        "PHE27_SE_L01_p005_07.png",
+        "PHE27_SE_L01_p005_08.png"
+      ],
+      "status": "matched"
+    },
+    {
+      "lesson": 1,
+      "label": "L01",
+      "page": 6,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/L01/PHE27_SE_L01_p006_02.png",
+        "images/L01/PHE27_SE_L01_p006_01.png",
+        "images/L01/PHE27_SE_L01_p006_03.png",
+        "images/L01/PHE27_SE_L01_p006_04.png",
+        "images/L01/PHE27_SE_L01_p006_06.png",
+        "images/L01/PHE27_SE_L01_p006_05.png",
+        "images/L01/PHE27_SE_L01_p006_07.png",
+        "images/L01/PHE27_SE_L01_p006_08.png",
+        "images/L01/PHE27_SE_L01_p006_09.png",
+        "images/L01/PHE27_SE_L01_p006_10.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L01_p006_01.png",
+        "PHE27_SE_L01_p006_02.png",
+        "PHE27_SE_L01_p006_03.png",
+        "PHE27_SE_L01_p006_04.png",
+        "PHE27_SE_L01_p006_05.png",
+        "PHE27_SE_L01_p006_06.png",
+        "PHE27_SE_L01_p006_07.png",
+        "PHE27_SE_L01_p006_08.png",
+        "PHE27_SE_L01_p006_09.png",
+        "PHE27_SE_L01_p006_10.png"
+      ],
+      "status": "matched"
+    },
+    {
+      "lesson": 1,
+      "label": "L01",
+      "page": 7,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/L01/PHE27_SE_L01_p007_01.png",
+        "images/L01/PHE27_SE_L01_p007_02.png",
+        "images/L01/PHE27_SE_L01_p007_03.png",
+        "images/L01/PHE27_SE_L01_p007_04.png",
+        "images/L01/PHE27_SE_L01_p007_06.png",
+        "images/L01/PHE27_SE_L01_p007_07.png",
+        "images/L01/PHE27_SE_L01_p007_05.png",
+        "images/L01/PHE27_SE_L01_p007_08.png",
+        "images/L01/PHE27_SE_L01_p007_09.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L01_p007_01.png",
+        "PHE27_SE_L01_p007_02.png",
+        "PHE27_SE_L01_p007_03.png",
+        "PHE27_SE_L01_p007_04.png",
+        "PHE27_SE_L01_p007_05.png",
+        "PHE27_SE_L01_p007_06.png",
+        "PHE27_SE_L01_p007_07.png",
+        "PHE27_SE_L01_p007_08.png",
+        "PHE27_SE_L01_p007_09.png"
+      ],
+      "status": "matched"
+    },
+    {
+      "lesson": 1,
+      "label": "L01",
+      "page": 8,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/L01/PHE27_SE_L01_p008_02.png",
+        "images/L01/PHE27_SE_L01_p008_01.png",
+        "images/L01/PHE27_SE_L01_p008_03.png",
+        "images/L01/PHE27_SE_L01_p008_04.png",
+        "images/L01/PHE27_SE_L01_p008_05.png",
+        "images/L01/PHE27_SE_L01_p008_08.png",
+        "images/L01/PHE27_SE_L01_p008_07.png",
+        "images/L01/PHE27_SE_L01_p008_06.png",
+        "images/L01/PHE27_SE_L01_p008_09.png",
+        "images/L01/PHE27_SE_L01_p008_10.png",
+        "images/L01/PHE27_SE_L01_p008_11.png",
+        "images/L01/PHE27_SE_L01_p008_12.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L01_p008_01.png",
+        "PHE27_SE_L01_p008_02.png",
+        "PHE27_SE_L01_p008_03.png",
+        "PHE27_SE_L01_p008_04.png",
+        "PHE27_SE_L01_p008_05.png",
+        "PHE27_SE_L01_p008_06.png",
+        "PHE27_SE_L01_p008_07.png",
+        "PHE27_SE_L01_p008_08.png",
+        "PHE27_SE_L01_p008_09.png",
+        "PHE27_SE_L01_p008_10.png",
+        "PHE27_SE_L01_p008_11.png",
+        "PHE27_SE_L01_p008_12.png"
+      ],
+      "status": "matched"
+    },
+    {
+      "lesson": 1,
+      "label": "L01",
+      "page": 9,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/L01/PHE27_SE_L01_p009_02.png",
+        "images/L01/PHE27_SE_L01_p009_01.png",
+        "images/L01/PHE27_SE_L01_p009_03.png",
+        "images/L01/PHE27_SE_L01_p009_04.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L01_p009_01.png",
+        "PHE27_SE_L01_p009_02.png",
+        "PHE27_SE_L01_p009_03.png",
+        "PHE27_SE_L01_p009_04.png"
+      ],
+      "status": "matched"
+    },
+    {
+      "lesson": 1,
+      "label": "L01",
+      "page": 10,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/L01/PHE27_SE_L01_p010_01.png",
+        "images/L01/PHE27_SE_L01_p010_02.png",
+        "images/L01/PHE27_SE_L01_p010_03.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L01_p010_01.png",
+        "PHE27_SE_L01_p010_02.png",
+        "PHE27_SE_L01_p010_03.png"
+      ],
+      "status": "matched"
+    },
+    {
+      "lesson": 1,
+      "label": "L01",
+      "page": 11,
+      "xmlPageFound": true,
+      "existingImageRefs": [],
+      "extractedImages": [],
+      "status": "matched"
+    },
+    {
+      "lesson": 1,
+      "label": "L01",
+      "page": 12,
+      "xmlPageFound": true,
+      "existingImageRefs": [],
+      "extractedImages": [],
+      "status": "matched"
+    },
+    {
+      "lesson": 2,
+      "label": "L02",
+      "page": 13,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/L02/PHE27_SE_L02_p013_01.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L02_p013_01.png"
+      ],
+      "status": "matched"
+    },
+    {
+      "lesson": 2,
+      "label": "L02",
+      "page": 14,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/L02/PHE27_SE_L02_p014_01.png",
+        "images/L02/PHE27_SE_L02_p014_02.png",
+        "images/L02/PHE27_SE_L02_p014_03.png",
+        "images/L02/PHE27_SE_L02_p014_04.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L02_p014_01.png",
+        "PHE27_SE_L02_p014_02.png",
+        "PHE27_SE_L02_p014_03.png",
+        "PHE27_SE_L02_p014_04.png"
+      ],
+      "status": "matched"
+    },
+    {
+      "lesson": 2,
+      "label": "L02",
+      "page": 15,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/L02/PHE27_SE_L02_p015_02.png",
+        "images/L02/PHE27_SE_L02_p015_01.png",
+        "images/L02/PHE27_SE_L02_p015_04.png",
+        "images/L02/PHE27_SE_L02_p015_03.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L02_p015_01.png",
+        "PHE27_SE_L02_p015_02.png",
+        "PHE27_SE_L02_p015_03.png",
+        "PHE27_SE_L02_p015_04.png"
+      ],
+      "status": "matched"
+    },
+    {
+      "lesson": 2,
+      "label": "L02",
+      "page": 16,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/L02/PHE27_SE_L02_p016_02.png",
+        "images/L02/PHE27_SE_L02_p016_01.png",
+        "images/L02/PHE27_SE_L02_p016_04.png",
+        "images/L02/PHE27_SE_L02_p016_05.png",
+        "images/L02/PHE27_SE_L02_p016_07.png",
+        "images/L02/PHE27_SE_L02_p016_06.png",
+        "images/L02/PHE27_SE_L02_p016_03.png",
+        "images/L02/PHE27_SE_L02_p016_09.png",
+        "images/L02/PHE27_SE_L02_p016_08.png",
+        "images/L02/PHE27_SE_L02_p016_11.png",
+        "images/L02/PHE27_SE_L02_p016_10.png",
+        "images/L02/PHE27_SE_L02_p016_12.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L02_p016_01.png",
+        "PHE27_SE_L02_p016_02.png",
+        "PHE27_SE_L02_p016_03.png",
+        "PHE27_SE_L02_p016_04.png",
+        "PHE27_SE_L02_p016_05.png",
+        "PHE27_SE_L02_p016_06.png",
+        "PHE27_SE_L02_p016_07.png",
+        "PHE27_SE_L02_p016_08.png",
+        "PHE27_SE_L02_p016_09.png",
+        "PHE27_SE_L02_p016_10.png",
+        "PHE27_SE_L02_p016_11.png",
+        "PHE27_SE_L02_p016_12.png"
+      ],
+      "status": "matched"
+    },
+    {
+      "lesson": 2,
+      "label": "L02",
+      "page": 17,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/L02/PHE27_SE_L02_p017_01.png",
+        "images/L02/PHE27_SE_L02_p017_02.png",
+        "images/L02/PHE27_SE_L02_p017_06.png",
+        "images/L02/PHE27_SE_L02_p017_03.png",
+        "images/L02/PHE27_SE_L02_p017_05.png",
+        "images/L02/PHE27_SE_L02_p017_04.png",
+        "images/L02/PHE27_SE_L02_p017_08.png",
+        "images/L02/PHE27_SE_L02_p017_07.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L02_p017_01.png",
+        "PHE27_SE_L02_p017_02.png",
+        "PHE27_SE_L02_p017_03.png",
+        "PHE27_SE_L02_p017_04.png",
+        "PHE27_SE_L02_p017_05.png",
+        "PHE27_SE_L02_p017_06.png",
+        "PHE27_SE_L02_p017_07.png",
+        "PHE27_SE_L02_p017_08.png"
+      ],
+      "status": "matched"
+    },
+    {
+      "lesson": 2,
+      "label": "L02",
+      "page": 18,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/L02/PHE27_SE_L02_p018_01.png",
+        "images/L02/PHE27_SE_L02_p018_02.png",
+        "images/L02/PHE27_SE_L02_p018_04.png",
+        "images/L02/PHE27_SE_L02_p018_06.png",
+        "images/L02/PHE27_SE_L02_p018_03.png",
+        "images/L02/PHE27_SE_L02_p018_05.png",
+        "images/L02/PHE27_SE_L02_p018_07.png",
+        "images/L02/PHE27_SE_L02_p018_08.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L02_p018_01.png",
+        "PHE27_SE_L02_p018_02.png",
+        "PHE27_SE_L02_p018_03.png",
+        "PHE27_SE_L02_p018_04.png",
+        "PHE27_SE_L02_p018_05.png",
+        "PHE27_SE_L02_p018_06.png",
+        "PHE27_SE_L02_p018_07.png",
+        "PHE27_SE_L02_p018_08.png"
+      ],
+      "status": "matched"
+    },
+    {
+      "lesson": 2,
+      "label": "L02",
+      "page": 19,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/L02/PHE27_SE_L02_p019_01.png",
+        "images/L02/PHE27_SE_L02_p019_02.png",
+        "images/L02/PHE27_SE_L02_p019_03.png",
+        "images/L02/PHE27_SE_L02_p019_04.png",
+        "images/L02/PHE27_SE_L02_p019_05.png",
+        "images/L02/PHE27_SE_L02_p019_06.png",
+        "images/L02/PHE27_SE_L02_p019_07.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L02_p019_01.png",
+        "PHE27_SE_L02_p019_02.png",
+        "PHE27_SE_L02_p019_03.png",
+        "PHE27_SE_L02_p019_04.png",
+        "PHE27_SE_L02_p019_05.png",
+        "PHE27_SE_L02_p019_06.png",
+        "PHE27_SE_L02_p019_07.png"
+      ],
+      "status": "matched"
+    },
+    {
+      "lesson": 2,
+      "label": "L02",
+      "page": 20,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/L02/PHE27_SE_L02_p020_01.png",
+        "images/L02/PHE27_SE_L02_p020_02.png",
+        "images/L02/PHE27_SE_L02_p020_03.png",
+        "images/L02/PHE27_SE_L02_p020_05.png",
+        "images/L02/PHE27_SE_L02_p020_04.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L02_p020_01.png",
+        "PHE27_SE_L02_p020_02.png",
+        "PHE27_SE_L02_p020_03.png",
+        "PHE27_SE_L02_p020_04.png",
+        "PHE27_SE_L02_p020_05.png"
+      ],
+      "status": "matched"
+    },
+    {
+      "lesson": 2,
+      "label": "L02",
+      "page": 21,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/L02/PHE27_SE_L02_p021_02.png",
+        "images/L02/PHE27_SE_L02_p021_01.png",
+        "images/L02/PHE27_SE_L02_p021_03.png",
+        "images/L02/PHE27_SE_L02_p021_04.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L02_p021_01.png",
+        "PHE27_SE_L02_p021_02.png",
+        "PHE27_SE_L02_p021_03.png",
+        "PHE27_SE_L02_p021_04.png"
+      ],
+      "status": "matched"
+    },
+    {
+      "lesson": 2,
+      "label": "L02",
+      "page": 22,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/L02/PHE27_SE_L02_p022_01.png",
+        "images/L02/PHE27_SE_L02_p022_02.png",
+        "images/L02/PHE27_SE_L02_p022_03.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L02_p022_01.png",
+        "PHE27_SE_L02_p022_02.png",
+        "PHE27_SE_L02_p022_03.png"
+      ],
+      "status": "matched"
+    },
+    {
+      "lesson": 2,
+      "label": "L02",
+      "page": 23,
+      "xmlPageFound": true,
+      "existingImageRefs": [],
+      "extractedImages": [],
+      "status": "matched"
+    },
+    {
+      "lesson": 2,
+      "label": "L02",
+      "page": 24,
+      "xmlPageFound": true,
+      "existingImageRefs": [],
+      "extractedImages": [],
+      "status": "matched"
+    },
+    {
+      "lesson": 3,
+      "label": "L03",
+      "page": 25,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/L03/PHE27_SE_L03_p025_01.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L03_p025_01.png"
+      ],
+      "status": "matched"
+    },
+    {
+      "lesson": 3,
+      "label": "L03",
+      "page": 26,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/L03/PHE27_SE_L03_p026_01.png",
+        "images/L03/PHE27_SE_L03_p026_02.png",
+        "images/L03/PHE27_SE_L03_p026_04.png",
+        "images/L03/PHE27_SE_L03_p026_03.png",
+        "images/L03/PHE27_SE_L03_p026_06.png",
+        "images/L03/PHE27_SE_L03_p026_05.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L03_p026_01.png",
+        "PHE27_SE_L03_p026_02.png",
+        "PHE27_SE_L03_p026_03.png",
+        "PHE27_SE_L03_p026_04.png",
+        "PHE27_SE_L03_p026_05.png",
+        "PHE27_SE_L03_p026_06.png"
+      ],
+      "status": "matched"
+    },
+    {
+      "lesson": 3,
+      "label": "L03",
+      "page": 27,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/L03/PHE27_SE_L03_p027_02.png",
+        "images/L03/PHE27_SE_L03_p027_01.png",
+        "images/L03/PHE27_SE_L03_p027_02.png",
+        "images/L03/PHE27_SE_L03_p027_04.png",
+        "images/L03/PHE27_SE_L03_p027_05.png",
+        "images/L03/PHE27_SE_L03_p027_06.png",
+        "images/L03/PHE27_SE_L03_p027_08.png",
+        "images/L03/PHE27_SE_L03_p027_07.png",
+        "images/L03/PHE27_SE_L03_p027_09.png",
+        "images/L03/PHE27_SE_L03_p027_11.png",
+        "images/L03/PHE27_SE_L03_p027_10.png",
+        "images/L03/PHE27_SE_L03_p027_12.png",
+        "images/L03/PHE27_SE_L03_p027_13.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L03_p027_01.png",
+        "PHE27_SE_L03_p027_02.png",
+        "PHE27_SE_L03_p027_03.png",
+        "PHE27_SE_L03_p027_04.png",
+        "PHE27_SE_L03_p027_05.png",
+        "PHE27_SE_L03_p027_06.png",
+        "PHE27_SE_L03_p027_07.png",
+        "PHE27_SE_L03_p027_08.png",
+        "PHE27_SE_L03_p027_09.png",
+        "PHE27_SE_L03_p027_10.png",
+        "PHE27_SE_L03_p027_11.png",
+        "PHE27_SE_L03_p027_12.png",
+        "PHE27_SE_L03_p027_13.png"
+      ],
+      "status": "matched"
+    },
+    {
+      "lesson": 3,
+      "label": "L03",
+      "page": 28,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/L03/PHE27_SE_L03_p028_01.png",
+        "images/L03/PHE27_SE_L03_p028_02.png",
+        "images/L03/PHE27_SE_L03_p028_04.png",
+        "images/L03/PHE27_SE_L03_p028_03.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L03_p028_01.png",
+        "PHE27_SE_L03_p028_02.png",
+        "PHE27_SE_L03_p028_03.png",
+        "PHE27_SE_L03_p028_04.png"
+      ],
+      "status": "matched"
+    },
+    {
+      "lesson": 3,
+      "label": "L03",
+      "page": 29,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/L03/PHE27_SE_L03_p029_01.png",
+        "images/L03/PHE27_SE_L03_p029_02.png",
+        "images/L03/PHE27_SE_L03_p029_03.png",
+        "images/L03/PHE27_SE_L03_p029_04.png",
+        "images/L03/PHE27_SE_L03_p029_05.png",
+        "images/L03/PHE27_SE_L03_p029_07.png",
+        "images/L03/PHE27_SE_L03_p029_06.png",
+        "images/L03/PHE27_SE_L03_p029_08.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L03_p029_01.png",
+        "PHE27_SE_L03_p029_02.png",
+        "PHE27_SE_L03_p029_03.png",
+        "PHE27_SE_L03_p029_04.png",
+        "PHE27_SE_L03_p029_05.png",
+        "PHE27_SE_L03_p029_06.png",
+        "PHE27_SE_L03_p029_07.png",
+        "PHE27_SE_L03_p029_08.png"
+      ],
+      "status": "matched"
+    },
+    {
+      "lesson": 3,
+      "label": "L03",
+      "page": 30,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/L03/PHE27_SE_L03_p030_01.png",
+        "images/L03/PHE27_SE_L03_p030_03.png",
+        "images/L03/PHE27_SE_L03_p030_02.png",
+        "images/L03/PHE27_SE_L03_p030_04.png",
+        "images/L03/PHE27_SE_L03_p030_06.png",
+        "images/L03/PHE27_SE_L03_p030_05.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L03_p030_01.png",
+        "PHE27_SE_L03_p030_02.png",
+        "PHE27_SE_L03_p030_03.png",
+        "PHE27_SE_L03_p030_04.png",
+        "PHE27_SE_L03_p030_05.png",
+        "PHE27_SE_L03_p030_06.png"
+      ],
+      "status": "matched"
+    },
+    {
+      "lesson": 3,
+      "label": "L03",
+      "page": 31,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/L03/PHE27_SE_L03_p031_03.png",
+        "images/L03/PHE27_SE_L03_p031_01.png",
+        "images/L03/PHE27_SE_L03_p031_02.png",
+        "images/L03/PHE27_SE_L03_p031_04.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L03_p031_01.png",
+        "PHE27_SE_L03_p031_02.png",
+        "PHE27_SE_L03_p031_03.png",
+        "PHE27_SE_L03_p031_04.png"
+      ],
+      "status": "matched"
+    },
+    {
+      "lesson": 3,
+      "label": "L03",
+      "page": 32,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/L03/PHE27_SE_L03_p032_01.png",
+        "images/L03/PHE27_SE_L03_p032_02.png",
+        "images/L03/PHE27_SE_L03_p032_05.png",
+        "images/L03/PHE27_SE_L03_p032_03.png",
+        "images/L03/PHE27_SE_L03_p032_04.png",
+        "images/L03/PHE27_SE_L03_p032_07.png",
+        "images/L03/PHE27_SE_L03_p032_06.png",
+        "images/L03/PHE27_SE_L03_p032_08.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L03_p032_01.png",
+        "PHE27_SE_L03_p032_02.png",
+        "PHE27_SE_L03_p032_03.png",
+        "PHE27_SE_L03_p032_04.png",
+        "PHE27_SE_L03_p032_05.png",
+        "PHE27_SE_L03_p032_06.png",
+        "PHE27_SE_L03_p032_07.png",
+        "PHE27_SE_L03_p032_08.png"
+      ],
+      "status": "matched"
+    },
+    {
+      "lesson": 3,
+      "label": "L03",
+      "page": 33,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/L03/PHE27_SE_L03_p033_02.png",
+        "images/L03/PHE27_SE_L03_p033_01.png",
+        "images/L03/PHE27_SE_L03_p033_04.png",
+        "images/L03/PHE27_SE_L03_p033_03.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L03_p033_01.png",
+        "PHE27_SE_L03_p033_02.png",
+        "PHE27_SE_L03_p033_03.png",
+        "PHE27_SE_L03_p033_04.png"
+      ],
+      "status": "matched"
+    },
+    {
+      "lesson": 3,
+      "label": "L03",
+      "page": 34,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/L03/PHE27_SE_L03_p034_01.png",
+        "images/L03/PHE27_SE_L03_p034_02.png",
+        "images/L03/PHE27_SE_L03_p034_03.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L03_p034_01.png",
+        "PHE27_SE_L03_p034_02.png",
+        "PHE27_SE_L03_p034_03.png"
+      ],
+      "status": "matched"
+    },
+    {
+      "lesson": 3,
+      "label": "L03",
+      "page": 35,
+      "xmlPageFound": true,
+      "existingImageRefs": [],
+      "extractedImages": [],
+      "status": "matched"
+    },
+    {
+      "lesson": 3,
+      "label": "L03",
+      "page": 36,
+      "xmlPageFound": true,
+      "existingImageRefs": [],
+      "extractedImages": [],
+      "status": "matched"
+    },
+    {
+      "lesson": 4,
+      "label": "L04",
+      "page": 37,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/L04/PHE27_SE_L04_p037_01.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L04_p037_01.png"
+      ],
+      "status": "matched"
+    },
+    {
+      "lesson": 4,
+      "label": "L04",
+      "page": 38,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/L04/PHE27_SE_L04_p038_02.png",
+        "images/L04/PHE27_SE_L04_p038_01.png",
+        "images/L04/PHE27_SE_L04_p038_03.png",
+        "images/L04/PHE27_SE_L04_p038_04.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L04_p038_01.png",
+        "PHE27_SE_L04_p038_02.png",
+        "PHE27_SE_L04_p038_03.png",
+        "PHE27_SE_L04_p038_04.png"
+      ],
+      "status": "matched"
+    },
+    {
+      "lesson": 4,
+      "label": "L04",
+      "page": 39,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/L04/PHE27_SE_L04_p039_01.png",
+        "images/L04/PHE27_SE_L04_p039_02.png",
+        "images/L04/PHE27_SE_L04_p039_04.png",
+        "images/L04/PHE27_SE_L04_p039_03.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L04_p039_01.png",
+        "PHE27_SE_L04_p039_02.png",
+        "PHE27_SE_L04_p039_03.png",
+        "PHE27_SE_L04_p039_04.png"
+      ],
+      "status": "matched"
+    },
+    {
+      "lesson": 4,
+      "label": "L04",
+      "page": 40,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/L04/PHE27_SE_L04_p040_02.png",
+        "images/L04/PHE27_SE_L04_p040_01.png",
+        "images/L04/PHE27_SE_L04_p040_03.png",
+        "images/L04/PHE27_SE_L04_p040_04.png",
+        "images/u04/0525aadf_17.png",
+        "images/u04/0525aadf_18.png",
+        "images/u04/0525aadf_21.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L04_p040_01.png",
+        "PHE27_SE_L04_p040_02.png",
+        "PHE27_SE_L04_p040_03.png",
+        "PHE27_SE_L04_p040_04.png",
+        "PHE27_SE_L04_p040_05.png",
+        "PHE27_SE_L04_p040_06.png",
+        "PHE27_SE_L04_p040_07.png",
+        "PHE27_SE_L04_p040_08.png",
+        "PHE27_SE_L04_p040_09.png",
+        "PHE27_SE_L04_p040_10.png",
+        "PHE27_SE_L04_p040_11.png",
+        "PHE27_SE_L04_p040_12.png",
+        "PHE27_SE_L04_p040_13.png",
+        "PHE27_SE_L04_p040_14.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 4,
+      "label": "L04",
+      "page": 41,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u04/0525aadf_22.png",
+        "images/u04/0525aadf_23.png",
+        "images/u04/0525aadf_24.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L04_p041_01.png",
+        "PHE27_SE_L04_p041_02.png",
+        "PHE27_SE_L04_p041_03.png",
+        "PHE27_SE_L04_p041_04.png",
+        "PHE27_SE_L04_p041_05.png",
+        "PHE27_SE_L04_p041_06.png",
+        "PHE27_SE_L04_p041_07.png",
+        "PHE27_SE_L04_p041_08.png",
+        "PHE27_SE_L04_p041_09.png",
+        "PHE27_SE_L04_p041_10.png",
+        "PHE27_SE_L04_p041_11.png",
+        "PHE27_SE_L04_p041_12.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 4,
+      "label": "L04",
+      "page": 42,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u04/0525aadf_25.png",
+        "images/u04/0525aadf_27.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L04_p042_01.png",
+        "PHE27_SE_L04_p042_02.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 4,
+      "label": "L04",
+      "page": 43,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u04/0525aadf_37.png",
+        "images/u04/0525aadf_38.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L04_p043_01.png",
+        "PHE27_SE_L04_p043_02.png",
+        "PHE27_SE_L04_p043_03.png",
+        "PHE27_SE_L04_p043_04.png",
+        "PHE27_SE_L04_p043_05.png",
+        "PHE27_SE_L04_p043_06.png",
+        "PHE27_SE_L04_p043_07.png",
+        "PHE27_SE_L04_p043_08.png",
+        "PHE27_SE_L04_p043_09.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 4,
+      "label": "L04",
+      "page": 44,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u04/0525aadf_39.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L04_p044_01.png",
+        "PHE27_SE_L04_p044_02.png",
+        "PHE27_SE_L04_p044_03.png",
+        "PHE27_SE_L04_p044_04.png",
+        "PHE27_SE_L04_p044_05.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 4,
+      "label": "L04",
+      "page": 45,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u04/0525aadf_42.png",
+        "images/u04/0525aadf_43.png",
+        "images/u04/0525aadf_44.png",
+        "images/u04/0525aadf_45.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L04_p045_01.png",
+        "PHE27_SE_L04_p045_02.png",
+        "PHE27_SE_L04_p045_03.png",
+        "PHE27_SE_L04_p045_04.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 4,
+      "label": "L04",
+      "page": 46,
+      "xmlPageFound": true,
+      "existingImageRefs": [],
+      "extractedImages": [
+        "PHE27_SE_L04_p046_01.png",
+        "PHE27_SE_L04_p046_02.png",
+        "PHE27_SE_L04_p046_03.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 4,
+      "label": "L04",
+      "page": 47,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u04/0525aadf_55.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L04_p047_01.png",
+        "PHE27_SE_L04_p047_02.png",
+        "PHE27_SE_L04_p047_03.png",
+        "PHE27_SE_L04_p047_04.png",
+        "PHE27_SE_L04_p047_05.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 4,
+      "label": "L04",
+      "page": 48,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u04/0525aadf_62.png"
+      ],
+      "extractedImages": [],
+      "status": "review"
+    },
+    {
+      "lesson": 5,
+      "label": "L05",
+      "page": 49,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u05/b7ceaf4f_27.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L05_p049_01.png",
+        "PHE27_SE_L05_p049_02.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 5,
+      "label": "L05",
+      "page": 50,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u05/b7ceaf4f_47.png",
+        "images/u05/b7ceaf4f_4.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L05_p050_01.png",
+        "PHE27_SE_L05_p050_02.png",
+        "PHE27_SE_L05_p050_03.png",
+        "PHE27_SE_L05_p050_04.png",
+        "PHE27_SE_L05_p050_05.png",
+        "PHE27_SE_L05_p050_06.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 5,
+      "label": "L05",
+      "page": 51,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u05/b7ceaf4f_5.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L05_p051_01.png",
+        "PHE27_SE_L05_p051_02.png",
+        "PHE27_SE_L05_p051_03.png",
+        "PHE27_SE_L05_p051_04.png",
+        "PHE27_SE_L05_p051_05.png",
+        "PHE27_SE_L05_p051_06.png",
+        "PHE27_SE_L05_p051_07.png",
+        "PHE27_SE_L05_p051_08.png",
+        "PHE27_SE_L05_p051_09.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 5,
+      "label": "L05",
+      "page": 52,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u05/b7ceaf4f_7.png",
+        "images/u05/b7ceaf4f_8.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L05_p052_01.png",
+        "PHE27_SE_L05_p052_02.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 5,
+      "label": "L05",
+      "page": 53,
+      "xmlPageFound": true,
+      "existingImageRefs": [],
+      "extractedImages": [
+        "PHE27_SE_L05_p053_01.png",
+        "PHE27_SE_L05_p053_02.png",
+        "PHE27_SE_L05_p053_03.png",
+        "PHE27_SE_L05_p053_04.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 5,
+      "label": "L05",
+      "page": 54,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u05/b7ceaf4f_24.png",
+        "images/u05/b7ceaf4f_25.png",
+        "images/u05/b7ceaf4f_28.png",
+        "images/u05/b7ceaf4f_29.png",
+        "images/u05/b7ceaf4f_30.png",
+        "images/u05/b7ceaf4f_33.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L05_p054_01.png",
+        "PHE27_SE_L05_p054_02.png",
+        "PHE27_SE_L05_p054_03.png",
+        "PHE27_SE_L05_p054_04.png",
+        "PHE27_SE_L05_p054_05.png",
+        "PHE27_SE_L05_p054_06.png",
+        "PHE27_SE_L05_p054_07.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 5,
+      "label": "L05",
+      "page": 55,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u05/b7ceaf4f_35.png",
+        "images/u05/b7ceaf4f_37.png",
+        "images/u05/b7ceaf4f_41.png",
+        "images/u05/b7ceaf4f_42.png",
+        "images/u05/b7ceaf4f_43.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L05_p055_01.png",
+        "PHE27_SE_L05_p055_02.png",
+        "PHE27_SE_L05_p055_03.png",
+        "PHE27_SE_L05_p055_04.png",
+        "PHE27_SE_L05_p055_05.png",
+        "PHE27_SE_L05_p055_06.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 5,
+      "label": "L05",
+      "page": 56,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u05/b7ceaf4f_51.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L05_p056_01.png",
+        "PHE27_SE_L05_p056_02.png",
+        "PHE27_SE_L05_p056_03.png",
+        "PHE27_SE_L05_p056_04.png",
+        "PHE27_SE_L05_p056_05.png",
+        "PHE27_SE_L05_p056_06.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 5,
+      "label": "L05",
+      "page": 57,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u05/b7ceaf4f_52.png",
+        "images/u05/b7ceaf4f_53.png",
+        "images/u05/b7ceaf4f_54.png",
+        "images/u05/b7ceaf4f_55.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L05_p057_01.png",
+        "PHE27_SE_L05_p057_02.png",
+        "PHE27_SE_L05_p057_03.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 5,
+      "label": "L05",
+      "page": 58,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u05/b7ceaf4f_59.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L05_p058_01.png",
+        "PHE27_SE_L05_p058_02.png",
+        "PHE27_SE_L05_p058_03.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 5,
+      "label": "L05",
+      "page": 59,
+      "xmlPageFound": true,
+      "existingImageRefs": [],
+      "extractedImages": [],
+      "status": "matched"
+    },
+    {
+      "lesson": 5,
+      "label": "L05",
+      "page": 60,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u05/b7ceaf4f_64.png"
+      ],
+      "extractedImages": [],
+      "status": "review"
+    },
+    {
+      "lesson": 6,
+      "label": "L06",
+      "page": 61,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u06/955ea4b9_1.png",
+        "images/u06/955ea4b9_16.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L06_p061_01.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 6,
+      "label": "L06",
+      "page": 62,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u06/955ea4b9_44.png",
+        "images/u06/955ea4b9_10.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L06_p062_01.png",
+        "PHE27_SE_L06_p062_02.png",
+        "PHE27_SE_L06_p062_03.png",
+        "PHE27_SE_L06_p062_04.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 6,
+      "label": "L06",
+      "page": 63,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u06/955ea4b9_11.png",
+        "images/u06/955ea4b9_13.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L06_p063_01.png",
+        "PHE27_SE_L06_p063_02.png",
+        "PHE27_SE_L06_p063_03.png",
+        "PHE27_SE_L06_p063_04.png",
+        "PHE27_SE_L06_p063_05.png",
+        "PHE27_SE_L06_p063_06.png",
+        "PHE27_SE_L06_p063_07.png",
+        "PHE27_SE_L06_p063_08.png",
+        "PHE27_SE_L06_p063_09.png",
+        "PHE27_SE_L06_p063_10.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 6,
+      "label": "L06",
+      "page": 64,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u06/955ea4b9_18.png",
+        "images/u06/955ea4b9_19.png",
+        "images/u06/955ea4b9_24.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L06_p064_01.png",
+        "PHE27_SE_L06_p064_02.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 6,
+      "label": "L06",
+      "page": 65,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u06/955ea4b9_30.png",
+        "images/u06/955ea4b9_31.png",
+        "images/u06/955ea4b9_36.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L06_p065_01.png",
+        "PHE27_SE_L06_p065_02.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 6,
+      "label": "L06",
+      "page": 66,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u06/955ea4b9_42.png",
+        "images/u06/955ea4b9_43.png",
+        "images/u06/955ea4b9_45.png",
+        "images/u06/955ea4b9_48.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L06_p066_01.png",
+        "PHE27_SE_L06_p066_02.png",
+        "PHE27_SE_L06_p066_03.png",
+        "PHE27_SE_L06_p066_04.png",
+        "PHE27_SE_L06_p066_05.png",
+        "PHE27_SE_L06_p066_06.png",
+        "PHE27_SE_L06_p066_07.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 6,
+      "label": "L06",
+      "page": 67,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u06/955ea4b9_50.png",
+        "images/u06/955ea4b9_53.png",
+        "images/u06/955ea4b9_56.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L06_p067_01.png",
+        "PHE27_SE_L06_p067_02.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 6,
+      "label": "L06",
+      "page": 68,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u06/955ea4b9_61.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L06_p068_01.png",
+        "PHE27_SE_L06_p068_02.png",
+        "PHE27_SE_L06_p068_03.png",
+        "PHE27_SE_L06_p068_04.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 6,
+      "label": "L06",
+      "page": 69,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u06/955ea4b9_69.png",
+        "images/u06/955ea4b9_70.png",
+        "images/u06/955ea4b9_71.png",
+        "images/u06/955ea4b9_73.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L06_p069_01.png",
+        "PHE27_SE_L06_p069_02.png",
+        "PHE27_SE_L06_p069_03.png",
+        "PHE27_SE_L06_p069_04.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 6,
+      "label": "L06",
+      "page": 70,
+      "xmlPageFound": true,
+      "existingImageRefs": [],
+      "extractedImages": [
+        "PHE27_SE_L06_p070_01.png",
+        "PHE27_SE_L06_p070_02.png",
+        "PHE27_SE_L06_p070_03.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 6,
+      "label": "L06",
+      "page": 71,
+      "xmlPageFound": true,
+      "existingImageRefs": [],
+      "extractedImages": [],
+      "status": "matched"
+    },
+    {
+      "lesson": 6,
+      "label": "L06",
+      "page": 72,
+      "xmlPageFound": true,
+      "existingImageRefs": [],
+      "extractedImages": [
+        "PHE27_SE_L06_p072_01.png",
+        "PHE27_SE_L06_p072_02.png",
+        "PHE27_SE_L06_p072_03.png",
+        "PHE27_SE_L06_p072_04.png",
+        "PHE27_SE_L06_p072_05.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 7,
+      "label": "L07",
+      "page": 73,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u07/905bf8c8_1.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L07_073-084_hi_p073_01.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 7,
+      "label": "L07",
+      "page": 74,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u07/905bf8c8_48.png",
+        "images/u07/905bf8c8_56.png",
+        "images/u07/905bf8c8_65.png",
+        "images/u07/905bf8c8_5.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L07_073-084_hi_p074_01.png",
+        "PHE27_SE_L07_073-084_hi_p074_02.png",
+        "PHE27_SE_L07_073-084_hi_p074_03.png",
+        "PHE27_SE_L07_073-084_hi_p074_04.png",
+        "PHE27_SE_L07_073-084_hi_p074_05.png",
+        "PHE27_SE_L07_073-084_hi_p074_06.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 7,
+      "label": "L07",
+      "page": 75,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u07/905bf8c8_6.png",
+        "images/u07/905bf8c8_7.png",
+        "images/u07/905bf8c8_9.png",
+        "images/u07/905bf8c8_10.png",
+        "images/u07/905bf8c8_11.png",
+        "images/u07/905bf8c8_14.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L07_073-084_hi_p075_01.png",
+        "PHE27_SE_L07_073-084_hi_p075_02.png",
+        "PHE27_SE_L07_073-084_hi_p075_03.png",
+        "PHE27_SE_L07_073-084_hi_p075_04.png",
+        "PHE27_SE_L07_073-084_hi_p075_05.png",
+        "PHE27_SE_L07_073-084_hi_p075_06.png",
+        "PHE27_SE_L07_073-084_hi_p075_07.png",
+        "PHE27_SE_L07_073-084_hi_p075_08.png",
+        "PHE27_SE_L07_073-084_hi_p075_09.png",
+        "PHE27_SE_L07_073-084_hi_p075_10.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 7,
+      "label": "L07",
+      "page": 76,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u07/905bf8c8_16.png",
+        "images/u07/905bf8c8_17.png",
+        "images/u07/905bf8c8_23.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L07_073-084_hi_p076_01.png",
+        "PHE27_SE_L07_073-084_hi_p076_02.png",
+        "PHE27_SE_L07_073-084_hi_p076_03.png",
+        "PHE27_SE_L07_073-084_hi_p076_04.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 7,
+      "label": "L07",
+      "page": 77,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u07/905bf8c8_26.png",
+        "images/u07/905bf8c8_27.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L07_073-084_hi_p077_01.png",
+        "PHE27_SE_L07_073-084_hi_p077_02.png",
+        "PHE27_SE_L07_073-084_hi_p077_03.png",
+        "PHE27_SE_L07_073-084_hi_p077_04.png",
+        "PHE27_SE_L07_073-084_hi_p077_05.png",
+        "PHE27_SE_L07_073-084_hi_p077_06.png",
+        "PHE27_SE_L07_073-084_hi_p077_07.png",
+        "PHE27_SE_L07_073-084_hi_p077_08.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 7,
+      "label": "L07",
+      "page": 78,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u07/905bf8c8_28.png",
+        "images/u07/905bf8c8_35.png",
+        "images/u07/905bf8c8_36.png",
+        "images/u07/905bf8c8_37.png",
+        "images/u07/905bf8c8_41.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L07_073-084_hi_p078_01.png",
+        "PHE27_SE_L07_073-084_hi_p078_02.png",
+        "PHE27_SE_L07_073-084_hi_p078_03.png",
+        "PHE27_SE_L07_073-084_hi_p078_04.png",
+        "PHE27_SE_L07_073-084_hi_p078_05.png",
+        "PHE27_SE_L07_073-084_hi_p078_06.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 7,
+      "label": "L07",
+      "page": 79,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u07/905bf8c8_44.png",
+        "images/u07/905bf8c8_45.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L07_073-084_hi_p079_01.png",
+        "PHE27_SE_L07_073-084_hi_p079_02.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 7,
+      "label": "L07",
+      "page": 80,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u07/905bf8c8_49.png",
+        "images/u07/905bf8c8_51.png"
+      ],
+      "extractedImages": [],
+      "status": "review"
+    },
+    {
+      "lesson": 7,
+      "label": "L07",
+      "page": 81,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u07/905bf8c8_52.png",
+        "images/u07/905bf8c8_54.png",
+        "images/u07/905bf8c8_55.png",
+        "images/u07/905bf8c8_57.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L07_073-084_hi_p081_01.png",
+        "PHE27_SE_L07_073-084_hi_p081_02.png",
+        "PHE27_SE_L07_073-084_hi_p081_03.png",
+        "PHE27_SE_L07_073-084_hi_p081_04.png",
+        "PHE27_SE_L07_073-084_hi_p081_05.png",
+        "PHE27_SE_L07_073-084_hi_p081_06.png",
+        "PHE27_SE_L07_073-084_hi_p081_07.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 7,
+      "label": "L07",
+      "page": 82,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u07/905bf8c8_60.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L07_073-084_hi_p082_01.png",
+        "PHE27_SE_L07_073-084_hi_p082_02.png",
+        "PHE27_SE_L07_073-084_hi_p082_03.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 7,
+      "label": "L07",
+      "page": 83,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u07/905bf8c8_61.png"
+      ],
+      "extractedImages": [],
+      "status": "review"
+    },
+    {
+      "lesson": 7,
+      "label": "L07",
+      "page": 84,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u07/905bf8c8_62.png"
+      ],
+      "extractedImages": [],
+      "status": "review"
+    },
+    {
+      "lesson": 8,
+      "label": "L08",
+      "page": 85,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u08/7023034d_22.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L08_p085_01.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 8,
+      "label": "L08",
+      "page": 86,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u08/7023034d_34.png",
+        "images/u08/7023034d_45.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L08_p086_01.png",
+        "PHE27_SE_L08_p086_02.png",
+        "PHE27_SE_L08_p086_03.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 8,
+      "label": "L08",
+      "page": 87,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u08/7023034d_2.png",
+        "images/u08/7023034d_3.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L08_p087_01.png",
+        "PHE27_SE_L08_p087_02.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 8,
+      "label": "L08",
+      "page": 88,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u08/7023034d_7.png",
+        "images/u08/7023034d_9.png",
+        "images/u08/7023034d_12.png",
+        "images/u08/7023034d_14.png",
+        "images/u08/7023034d_15.png",
+        "images/u08/7023034d_16.png",
+        "images/u08/7023034d_17.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L08_p088_01.png",
+        "PHE27_SE_L08_p088_02.png",
+        "PHE27_SE_L08_p088_03.png",
+        "PHE27_SE_L08_p088_04.png",
+        "PHE27_SE_L08_p088_05.png",
+        "PHE27_SE_L08_p088_06.png",
+        "PHE27_SE_L08_p088_07.png",
+        "PHE27_SE_L08_p088_08.png",
+        "PHE27_SE_L08_p088_09.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 8,
+      "label": "L08",
+      "page": 89,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u08/7023034d_18.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L08_p089_01.png",
+        "PHE27_SE_L08_p089_02.png",
+        "PHE27_SE_L08_p089_03.png",
+        "PHE27_SE_L08_p089_04.png",
+        "PHE27_SE_L08_p089_05.png",
+        "PHE27_SE_L08_p089_06.png",
+        "PHE27_SE_L08_p089_07.png",
+        "PHE27_SE_L08_p089_08.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 8,
+      "label": "L08",
+      "page": 90,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u08/7023034d_20.png",
+        "images/u08/7023034d_21.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L08_p090_01.png",
+        "PHE27_SE_L08_p090_02.png",
+        "PHE27_SE_L08_p090_03.png",
+        "PHE27_SE_L08_p090_04.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 8,
+      "label": "L08",
+      "page": 91,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u08/7023034d_27.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L08_p091_01.png",
+        "PHE27_SE_L08_p091_02.png",
+        "PHE27_SE_L08_p091_03.png",
+        "PHE27_SE_L08_p091_04.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 8,
+      "label": "L08",
+      "page": 92,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u08/7023034d_33.png"
+      ],
+      "extractedImages": [],
+      "status": "review"
+    },
+    {
+      "lesson": 8,
+      "label": "L08",
+      "page": 93,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u08/7023034d_41.png",
+        "images/u08/7023034d_43.png",
+        "images/u08/7023034d_48.png",
+        "images/u08/7023034d_46.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L08_p093_01.png",
+        "PHE27_SE_L08_p093_02.png",
+        "PHE27_SE_L08_p093_03.png",
+        "PHE27_SE_L08_p093_04.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 8,
+      "label": "L08",
+      "page": 94,
+      "xmlPageFound": true,
+      "existingImageRefs": [],
+      "extractedImages": [
+        "PHE27_SE_L08_p094_01.png",
+        "PHE27_SE_L08_p094_02.png",
+        "PHE27_SE_L08_p094_03.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 8,
+      "label": "L08",
+      "page": 95,
+      "xmlPageFound": true,
+      "existingImageRefs": [],
+      "extractedImages": [],
+      "status": "matched"
+    },
+    {
+      "lesson": 8,
+      "label": "L08",
+      "page": 96,
+      "xmlPageFound": true,
+      "existingImageRefs": [],
+      "extractedImages": [],
+      "status": "matched"
+    },
+    {
+      "lesson": 9,
+      "label": "L09",
+      "page": 97,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u09/038e2b76_2.png",
+        "images/u09/038e2b76_22.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L09_p097_01.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 9,
+      "label": "L09",
+      "page": 98,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u09/038e2b76_38.png",
+        "images/u09/038e2b76_47.png",
+        "images/u09/038e2b76_53.png",
+        "images/u09/038e2b76_70.png",
+        "images/u09/038e2b76_3.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L09_p098_01.png",
+        "PHE27_SE_L09_p098_02.png",
+        "PHE27_SE_L09_p098_03.png",
+        "PHE27_SE_L09_p098_04.png",
+        "PHE27_SE_L09_p098_05.png",
+        "PHE27_SE_L09_p098_06.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 9,
+      "label": "L09",
+      "page": 99,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u09/038e2b76_8.png",
+        "images/u09/038e2b76_16.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L09_p099_01.png",
+        "PHE27_SE_L09_p099_02.png",
+        "PHE27_SE_L09_p099_03.png",
+        "PHE27_SE_L09_p099_04.png",
+        "PHE27_SE_L09_p099_05.png",
+        "PHE27_SE_L09_p099_06.png",
+        "PHE27_SE_L09_p099_07.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 9,
+      "label": "L09",
+      "page": 100,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u09/038e2b76_25.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L09_p100_01.png",
+        "PHE27_SE_L09_p100_02.png",
+        "PHE27_SE_L09_p100_03.png",
+        "PHE27_SE_L09_p100_04.png",
+        "PHE27_SE_L09_p100_05.png",
+        "PHE27_SE_L09_p100_06.png",
+        "PHE27_SE_L09_p100_07.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 9,
+      "label": "L09",
+      "page": 101,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u09/038e2b76_32.png"
+      ],
+      "extractedImages": [],
+      "status": "review"
+    },
+    {
+      "lesson": 9,
+      "label": "L09",
+      "page": 102,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u09/038e2b76_34.png",
+        "images/u09/038e2b76_35.png",
+        "images/u09/038e2b76_36.png",
+        "images/u09/038e2b76_37.png",
+        "images/u09/038e2b76_40.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L09_p102_01.png",
+        "PHE27_SE_L09_p102_02.png",
+        "PHE27_SE_L09_p102_03.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 9,
+      "label": "L09",
+      "page": 103,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u09/038e2b76_46.png",
+        "images/u09/038e2b76_48.png",
+        "images/u09/038e2b76_49.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L09_p103_01.png",
+        "PHE27_SE_L09_p103_02.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 9,
+      "label": "L09",
+      "page": 104,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u09/038e2b76_55.png",
+        "images/u09/038e2b76_56.png",
+        "images/u09/038e2b76_57.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L09_p104_01.png",
+        "PHE27_SE_L09_p104_02.png",
+        "PHE27_SE_L09_p104_03.png",
+        "PHE27_SE_L09_p104_04.png",
+        "PHE27_SE_L09_p104_05.png",
+        "PHE27_SE_L09_p104_06.png",
+        "PHE27_SE_L09_p104_07.png",
+        "PHE27_SE_L09_p104_08.png",
+        "PHE27_SE_L09_p104_09.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 9,
+      "label": "L09",
+      "page": 105,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u09/038e2b76_58.png",
+        "images/u09/038e2b76_59.png",
+        "images/u09/038e2b76_60.png",
+        "images/u09/038e2b76_62.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L09_p105_01.png",
+        "PHE27_SE_L09_p105_02.png",
+        "PHE27_SE_L09_p105_03.png",
+        "PHE27_SE_L09_p105_04.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 9,
+      "label": "L09",
+      "page": 106,
+      "xmlPageFound": true,
+      "existingImageRefs": [],
+      "extractedImages": [
+        "PHE27_SE_L09_p106_01.png",
+        "PHE27_SE_L09_p106_02.png",
+        "PHE27_SE_L09_p106_03.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 9,
+      "label": "L09",
+      "page": 107,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u09/038e2b76_69.png"
+      ],
+      "extractedImages": [],
+      "status": "review"
+    },
+    {
+      "lesson": 9,
+      "label": "L09",
+      "page": 108,
+      "xmlPageFound": true,
+      "existingImageRefs": [],
+      "extractedImages": [],
+      "status": "matched"
+    },
+    {
+      "lesson": 10,
+      "label": "L10",
+      "page": 109,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u10/a5211268_2.png",
+        "images/u10/a5211268_32.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L10_p109_01.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 10,
+      "label": "L10",
+      "page": 110,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u10/a5211268_59.png",
+        "images/u10/a5211268_69.png",
+        "images/u10/a5211268_3.png",
+        "images/u10/a5211268_4.png",
+        "images/u10/a5211268_5.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L10_p110_01.png",
+        "PHE27_SE_L10_p110_02.png",
+        "PHE27_SE_L10_p110_03.png",
+        "PHE27_SE_L10_p110_04.png",
+        "PHE27_SE_L10_p110_05.png",
+        "PHE27_SE_L10_p110_06.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 10,
+      "label": "L10",
+      "page": 111,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u10/a5211268_9.png",
+        "images/u10/a5211268_13.png",
+        "images/u10/a5211268_14.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L10_p111_01.png",
+        "PHE27_SE_L10_p111_02.png",
+        "PHE27_SE_L10_p111_03.png",
+        "PHE27_SE_L10_p111_04.png",
+        "PHE27_SE_L10_p111_05.png",
+        "PHE27_SE_L10_p111_06.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 10,
+      "label": "L10",
+      "page": 112,
+      "xmlPageFound": true,
+      "existingImageRefs": [],
+      "extractedImages": [
+        "PHE27_SE_L10_p112_01.png",
+        "PHE27_SE_L10_p112_02.png",
+        "PHE27_SE_L10_p112_03.png",
+        "PHE27_SE_L10_p112_04.png",
+        "PHE27_SE_L10_p112_05.png",
+        "PHE27_SE_L10_p112_06.png",
+        "PHE27_SE_L10_p112_07.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 10,
+      "label": "L10",
+      "page": 113,
+      "xmlPageFound": true,
+      "existingImageRefs": [],
+      "extractedImages": [],
+      "status": "matched"
+    },
+    {
+      "lesson": 10,
+      "label": "L10",
+      "page": 114,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u10/a5211268_26.png",
+        "images/u10/a5211268_27.png",
+        "images/u10/a5211268_28.png",
+        "images/u10/a5211268_29.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L10_p114_01.png",
+        "PHE27_SE_L10_p114_02.png",
+        "PHE27_SE_L10_p114_03.png",
+        "PHE27_SE_L10_p114_04.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 10,
+      "label": "L10",
+      "page": 115,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u10/a5211268_43.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L10_p115_01.png",
+        "PHE27_SE_L10_p115_02.png",
+        "PHE27_SE_L10_p115_03.png",
+        "PHE27_SE_L10_p115_04.png",
+        "PHE27_SE_L10_p115_05.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 10,
+      "label": "L10",
+      "page": 116,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u10/a5211268_44.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L10_p116_01.png",
+        "PHE27_SE_L10_p116_02.png",
+        "PHE27_SE_L10_p116_03.png",
+        "PHE27_SE_L10_p116_04.png",
+        "PHE27_SE_L10_p116_05.png",
+        "PHE27_SE_L10_p116_06.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 10,
+      "label": "L10",
+      "page": 117,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u10/a5211268_45.png",
+        "images/u10/a5211268_47.png",
+        "images/u10/a5211268_49.png",
+        "images/u10/a5211268_51.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L10_p117_01.png",
+        "PHE27_SE_L10_p117_02.png",
+        "PHE27_SE_L10_p117_03.png",
+        "PHE27_SE_L10_p117_04.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 10,
+      "label": "L10",
+      "page": 118,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u10/a5211268_53.png",
+        "images/u10/a5211268_54.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L10_p118_01.png",
+        "PHE27_SE_L10_p118_02.png",
+        "PHE27_SE_L10_p118_03.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 10,
+      "label": "L10",
+      "page": 119,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u10/a5211268_58.png"
+      ],
+      "extractedImages": [],
+      "status": "review"
+    },
+    {
+      "lesson": 10,
+      "label": "L10",
+      "page": 120,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u10/a5211268_67.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L10_p120_01.png",
+        "PHE27_SE_L10_p120_02.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 11,
+      "label": "L11",
+      "page": 121,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u11/189a9105_2.png",
+        "images/u11/189a9105_20.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L11_p121_01.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 11,
+      "label": "L11",
+      "page": 122,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u11/189a9105_38.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L11_p122_01.png",
+        "PHE27_SE_L11_p122_02.png",
+        "PHE27_SE_L11_p122_03.png",
+        "PHE27_SE_L11_p122_04.png",
+        "PHE27_SE_L11_p122_05.png",
+        "PHE27_SE_L11_p122_06.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 11,
+      "label": "L11",
+      "page": 123,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u11/189a9105_3.png",
+        "images/u11/189a9105_4.png"
+      ],
+      "extractedImages": [],
+      "status": "review"
+    },
+    {
+      "lesson": 11,
+      "label": "L11",
+      "page": 124,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u11/189a9105_6.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L11_p124_01.png",
+        "PHE27_SE_L11_p124_02.png",
+        "PHE27_SE_L11_p124_03.png",
+        "PHE27_SE_L11_p124_04.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 11,
+      "label": "L11",
+      "page": 125,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u11/189a9105_10.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L11_p125_01.png",
+        "PHE27_SE_L11_p125_02.png",
+        "PHE27_SE_L11_p125_03.png",
+        "PHE27_SE_L11_p125_04.png",
+        "PHE27_SE_L11_p125_06.png",
+        "PHE27_SE_L11_p125_07.png",
+        "PHE27_SE_L11_p125_08.png",
+        "PHE27_SE_L11_p125_09.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 11,
+      "label": "L11",
+      "page": 126,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u11/189a9105_22.png",
+        "images/u11/189a9105_23.png",
+        "images/u11/189a9105_25.png",
+        "images/u11/189a9105_26.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L11_p126_01.png",
+        "PHE27_SE_L11_p126_02.png",
+        "PHE27_SE_L11_p126_03.png",
+        "PHE27_SE_L11_p126_04.png",
+        "PHE27_SE_L11_p126_05.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 11,
+      "label": "L11",
+      "page": 127,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u11/189a9105_32.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L11_p127_01.png",
+        "PHE27_SE_L11_p127_02.png",
+        "PHE27_SE_L11_p127_03.png",
+        "PHE27_SE_L11_p127_04.png",
+        "PHE27_SE_L11_p127_05.png",
+        "PHE27_SE_L11_p127_06.png",
+        "PHE27_SE_L11_p127_07.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 11,
+      "label": "L11",
+      "page": 128,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u11/189a9105_44.png"
+      ],
+      "extractedImages": [],
+      "status": "review"
+    },
+    {
+      "lesson": 11,
+      "label": "L11",
+      "page": 129,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u11/189a9105_48.png",
+        "images/u11/189a9105_50.png",
+        "images/u11/189a9105_52.png",
+        "images/u11/189a9105_53.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L11_p129_01.png",
+        "PHE27_SE_L11_p129_02.png",
+        "PHE27_SE_L11_p129_03.png",
+        "PHE27_SE_L11_p129_04.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 11,
+      "label": "L11",
+      "page": 130,
+      "xmlPageFound": true,
+      "existingImageRefs": [],
+      "extractedImages": [
+        "PHE27_SE_L11_p130_01.png",
+        "PHE27_SE_L11_p130_02.png",
+        "PHE27_SE_L11_p130_03.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 11,
+      "label": "L11",
+      "page": 131,
+      "xmlPageFound": true,
+      "existingImageRefs": [],
+      "extractedImages": [],
+      "status": "matched"
+    },
+    {
+      "lesson": 11,
+      "label": "L11",
+      "page": 132,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u11/189a9105_71.png",
+        "images/u11/189a9105_72.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L11_p132_01.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 12,
+      "label": "L12",
+      "page": 133,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u12/c7966ed5_2.png",
+        "images/u12/c7966ed5_29.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L12_p133_01.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 12,
+      "label": "L12",
+      "page": 134,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u12/c7966ed5_43.png",
+        "images/u12/c7966ed5_54.png",
+        "images/u12/c7966ed5_3.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L12_p134_01.png",
+        "PHE27_SE_L12_p134_02.png",
+        "PHE27_SE_L12_p134_03.png",
+        "PHE27_SE_L12_p134_04.png",
+        "PHE27_SE_L12_p134_05.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 12,
+      "label": "L12",
+      "page": 135,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u12/c7966ed5_8.png",
+        "images/u12/c7966ed5_9.png"
+      ],
+      "extractedImages": [],
+      "status": "review"
+    },
+    {
+      "lesson": 12,
+      "label": "L12",
+      "page": 136,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u12/c7966ed5_11.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L12_p136_01.png",
+        "PHE27_SE_L12_p136_02.png",
+        "PHE27_SE_L12_p136_03.png",
+        "PHE27_SE_L12_p136_04.png",
+        "PHE27_SE_L12_p136_05.png",
+        "PHE27_SE_L12_p136_06.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 12,
+      "label": "L12",
+      "page": 137,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u12/c7966ed5_14.png",
+        "images/u12/c7966ed5_15.png",
+        "images/u12/c7966ed5_17.png",
+        "images/u12/c7966ed5_18.png",
+        "images/u12/c7966ed5_19.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L12_p137_01.png",
+        "PHE27_SE_L12_p137_02.png",
+        "PHE27_SE_L12_p137_03.png",
+        "PHE27_SE_L12_p137_04.png",
+        "PHE27_SE_L12_p137_05.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 12,
+      "label": "L12",
+      "page": 138,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u12/c7966ed5_25.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L12_p138_02.png",
+        "PHE27_SE_L12_p138_03.png",
+        "PHE27_SE_L12_p138_04.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 12,
+      "label": "L12",
+      "page": 139,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u12/c7966ed5_34.png"
+      ],
+      "extractedImages": [],
+      "status": "review"
+    },
+    {
+      "lesson": 12,
+      "label": "L12",
+      "page": 140,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u12/c7966ed5_37.png"
+      ],
+      "extractedImages": [],
+      "status": "review"
+    },
+    {
+      "lesson": 12,
+      "label": "L12",
+      "page": 141,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u12/c7966ed5_44.png",
+        "images/u12/c7966ed5_45.png",
+        "images/u12/c7966ed5_46.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L12_p141_01.png",
+        "PHE27_SE_L12_p141_02.png",
+        "PHE27_SE_L12_p141_03.png",
+        "PHE27_SE_L12_p141_04.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 12,
+      "label": "L12",
+      "page": 142,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u12/c7966ed5_47.png",
+        "images/u12/c7966ed5_48.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L12_p142_01.png",
+        "PHE27_SE_L12_p142_02.png",
+        "PHE27_SE_L12_p142_03.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 12,
+      "label": "L12",
+      "page": 143,
+      "xmlPageFound": true,
+      "existingImageRefs": [],
+      "extractedImages": [],
+      "status": "matched"
+    },
+    {
+      "lesson": 12,
+      "label": "L12",
+      "page": 144,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u12/c7966ed5_62.png"
+      ],
+      "extractedImages": [],
+      "status": "review"
+    },
+    {
+      "lesson": 13,
+      "label": "L13",
+      "page": 145,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u13/5a0ab404_1.png",
+        "images/u13/5a0ab404_10.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L13_p145_01.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 13,
+      "label": "L13",
+      "page": 146,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u13/5a0ab404_28.png",
+        "images/u13/5a0ab404_48.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L13_p146_01.png",
+        "PHE27_SE_L13_p146_02.png",
+        "PHE27_SE_L13_p146_03.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 13,
+      "label": "L13",
+      "page": 147,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u13/5a0ab404_9.png",
+        "images/u13/5a0ab404_15.png",
+        "images/u13/5a0ab404_16.png",
+        "images/u13/5a0ab404_17.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L13_p147_01.png",
+        "PHE27_SE_L13_p147_02.png",
+        "PHE27_SE_L13_p147_03.png",
+        "PHE27_SE_L13_p147_04.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 13,
+      "label": "L13",
+      "page": 148,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u13/5a0ab404_23.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L13_p148_01.png",
+        "PHE27_SE_L13_p148_02.png",
+        "PHE27_SE_L13_p148_03.png",
+        "PHE27_SE_L13_p148_04.png",
+        "PHE27_SE_L13_p148_05.png",
+        "PHE27_SE_L13_p148_06.png",
+        "PHE27_SE_L13_p148_07.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 13,
+      "label": "L13",
+      "page": 149,
+      "xmlPageFound": true,
+      "existingImageRefs": [],
+      "extractedImages": [],
+      "status": "matched"
+    },
+    {
+      "lesson": 13,
+      "label": "L13",
+      "page": 150,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u13/5a0ab404_27.png",
+        "images/u13/5a0ab404_34.png",
+        "images/u13/5a0ab404_35.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L13_p150_01.png",
+        "PHE27_SE_L13_p150_02.png",
+        "PHE27_SE_L13_p150_03.png",
+        "PHE27_SE_L13_p150_04.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 13,
+      "label": "L13",
+      "page": 151,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u13/5a0ab404_39.png",
+        "images/u13/5a0ab404_42.png",
+        "images/u13/5a0ab404_44.png",
+        "images/u13/5a0ab404_45.png",
+        "images/u13/5a0ab404_47.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L13_p151_01.png",
+        "PHE27_SE_L13_p151_02.png",
+        "PHE27_SE_L13_p151_03.png",
+        "PHE27_SE_L13_p151_04.png",
+        "PHE27_SE_L13_p151_05.png",
+        "PHE27_SE_L13_p151_06.png",
+        "PHE27_SE_L13_p151_07.png",
+        "PHE27_SE_L13_p151_08.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 13,
+      "label": "L13",
+      "page": 152,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u13/5a0ab404_51.png",
+        "images/u13/5a0ab404_53.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L13_p152_01.png",
+        "PHE27_SE_L13_p152_02.png",
+        "PHE27_SE_L13_p152_03.png",
+        "PHE27_SE_L13_p152_04.png",
+        "PHE27_SE_L13_p152_05.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 13,
+      "label": "L13",
+      "page": 153,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u13/5a0ab404_57.png",
+        "images/u13/5a0ab404_58.png",
+        "images/u13/5a0ab404_60.png",
+        "images/u13/5a0ab404_61.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L13_p153_01.png",
+        "PHE27_SE_L13_p153_02.png",
+        "PHE27_SE_L13_p153_03.png",
+        "PHE27_SE_L13_p153_04.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 13,
+      "label": "L13",
+      "page": 154,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u13/5a0ab404_62.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L13_p154_01.png",
+        "PHE27_SE_L13_p154_02.png",
+        "PHE27_SE_L13_p154_03.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 13,
+      "label": "L13",
+      "page": 155,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u13/5a0ab404_69.png"
+      ],
+      "extractedImages": [],
+      "status": "review"
+    },
+    {
+      "lesson": 13,
+      "label": "L13",
+      "page": 156,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u13/5a0ab404_71.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L13_p156_01.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 14,
+      "label": "L14",
+      "page": 157,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u14/ecfaaa17_1.png",
+        "images/u14/ecfaaa17_2.png",
+        "images/u14/ecfaaa17_18.png",
+        "images/u14/ecfaaa17_36.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L14_p157_01.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 14,
+      "label": "L14",
+      "page": 158,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u14/ecfaaa17_55.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L14_p158_01.png",
+        "PHE27_SE_L14_p158_02.png",
+        "PHE27_SE_L14_p158_03.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 14,
+      "label": "L14",
+      "page": 159,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u14/ecfaaa17_15.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L14_p159_01.png",
+        "PHE27_SE_L14_p159_02.png",
+        "PHE27_SE_L14_p159_03.png",
+        "PHE27_SE_L14_p159_04.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 14,
+      "label": "L14",
+      "page": 160,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u14/ecfaaa17_20.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L14_p160_01.png",
+        "PHE27_SE_L14_p160_02.png",
+        "PHE27_SE_L14_p160_03.png",
+        "PHE27_SE_L14_p160_04.png",
+        "PHE27_SE_L14_p160_05.png",
+        "PHE27_SE_L14_p160_06.png",
+        "PHE27_SE_L14_p160_07.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 14,
+      "label": "L14",
+      "page": 161,
+      "xmlPageFound": true,
+      "existingImageRefs": [],
+      "extractedImages": [],
+      "status": "matched"
+    },
+    {
+      "lesson": 14,
+      "label": "L14",
+      "page": 162,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u14/ecfaaa17_22.png",
+        "images/u14/ecfaaa17_24.png",
+        "images/u14/ecfaaa17_26.png",
+        "images/u14/ecfaaa17_27.png",
+        "images/u14/ecfaaa17_31.png",
+        "images/u14/ecfaaa17_32.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L14_p162_01.png",
+        "PHE27_SE_L14_p162_02.png",
+        "PHE27_SE_L14_p162_03.png",
+        "PHE27_SE_L14_p162_04.png",
+        "PHE27_SE_L14_p162_05.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 14,
+      "label": "L14",
+      "page": 163,
+      "xmlPageFound": true,
+      "existingImageRefs": [],
+      "extractedImages": [
+        "PHE27_SE_L14_p163_01.png",
+        "PHE27_SE_L14_p163_02.png",
+        "PHE27_SE_L14_p163_03.png",
+        "PHE27_SE_L14_p163_04.png",
+        "PHE27_SE_L14_p163_05.png",
+        "PHE27_SE_L14_p163_06.png",
+        "PHE27_SE_L14_p163_07.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 14,
+      "label": "L14",
+      "page": 164,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u14/ecfaaa17_43.png"
+      ],
+      "extractedImages": [],
+      "status": "review"
+    },
+    {
+      "lesson": 14,
+      "label": "L14",
+      "page": 165,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u14/ecfaaa17_50.png",
+        "images/u14/ecfaaa17_51.png",
+        "images/u14/ecfaaa17_52.png",
+        "images/u14/ecfaaa17_53.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L14_p165_01.png",
+        "PHE27_SE_L14_p165_02.png",
+        "PHE27_SE_L14_p165_03.png",
+        "PHE27_SE_L14_p165_04.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 14,
+      "label": "L14",
+      "page": 166,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u14/ecfaaa17_54.png",
+        "images/u14/ecfaaa17_56.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L14_p166_01.png",
+        "PHE27_SE_L14_p166_02.png",
+        "PHE27_SE_L14_p166_03.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 14,
+      "label": "L14",
+      "page": 167,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u14/ecfaaa17_61.png"
+      ],
+      "extractedImages": [],
+      "status": "review"
+    },
+    {
+      "lesson": 14,
+      "label": "L14",
+      "page": 168,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u14/ecfaaa17_67.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L14_p168_01.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 15,
+      "label": "L15",
+      "page": 169,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u15/0e815156_1.png",
+        "images/u15/0e815156_2.png",
+        "images/u15/0e815156_23.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L15_p169_01.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 15,
+      "label": "L15",
+      "page": 170,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u15/0e815156_36.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L15_p170_01.png",
+        "PHE27_SE_L15_p170_02.png",
+        "PHE27_SE_L15_p170_03.png",
+        "PHE27_SE_L15_p170_04.png",
+        "PHE27_SE_L15_p170_05.png",
+        "PHE27_SE_L15_p170_06.png",
+        "PHE27_SE_L15_p170_07.png",
+        "PHE27_SE_L15_p170_08.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 15,
+      "label": "L15",
+      "page": 171,
+      "xmlPageFound": true,
+      "existingImageRefs": [],
+      "extractedImages": [],
+      "status": "matched"
+    },
+    {
+      "lesson": 15,
+      "label": "L15",
+      "page": 172,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u15/0e815156_15.png",
+        "images/u15/0e815156_16.png",
+        "images/u15/0e815156_20.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L15_p172_01.png",
+        "PHE27_SE_L15_p172_02.png",
+        "PHE27_SE_L15_p172_03.png",
+        "PHE27_SE_L15_p172_04.png",
+        "PHE27_SE_L15_p172_05.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 15,
+      "label": "L15",
+      "page": 173,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u15/0e815156_25.png",
+        "images/u15/0e815156_27.png",
+        "images/u15/0e815156_31.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L15_p173_01.png",
+        "PHE27_SE_L15_p173_02.png",
+        "PHE27_SE_L15_p173_03.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 15,
+      "label": "L15",
+      "page": 174,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u15/0e815156_38.png",
+        "images/u15/0e815156_40.png",
+        "images/u15/0e815156_41.png",
+        "images/u15/0e815156_43.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L15_p174_01.png",
+        "PHE27_SE_L15_p174_02.png",
+        "PHE27_SE_L15_p174_03.png",
+        "PHE27_SE_L15_p174_04.png",
+        "PHE27_SE_L15_p174_05.png",
+        "PHE27_SE_L15_p174_06.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 15,
+      "label": "L15",
+      "page": 175,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u15/0e815156_45.png",
+        "images/u15/0e815156_46.png",
+        "images/u15/0e815156_48.png",
+        "images/u15/0e815156_49.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L15_p175_01.png",
+        "PHE27_SE_L15_p175_02.png",
+        "PHE27_SE_L15_p175_03.png",
+        "PHE27_SE_L15_p175_04.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 15,
+      "label": "L15",
+      "page": 176,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u15/0e815156_52.png",
+        "images/u15/0e815156_55.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L15_p176_01.png",
+        "PHE27_SE_L15_p176_02.png",
+        "PHE27_SE_L15_p176_03.png",
+        "PHE27_SE_L15_p176_04.png",
+        "PHE27_SE_L15_p176_05.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 15,
+      "label": "L15",
+      "page": 177,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u15/0e815156_57.png",
+        "images/u15/0e815156_59.png",
+        "images/u15/0e815156_60.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L15_p177_01.png",
+        "PHE27_SE_L15_p177_02.png",
+        "PHE27_SE_L15_p177_03.png",
+        "PHE27_SE_L15_p177_04.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 15,
+      "label": "L15",
+      "page": 178,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u15/0e815156_62.png",
+        "images/u15/0e815156_65.png",
+        "images/u15/0e815156_63.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L15_p178_01.png",
+        "PHE27_SE_L15_p178_02.png",
+        "PHE27_SE_L15_p178_03.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 15,
+      "label": "L15",
+      "page": 179,
+      "xmlPageFound": true,
+      "existingImageRefs": [],
+      "extractedImages": [],
+      "status": "matched"
+    },
+    {
+      "lesson": 15,
+      "label": "L15",
+      "page": 180,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u15/0e815156_73.png"
+      ],
+      "extractedImages": [],
+      "status": "review"
+    },
+    {
+      "lesson": 16,
+      "label": "L16",
+      "page": 181,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u16/0c3c8c84_1.png",
+        "images/u16/0c3c8c84_2.png",
+        "images/u16/0c3c8c84_6.png",
+        "images/u16/0c3c8c84_11.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L16_p181_01.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 16,
+      "label": "L16",
+      "page": 182,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u16/0c3c8c84_17.png",
+        "images/u16/0c3c8c84_28.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L16_p182_01.png",
+        "PHE27_SE_L16_p182_02.png",
+        "PHE27_SE_L16_p182_03.png",
+        "PHE27_SE_L16_p182_05.png",
+        "PHE27_SE_L16_p182_06.png",
+        "PHE27_SE_L16_p182_07.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 16,
+      "label": "L16",
+      "page": 183,
+      "xmlPageFound": true,
+      "existingImageRefs": [],
+      "extractedImages": [],
+      "status": "matched"
+    },
+    {
+      "lesson": 16,
+      "label": "L16",
+      "page": 184,
+      "xmlPageFound": true,
+      "existingImageRefs": [],
+      "extractedImages": [],
+      "status": "matched"
+    },
+    {
+      "lesson": 16,
+      "label": "L16",
+      "page": 185,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u16/0c3c8c84_8.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L16_p185_01.png",
+        "PHE27_SE_L16_p185_02.png",
+        "PHE27_SE_L16_p185_03.png",
+        "PHE27_SE_L16_p185_04.png",
+        "PHE27_SE_L16_p185_05.png",
+        "PHE27_SE_L16_p185_06.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 16,
+      "label": "L16",
+      "page": 186,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u16/0c3c8c84_15.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L16_p186_01.png",
+        "PHE27_SE_L16_p186_02.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 16,
+      "label": "L16",
+      "page": 187,
+      "xmlPageFound": true,
+      "existingImageRefs": [],
+      "extractedImages": [],
+      "status": "matched"
+    },
+    {
+      "lesson": 16,
+      "label": "L16",
+      "page": 188,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u16/0c3c8c84_20.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L16_p188_01.png",
+        "PHE27_SE_L16_p188_02.png",
+        "PHE27_SE_L16_p188_03.png",
+        "PHE27_SE_L16_p188_04.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 16,
+      "label": "L16",
+      "page": 189,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u16/0c3c8c84_25.png",
+        "images/u16/0c3c8c84_26.png",
+        "images/u16/0c3c8c84_29.png",
+        "images/u16/0c3c8c84_30.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L16_p189_01.png",
+        "PHE27_SE_L16_p189_02.png",
+        "PHE27_SE_L16_p189_03.png",
+        "PHE27_SE_L16_p189_04.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 16,
+      "label": "L16",
+      "page": 190,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u16/0c3c8c84_31.png",
+        "images/u16/0c3c8c84_32.png",
+        "images/u16/0c3c8c84_34.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L16_p190_01.png",
+        "PHE27_SE_L16_p190_02.png",
+        "PHE27_SE_L16_p190_03.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 16,
+      "label": "L16",
+      "page": 191,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u16/0c3c8c84_40.png"
+      ],
+      "extractedImages": [],
+      "status": "review"
+    },
+    {
+      "lesson": 16,
+      "label": "L16",
+      "page": 192,
+      "xmlPageFound": true,
+      "existingImageRefs": [],
+      "extractedImages": [],
+      "status": "matched"
+    },
+    {
+      "lesson": 17,
+      "label": "L17",
+      "page": 193,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u17/2ffad38f_1.png",
+        "images/u17/2ffad38f_2.png",
+        "images/u17/2ffad38f_11.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L17_p193_01.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 17,
+      "label": "L17",
+      "page": 194,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u17/2ffad38f_19.png",
+        "images/u17/2ffad38f_34.png",
+        "images/u17/2ffad38f_43.png",
+        "images/u17/2ffad38f_54.png",
+        "images/u17/2ffad38f_61.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L17_p194_01.png",
+        "PHE27_SE_L17_p194_02.png",
+        "PHE27_SE_L17_p194_03.png",
+        "PHE27_SE_L17_p194_04.png",
+        "PHE27_SE_L17_p194_05.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 17,
+      "label": "L17",
+      "page": 195,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u17/2ffad38f_5.png",
+        "images/u17/2ffad38f_13.png",
+        "images/u17/2ffad38f_14.png",
+        "images/u17/2ffad38f_15.png",
+        "images/u17/2ffad38f_17.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L17_p195_01.png",
+        "PHE27_SE_L17_p195_02.png",
+        "PHE27_SE_L17_p195_03.png",
+        "PHE27_SE_L17_p195_04.png",
+        "PHE27_SE_L17_p195_05.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 17,
+      "label": "L17",
+      "page": 196,
+      "xmlPageFound": true,
+      "existingImageRefs": [],
+      "extractedImages": [
+        "PHE27_SE_L17_p196_01.png",
+        "PHE27_SE_L17_p196_02.png",
+        "PHE27_SE_L17_p196_03.png",
+        "PHE27_SE_L17_p196_04.png",
+        "PHE27_SE_L17_p196_05.png",
+        "PHE27_SE_L17_p196_06.png",
+        "PHE27_SE_L17_p196_07.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 17,
+      "label": "L17",
+      "page": 197,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u17/2ffad38f_21.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L17_p197_01.png",
+        "PHE27_SE_L17_p197_02.png",
+        "PHE27_SE_L17_p197_03.png",
+        "PHE27_SE_L17_p197_04.png",
+        "PHE27_SE_L17_p197_05.png",
+        "PHE27_SE_L17_p197_06.png",
+        "PHE27_SE_L17_p197_07.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 17,
+      "label": "L17",
+      "page": 198,
+      "xmlPageFound": true,
+      "existingImageRefs": [],
+      "extractedImages": [],
+      "status": "matched"
+    },
+    {
+      "lesson": 17,
+      "label": "L17",
+      "page": 199,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u17/2ffad38f_26.png",
+        "images/u17/2ffad38f_27.png",
+        "images/u17/2ffad38f_28.png",
+        "images/u17/2ffad38f_29.png",
+        "images/u17/2ffad38f_30.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L17_p199_01.png",
+        "PHE27_SE_L17_p199_02.png",
+        "PHE27_SE_L17_p199_03.png",
+        "PHE27_SE_L17_p199_04.png",
+        "PHE27_SE_L17_p199_05.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 17,
+      "label": "L17",
+      "page": 200,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u17/2ffad38f_37.png",
+        "images/u17/2ffad38f_38.png"
+      ],
+      "extractedImages": [],
+      "status": "review"
+    },
+    {
+      "lesson": 17,
+      "label": "L17",
+      "page": 201,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u17/2ffad38f_42.png",
+        "images/u17/2ffad38f_45.png",
+        "images/u17/2ffad38f_47.png",
+        "images/u17/2ffad38f_49.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L17_p201_01.png",
+        "PHE27_SE_L17_p201_02.png",
+        "PHE27_SE_L17_p201_03.png",
+        "PHE27_SE_L17_p201_04.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 17,
+      "label": "L17",
+      "page": 202,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u17/2ffad38f_51.png",
+        "images/u17/2ffad38f_53.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L17_p202_01.png",
+        "PHE27_SE_L17_p202_02.png",
+        "PHE27_SE_L17_p202_03.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 17,
+      "label": "L17",
+      "page": 203,
+      "xmlPageFound": true,
+      "existingImageRefs": [],
+      "extractedImages": [],
+      "status": "matched"
+    },
+    {
+      "lesson": 17,
+      "label": "L17",
+      "page": 204,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u17/2ffad38f_62.png",
+        "images/u17/2ffad38f_63.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L17_p204_01.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 18,
+      "label": "L18",
+      "page": 205,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u18/89990678_1.png",
+        "images/u18/89990678_9.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L18_p205_01.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 18,
+      "label": "L18",
+      "page": 206,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u18/89990678_47.png",
+        "images/u18/89990678_56.png",
+        "images/u18/89990678_58.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L18_p206_01.png",
+        "PHE27_SE_L18_p206_02.png",
+        "PHE27_SE_L18_p206_03.png",
+        "PHE27_SE_L18_p206_04.png",
+        "PHE27_SE_L18_p206_05.png",
+        "PHE27_SE_L18_p206_06.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 18,
+      "label": "L18",
+      "page": 207,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u18/89990678_5.png",
+        "images/u18/89990678_7.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L18_p207_01.png",
+        "PHE27_SE_L18_p207_02.png",
+        "PHE27_SE_L18_p207_03.png",
+        "PHE27_SE_L18_p207_04.png",
+        "PHE27_SE_L18_p207_05.png",
+        "PHE27_SE_L18_p207_06.png",
+        "PHE27_SE_L18_p207_07.png",
+        "PHE27_SE_L18_p207_08.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 18,
+      "label": "L18",
+      "page": 208,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u18/89990678_13.png",
+        "images/u18/89990678_16.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L18_p208_01.png",
+        "PHE27_SE_L18_p208_02.png",
+        "PHE27_SE_L18_p208_03.png",
+        "PHE27_SE_L18_p208_04.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 18,
+      "label": "L18",
+      "page": 209,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u18/89990678_24.png",
+        "images/u18/89990678_25.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L18_p209_01.png",
+        "PHE27_SE_L18_p209_02.png",
+        "PHE27_SE_L18_p209_03.png",
+        "PHE27_SE_L18_p209_04.png",
+        "PHE27_SE_L18_p209_05.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 18,
+      "label": "L18",
+      "page": 210,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u18/89990678_26.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L18_p210_01.png",
+        "PHE27_SE_L18_p210_02.png",
+        "PHE27_SE_L18_p210_03.png",
+        "PHE27_SE_L18_p210_04.png",
+        "PHE27_SE_L18_p210_05.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 18,
+      "label": "L18",
+      "page": 211,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u18/89990678_29.png",
+        "images/u18/89990678_30.png",
+        "images/u18/89990678_32.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L18_p211_01.png",
+        "PHE27_SE_L18_p211_02.png",
+        "PHE27_SE_L18_p211_03.png",
+        "PHE27_SE_L18_p211_04.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 18,
+      "label": "L18",
+      "page": 212,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u18/89990678_36.png",
+        "images/u18/89990678_37.png",
+        "images/u18/89990678_38.png",
+        "images/u18/89990678_39.png"
+      ],
+      "extractedImages": [],
+      "status": "review"
+    },
+    {
+      "lesson": 18,
+      "label": "L18",
+      "page": 213,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u18/89990678_40.png",
+        "images/u18/89990678_41.png",
+        "images/u18/89990678_42.png",
+        "images/u18/89990678_43.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L18_p213_01.png",
+        "PHE27_SE_L18_p213_02.png",
+        "PHE27_SE_L18_p213_03.png",
+        "PHE27_SE_L18_p213_04.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 18,
+      "label": "L18",
+      "page": 214,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u18/89990678_46.png",
+        "images/u18/89990678_49.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L18_p214_01.png",
+        "PHE27_SE_L18_p214_02.png",
+        "PHE27_SE_L18_p214_03.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 18,
+      "label": "L18",
+      "page": 215,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u18/89990678_52.png",
+        "images/u18/89990678_53.png",
+        "images/u18/89990678_55.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L18_p215_01.png",
+        "PHE27_SE_L18_p215_02.png",
+        "PHE27_SE_L18_p215_03.png",
+        "PHE27_SE_L18_p215_04.png",
+        "PHE27_SE_L18_p215_05.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 18,
+      "label": "L18",
+      "page": 216,
+      "xmlPageFound": true,
+      "existingImageRefs": [],
+      "extractedImages": [],
+      "status": "matched"
+    },
+    {
+      "lesson": 19,
+      "label": "L19",
+      "page": 217,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u19/e0934285_8.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L19_p217_01.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 19,
+      "label": "L19",
+      "page": 218,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u19/e0934285_41.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L19_p218_01.png",
+        "PHE27_SE_L19_p218_02.png",
+        "PHE27_SE_L19_p218_03.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 19,
+      "label": "L19",
+      "page": 219,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u19/e0934285_5.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L19_p219_01.png",
+        "PHE27_SE_L19_p219_02.png",
+        "PHE27_SE_L19_p219_03.png",
+        "PHE27_SE_L19_p219_04.png",
+        "PHE27_SE_L19_p219_05.png",
+        "PHE27_SE_L19_p219_06.png",
+        "PHE27_SE_L19_p219_07.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 19,
+      "label": "L19",
+      "page": 220,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u19/e0934285_10.png",
+        "images/u19/e0934285_13.png",
+        "images/u19/e0934285_14.png",
+        "images/u19/e0934285_15.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L19_p220_01.png",
+        "PHE27_SE_L19_p220_02.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 19,
+      "label": "L19",
+      "page": 221,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u19/e0934285_20.png",
+        "images/u19/e0934285_21.png",
+        "images/u19/e0934285_22.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L19_p221_01.png",
+        "PHE27_SE_L19_p221_02.png",
+        "PHE27_SE_L19_p221_03.png",
+        "PHE27_SE_L19_p221_04.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 19,
+      "label": "L19",
+      "page": 222,
+      "xmlPageFound": true,
+      "existingImageRefs": [],
+      "extractedImages": [],
+      "status": "matched"
+    },
+    {
+      "lesson": 19,
+      "label": "L19",
+      "page": 223,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u19/e0934285_26.png",
+        "images/u19/e0934285_27.png",
+        "images/u19/e0934285_28.png",
+        "images/u19/e0934285_29.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L19_p223_01.png",
+        "PHE27_SE_L19_p223_02.png",
+        "PHE27_SE_L19_p223_03.png",
+        "PHE27_SE_L19_p223_04.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 19,
+      "label": "L19",
+      "page": 224,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u19/e0934285_32.png",
+        "images/u19/e0934285_38.png"
+      ],
+      "extractedImages": [],
+      "status": "review"
+    },
+    {
+      "lesson": 19,
+      "label": "L19",
+      "page": 225,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u19/e0934285_42.png",
+        "images/u19/e0934285_44.png",
+        "images/u19/e0934285_46.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L19_p225_01.png",
+        "PHE27_SE_L19_p225_02.png",
+        "PHE27_SE_L19_p225_03.png",
+        "PHE27_SE_L19_p225_04.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 19,
+      "label": "L19",
+      "page": 226,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u19/e0934285_49.png",
+        "images/u19/e0934285_50.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L19_p226_01.png",
+        "PHE27_SE_L19_p226_02.png",
+        "PHE27_SE_L19_p226_03.png",
+        "PHE27_SE_L19_p226_04.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 19,
+      "label": "L19",
+      "page": 227,
+      "xmlPageFound": true,
+      "existingImageRefs": [],
+      "extractedImages": [],
+      "status": "matched"
+    },
+    {
+      "lesson": 19,
+      "label": "L19",
+      "page": 228,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u19/e0934285_56.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L19_p228_01.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 20,
+      "label": "L20",
+      "page": 229,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u20/ff899bf7_1.png",
+        "images/u20/ff899bf7_13.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L20_p229_01.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 20,
+      "label": "L20",
+      "page": 230,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u20/ff899bf7_49.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L20_p230_01.png",
+        "PHE27_SE_L20_p230_02.png",
+        "PHE27_SE_L20_p230_03.png",
+        "PHE27_SE_L20_p230_04.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 20,
+      "label": "L20",
+      "page": 231,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u20/ff899bf7_6.png",
+        "images/u20/ff899bf7_9.png",
+        "images/u20/ff899bf7_10.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L20_p231_01.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 20,
+      "label": "L20",
+      "page": 232,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u20/ff899bf7_18.png",
+        "images/u20/ff899bf7_19.png",
+        "images/u20/ff899bf7_21.png",
+        "images/u20/ff899bf7_23.png",
+        "images/u20/ff899bf7_24.png",
+        "images/u20/ff899bf7_25.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L20_p232_01.png",
+        "PHE27_SE_L20_p232_02.png",
+        "PHE27_SE_L20_p232_03.png",
+        "PHE27_SE_L20_p232_04.png",
+        "PHE27_SE_L20_p232_05.png",
+        "PHE27_SE_L20_p232_06.png",
+        "PHE27_SE_L20_p232_07.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 20,
+      "label": "L20",
+      "page": 233,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u20/ff899bf7_27.png",
+        "images/u20/ff899bf7_30.png",
+        "images/u20/ff899bf7_32.png",
+        "images/u20/ff899bf7_33.png",
+        "images/u20/ff899bf7_34.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L20_p233_01.png",
+        "PHE27_SE_L20_p233_02.png",
+        "PHE27_SE_L20_p233_03.png",
+        "PHE27_SE_L20_p233_04.png",
+        "PHE27_SE_L20_p233_05.png",
+        "PHE27_SE_L20_p233_06.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 20,
+      "label": "L20",
+      "page": 234,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u20/ff899bf7_37.png",
+        "images/u20/ff899bf7_40.png",
+        "images/u20/ff899bf7_46.png",
+        "images/u20/ff899bf7_47.png",
+        "images/u20/ff899bf7_48.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L20_p234_01.png",
+        "PHE27_SE_L20_p234_02.png",
+        "PHE27_SE_L20_p234_03.png",
+        "PHE27_SE_L20_p234_04.png",
+        "PHE27_SE_L20_p234_05.png",
+        "PHE27_SE_L20_p234_06.png",
+        "PHE27_SE_L20_p234_07.png",
+        "PHE27_SE_L20_p234_08.png",
+        "PHE27_SE_L20_p234_09.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 20,
+      "label": "L20",
+      "page": 235,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u20/ff899bf7_50.png",
+        "images/u20/ff899bf7_61.png"
+      ],
+      "extractedImages": [],
+      "status": "review"
+    },
+    {
+      "lesson": 20,
+      "label": "L20",
+      "page": 236,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u20/ff899bf7_62.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L20_p236_01.png",
+        "PHE27_SE_L20_p236_02.png",
+        "PHE27_SE_L20_p236_03.png",
+        "PHE27_SE_L20_p236_04.png",
+        "PHE27_SE_L20_p236_05.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 20,
+      "label": "L20",
+      "page": 237,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u20/ff899bf7_63.png",
+        "images/u20/ff899bf7_64.png",
+        "images/u20/ff899bf7_65.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L20_p237_01.png",
+        "PHE27_SE_L20_p237_02.png",
+        "PHE27_SE_L20_p237_03.png",
+        "PHE27_SE_L20_p237_04.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 20,
+      "label": "L20",
+      "page": 238,
+      "xmlPageFound": true,
+      "existingImageRefs": [],
+      "extractedImages": [
+        "PHE27_SE_L20_p238_01.png",
+        "PHE27_SE_L20_p238_02.png",
+        "PHE27_SE_L20_p238_03.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 20,
+      "label": "L20",
+      "page": 239,
+      "xmlPageFound": true,
+      "existingImageRefs": [],
+      "extractedImages": [],
+      "status": "matched"
+    },
+    {
+      "lesson": 20,
+      "label": "L20",
+      "page": 240,
+      "xmlPageFound": true,
+      "existingImageRefs": [],
+      "extractedImages": [
+        "PHE27_SE_L20_p240_01.png",
+        "PHE27_SE_L20_p240_02.png",
+        "PHE27_SE_L20_p240_03.png",
+        "PHE27_SE_L20_p240_04.png",
+        "PHE27_SE_L20_p240_05.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 21,
+      "label": "L21",
+      "page": 241,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u21/ed9db498_26.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L21_p241_01.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 21,
+      "label": "L21",
+      "page": 242,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u21/ed9db498_38.png",
+        "images/u21/ed9db498_45.png",
+        "images/u21/ed9db498_52.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L21_p242_01.png",
+        "PHE27_SE_L21_p242_02.png",
+        "PHE27_SE_L21_p242_03.png",
+        "PHE27_SE_L21_p242_04.png",
+        "PHE27_SE_L21_p242_05.png",
+        "PHE27_SE_L21_p242_06.png",
+        "PHE27_SE_L21_p242_07.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 21,
+      "label": "L21",
+      "page": 243,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u21/ed9db498_5.png",
+        "images/u21/ed9db498_6.png",
+        "images/u21/ed9db498_11.png",
+        "images/u21/ed9db498_12.png",
+        "images/u21/ed9db498_13.png",
+        "images/u21/ed9db498_14.png",
+        "images/u21/ed9db498_18.png",
+        "images/u21/ed9db498_23.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L21_p243_01.png",
+        "PHE27_SE_L21_p243_02.png",
+        "PHE27_SE_L21_p243_03.png",
+        "PHE27_SE_L21_p243_04.png",
+        "PHE27_SE_L21_p243_05.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 21,
+      "label": "L21",
+      "page": 244,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u21/ed9db498_27.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L21_p244_01.png",
+        "PHE27_SE_L21_p244_02.png",
+        "PHE27_SE_L21_p244_03.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 21,
+      "label": "L21",
+      "page": 245,
+      "xmlPageFound": true,
+      "existingImageRefs": [],
+      "extractedImages": [],
+      "status": "matched"
+    },
+    {
+      "lesson": 21,
+      "label": "L21",
+      "page": 246,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u21/ed9db498_37.png",
+        "images/u21/ed9db498_39.png"
+      ],
+      "extractedImages": [],
+      "status": "review"
+    },
+    {
+      "lesson": 21,
+      "label": "L21",
+      "page": 247,
+      "xmlPageFound": true,
+      "existingImageRefs": [],
+      "extractedImages": [
+        "PHE27_SE_L21_p247_01.png",
+        "PHE27_SE_L21_p247_02.png",
+        "PHE27_SE_L21_p247_03.png",
+        "PHE27_SE_L21_p247_04.png",
+        "PHE27_SE_L21_p247_05.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 21,
+      "label": "L21",
+      "page": 248,
+      "xmlPageFound": true,
+      "existingImageRefs": [],
+      "extractedImages": [],
+      "status": "matched"
+    },
+    {
+      "lesson": 21,
+      "label": "L21",
+      "page": 249,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u22/37296f04_1.png",
+        "images/u22/37296f04_18.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L21_p249_01.png",
+        "PHE27_SE_L21_p249_02.png",
+        "PHE27_SE_L21_p249_03.png",
+        "PHE27_SE_L21_p249_04.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 21,
+      "label": "L21",
+      "page": 250,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u22/37296f04_41.png",
+        "images/u22/37296f04_48.png",
+        "images/u22/37296f04_9.png",
+        "images/u22/37296f04_10.png",
+        "images/u22/37296f04_11.png",
+        "images/u22/37296f04_12.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L21_p250_01.png",
+        "PHE27_SE_L21_p250_02.png",
+        "PHE27_SE_L21_p250_03.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 21,
+      "label": "L21",
+      "page": 251,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u22/37296f04_15.png",
+        "images/u22/37296f04_16.png",
+        "images/u22/37296f04_23.png"
+      ],
+      "extractedImages": [],
+      "status": "review"
+    },
+    {
+      "lesson": 21,
+      "label": "L21",
+      "page": 252,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u22/37296f04_26.png",
+        "images/u22/37296f04_27.png",
+        "images/u22/37296f04_35.png",
+        "images/u22/37296f04_36.png",
+        "images/u22/37296f04_37.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L21_p252_01.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 22,
+      "label": "L22",
+      "page": 253,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u22/37296f04_38.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L22_p253_01.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 22,
+      "label": "L22",
+      "page": 254,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u22/37296f04_43.png",
+        "images/u22/37296f04_44.png",
+        "images/u22/37296f04_52.png",
+        "images/u22/37296f04_53.png",
+        "images/u22/37296f04_54.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L22_p254_01.png",
+        "PHE27_SE_L22_p254_02.png",
+        "PHE27_SE_L22_p254_03.png",
+        "PHE27_SE_L22_p254_04.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 22,
+      "label": "L22",
+      "page": 255,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u22/37296f04_59.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L22_p255_01.png",
+        "PHE27_SE_L22_p255_02.png",
+        "PHE27_SE_L22_p255_03.png",
+        "PHE27_SE_L22_p255_04.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 22,
+      "label": "L22",
+      "page": 256,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u22/37296f04_63.png",
+        "images/u22/37296f04_64.png",
+        "images/u22/37296f04_66.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L22_p256_01.png",
+        "PHE27_SE_L22_p256_02.png",
+        "PHE27_SE_L22_p256_03.png",
+        "PHE27_SE_L22_p256_04.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 22,
+      "label": "L22",
+      "page": 257,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u22/37296f04_67.png",
+        "images/u22/37296f04_71.png",
+        "images/u22/37296f04_69.png",
+        "images/u22/37296f04_73.png"
+      ],
+      "extractedImages": [],
+      "status": "review"
+    },
+    {
+      "lesson": 22,
+      "label": "L22",
+      "page": 258,
+      "xmlPageFound": true,
+      "existingImageRefs": [],
+      "extractedImages": [
+        "PHE27_SE_L22_p258_01.png",
+        "PHE27_SE_L22_p258_02.png",
+        "PHE27_SE_L22_p258_03.png",
+        "PHE27_SE_L22_p258_04.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 22,
+      "label": "L22",
+      "page": 259,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u22/37296f04_6.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L22_p259_01.png",
+        "PHE27_SE_L22_p259_02.png",
+        "PHE27_SE_L22_p259_03.png",
+        "PHE27_SE_L22_p259_04.png",
+        "PHE27_SE_L22_p259_05.png",
+        "PHE27_SE_L22_p259_06.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 22,
+      "label": "L22",
+      "page": 260,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u22/37296f04_8.png"
+      ],
+      "extractedImages": [],
+      "status": "review"
+    },
+    {
+      "lesson": 22,
+      "label": "L22",
+      "page": 261,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u23/c9694937_1.png",
+        "images/u23/c9694937_2.png",
+        "images/u23/c9694937_19.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L22_p261_01.png",
+        "PHE27_SE_L22_p261_02.png",
+        "PHE27_SE_L22_p261_03.png",
+        "PHE27_SE_L22_p261_04.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 22,
+      "label": "L22",
+      "page": 262,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u23/c9694937_53.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L22_p262_01.png",
+        "PHE27_SE_L22_p262_02.png",
+        "PHE27_SE_L22_p262_03.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 22,
+      "label": "L22",
+      "page": 263,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u23/c9694937_4.png",
+        "images/u23/c9694937_5.png",
+        "images/u23/c9694937_6.png",
+        "images/u23/c9694937_7.png"
+      ],
+      "extractedImages": [],
+      "status": "review"
+    },
+    {
+      "lesson": 22,
+      "label": "L22",
+      "page": 264,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u23/c9694937_15.png",
+        "images/u23/c9694937_18.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L22_p264_01.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 23,
+      "label": "L23",
+      "page": 265,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u23/c9694937_20.png",
+        "images/u23/c9694937_25.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L23_p265_01.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 23,
+      "label": "L23",
+      "page": 266,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u23/c9694937_26.png",
+        "images/u23/c9694937_28.png",
+        "images/u23/c9694937_29.png",
+        "images/u23/c9694937_31.png",
+        "images/u23/c9694937_34.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L23_p266_01.png",
+        "PHE27_SE_L23_p266_02.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 23,
+      "label": "L23",
+      "page": 267,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u23/c9694937_36.png",
+        "images/u23/c9694937_37.png",
+        "images/u23/c9694937_38.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L23_p267_01.png",
+        "PHE27_SE_L23_p267_02.png",
+        "PHE27_SE_L23_p267_03.png",
+        "PHE27_SE_L23_p267_04.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 23,
+      "label": "L23",
+      "page": 268,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u23/c9694937_40.png",
+        "images/u23/c9694937_41.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L23_p268_01.png",
+        "PHE27_SE_L23_p268_02.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 23,
+      "label": "L23",
+      "page": 269,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u23/c9694937_44.png",
+        "images/u23/c9694937_46.png",
+        "images/u23/c9694937_49.png",
+        "images/u23/c9694937_50.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L23_p269_01.png",
+        "PHE27_SE_L23_p269_02.png",
+        "PHE27_SE_L23_p269_03.png",
+        "PHE27_SE_L23_p269_04.png",
+        "PHE27_SE_L23_p269_05.png",
+        "PHE27_SE_L23_p269_06.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 23,
+      "label": "L23",
+      "page": 270,
+      "xmlPageFound": true,
+      "existingImageRefs": [],
+      "extractedImages": [
+        "PHE27_SE_L23_p270_01.png",
+        "PHE27_SE_L23_p270_02.png",
+        "PHE27_SE_L23_p270_03.png",
+        "PHE27_SE_L23_p270_04.png",
+        "PHE27_SE_L23_p270_05.png",
+        "PHE27_SE_L23_p270_06.png",
+        "PHE27_SE_L23_p270_07.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 23,
+      "label": "L23",
+      "page": 271,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u24/a6fcef43_1.png",
+        "images/u24/a6fcef43_13.png",
+        "images/u24/a6fcef43_31.png",
+        "images/u24/a6fcef43_3.png",
+        "images/u24/a6fcef43_4.png",
+        "images/u24/a6fcef43_7.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L23_p271_01.png",
+        "PHE27_SE_L23_p271_02.png",
+        "PHE27_SE_L23_p271_03.png",
+        "PHE27_SE_L23_p271_04.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 23,
+      "label": "L23",
+      "page": 272,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u24/a6fcef43_9.png",
+        "images/u24/a6fcef43_10.png",
+        "images/u24/a6fcef43_12.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L23_p272_01.png",
+        "PHE27_SE_L23_p272_02.png",
+        "PHE27_SE_L23_p272_03.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 23,
+      "label": "L23",
+      "page": 273,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u24/a6fcef43_18.png",
+        "images/u24/a6fcef43_19.png",
+        "images/u24/a6fcef43_20.png",
+        "images/u24/a6fcef43_21.png",
+        "images/u24/a6fcef43_23.png",
+        "images/u24/a6fcef43_25.png",
+        "images/u24/a6fcef43_27.png",
+        "images/u24/a6fcef43_28.png",
+        "images/u24/a6fcef43_30.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L23_p273_01.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 23,
+      "label": "L23",
+      "page": 274,
+      "xmlPageFound": true,
+      "existingImageRefs": [],
+      "extractedImages": [],
+      "status": "matched"
+    },
+    {
+      "lesson": 24,
+      "label": "L24",
+      "page": 275,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u24/a6fcef43_38.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L24_p275_01.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 24,
+      "label": "L24",
+      "page": 276,
+      "xmlPageFound": true,
+      "existingImageRefs": [
+        "images/u24/a6fcef43_51.png",
+        "images/u24/a6fcef43_52.png"
+      ],
+      "extractedImages": [
+        "PHE27_SE_L24_p276_01.png",
+        "PHE27_SE_L24_p276_02.png",
+        "PHE27_SE_L24_p276_03.png",
+        "PHE27_SE_L24_p276_04.png",
+        "PHE27_SE_L24_p276_05.png",
+        "PHE27_SE_L24_p276_06.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 24,
+      "label": "L24",
+      "page": 277,
+      "xmlPageFound": true,
+      "existingImageRefs": [],
+      "extractedImages": [
+        "PHE27_SE_L24_p277_01.png",
+        "PHE27_SE_L24_p277_02.png",
+        "PHE27_SE_L24_p277_03.png",
+        "PHE27_SE_L24_p277_04.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 24,
+      "label": "L24",
+      "page": 278,
+      "xmlPageFound": true,
+      "existingImageRefs": [],
+      "extractedImages": [
+        "PHE27_SE_L24_p278_01.png",
+        "PHE27_SE_L24_p278_02.png",
+        "PHE27_SE_L24_p278_03.png",
+        "PHE27_SE_L24_p278_04.png",
+        "PHE27_SE_L24_p278_05.png",
+        "PHE27_SE_L24_p278_06.png",
+        "PHE27_SE_L24_p278_07.png",
+        "PHE27_SE_L24_p278_08.png",
+        "PHE27_SE_L24_p278_09.png",
+        "PHE27_SE_L24_p278_10.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 24,
+      "label": "L24",
+      "page": 279,
+      "xmlPageFound": true,
+      "existingImageRefs": [],
+      "extractedImages": [],
+      "status": "matched"
+    },
+    {
+      "lesson": 24,
+      "label": "L24",
+      "page": 280,
+      "xmlPageFound": true,
+      "existingImageRefs": [],
+      "extractedImages": [
+        "PHE27_SE_L24_p280_01.png",
+        "PHE27_SE_L24_p280_02.png",
+        "PHE27_SE_L24_p280_03.png",
+        "PHE27_SE_L24_p280_04.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 24,
+      "label": "L24",
+      "page": 281,
+      "xmlPageFound": true,
+      "existingImageRefs": [],
+      "extractedImages": [
+        "PHE27_SE_L24_p281_01.png",
+        "PHE27_SE_L24_p281_02.png",
+        "PHE27_SE_L24_p281_03.png",
+        "PHE27_SE_L24_p281_04.png",
+        "PHE27_SE_L24_p281_05.png",
+        "PHE27_SE_L24_p281_06.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 24,
+      "label": "L24",
+      "page": 282,
+      "xmlPageFound": true,
+      "existingImageRefs": [],
+      "extractedImages": [],
+      "status": "matched"
+    },
+    {
+      "lesson": 24,
+      "label": "L24",
+      "page": 283,
+      "xmlPageFound": true,
+      "existingImageRefs": [],
+      "extractedImages": [
+        "PHE27_SE_L24_p283_01.png",
+        "PHE27_SE_L24_p283_02.png",
+        "PHE27_SE_L24_p283_03.png",
+        "PHE27_SE_L24_p283_04.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 24,
+      "label": "L24",
+      "page": 284,
+      "xmlPageFound": true,
+      "existingImageRefs": [],
+      "extractedImages": [
+        "PHE27_SE_L24_p284_01.png",
+        "PHE27_SE_L24_p284_02.png",
+        "PHE27_SE_L24_p284_03.png"
+      ],
+      "status": "review"
+    },
+    {
+      "lesson": 24,
+      "label": "L24",
+      "page": 285,
+      "xmlPageFound": true,
+      "existingImageRefs": [],
+      "extractedImages": [],
+      "status": "matched"
+    },
+    {
+      "lesson": 24,
+      "label": "L24",
+      "page": 286,
+      "xmlPageFound": true,
+      "existingImageRefs": [],
+      "extractedImages": [],
+      "status": "matched"
+    }
+  ]
+}
