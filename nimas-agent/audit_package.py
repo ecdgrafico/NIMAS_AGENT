@@ -31,7 +31,7 @@ def main():
  if dup: findings.append(issue('duplicate-id', ', '.join(dup[:10])))
  for level,head in [('level1','h1'),('level2','h2'),('level3','h3'),('level4','h4')]:
   for x in tree.xpath(f'//d:{level}',namespaces=ns):
-   if not len(x) or tag(x[0]) != head: findings.append(issue('level-heading',f'{level} line {x.sourceline} lacks leading {head}'))
+   if not x.xpath(f'./d:{head}',namespaces=ns): findings.append(issue('level-heading',f'{level} line {x.sourceline} lacks direct {head}'))
  for x in tree.xpath('//d:imggroup[not(d:img)]',namespaces=ns): findings.append(issue('empty-imggroup',f'line {x.sourceline}'))
  write(a.report,findings)
 
