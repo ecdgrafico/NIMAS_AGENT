@@ -20,4 +20,18 @@ Inventario → mapa por página → calibración semántica → revisión → co
 
 El ZIP `9781669952961NIMAS_original.zip` es la fuente y debe permanecer intacto.
 
+## Ejecución en Windows PowerShell 5.1
+
+Desde `C:\www\NIMAS_AGENT-1`, ejecute sólo una de estas líneas, sin pegar el texto de salida de la consola:
+
+```powershell
+.\run_agent.cmd -Book PHE27
+```
+
+O directamente:
+
+```powershell
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\run_agent.ps1 -Book PHE27
+```
+
 La reconstrucción semántica XML/OPF es la prioridad. El proceso de imágenes es un módulo separado y puede terminar en revisión humana. El aprendizaje entre títulos se conserva como memoria explícita y versionada; no se aplican reglas nuevas globalmente sin evidencia.
