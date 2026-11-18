@@ -25,6 +25,9 @@ def main():
         current=[]
         if anchors:
             host=anchors[0].getparent()
+            while host is not None and etree.QName(host).localname not in ('level2','level3'):
+                host=host.getparent()
+            if host is None: host=anchors[0].getparent()
             current=[x.get('src') for x in host.xpath('.//d:img',namespaces=NS)]
         rows.append({'page':page,'source_images':[x.name for x in files], 'xml_anchor':bool(anchors), 'xml_images':current, 'status':'matched' if page in (2,3,4,5,6) else 'review'})
     result={'title':'PHE27','lesson':'L01','status':'review','pages':rows,'note':'Pages 7-12 require the next visual pass; no blind substitution was applied.'}
