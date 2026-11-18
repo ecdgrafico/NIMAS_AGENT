@@ -19,3 +19,5 @@ Agente PDF-led para reconstruir y validar paquetes NIMAS/DTBook, XML y OPF.
 Inventario → mapa por página → calibración semántica → revisión → corrección controlada → auditoría fail-closed → validación DTD/NIMAS → empaquetado.
 
 El ZIP `9781669952961NIMAS_original.zip` es la fuente y debe permanecer intacto.
+
+La reconstrucción semántica XML/OPF es la prioridad. El proceso de imágenes es un módulo separado y puede terminar en revisión humana. El aprendizaje entre títulos se conserva como memoria explícita y versionada; no se aplican reglas nuevas globalmente sin evidencia.
