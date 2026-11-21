@@ -35,3 +35,11 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\run_agent.ps1 -Book PH
 ```
 
 La reconstrucción semántica XML/OPF es la prioridad. El proceso de imágenes es un módulo separado y puede terminar en revisión humana. El aprendizaje entre títulos se conserva como memoria explícita y versionada; no se aplican reglas nuevas globalmente sin evidencia.
+
+## Auditoría editorial local
+
+`auditoria-lecciones/` añade una mesa de revisión por página: PDF, XML fuente,
+propuesta del agente, recursos asociados y navegación anterior/siguiente. No
+publica ni instala una propuesta automáticamente. Consulte
+`docs/arquitectura-y-migracion.md` y ejecute `iniciar_auditoria.ps1` en Windows
+para el flujo local portable.

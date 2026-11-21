@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Auditoría NIMAS</title>
+    <link rel="stylesheet" href="styles.css?v=20261120-15" />
+  </head>
+  <body>
+    <header>
+      <div>
+        <p class="eyebrow">NIMAS · remediación editorial</p>
+        <h1>Estudio NIMAS</h1>
+      </div>
+      <div class="header-actions">
+        <a class="secondary home-link" href="/auditoria-lecciones/?view=projects">Proyectos</a>
+        <a class="secondary home-link" id="project-nav" href="/auditoria-lecciones/?view=project">Proyecto actual</a>
+        <label>Lección
+          <select id="lesson"><option>Cargando lecciones…</option></select>
+        </label>
+        <button id="generate-current" class="secondary">Generar esta lección</button>
+        <button id="generate-pending" class="secondary">Generar pendientes</button>
+        <small id="job-status" style="color:#647287;font-size:.75rem;white-space:nowrap">Gestor local</small>
+      </div>
+    </header>
+    <div id="agent-notice" class="agent-notice" role="status" hidden></div>
+    <section id="job-panel" class="job-panel" hidden aria-live="polite">
+      <span id="job-pulse" aria-hidden="true"></span><div><strong id="job-title">El agente está trabajando</strong><p id="job-detail"></p></div><span id="job-elapsed"></span>
+    </section>
+
+    <section id="projects" class="landing" hidden>
+      <div class="landing-intro">
+        <p class="eyebrow">Espacio de trabajo</p>
+        <h2>Proyectos de remediación</h2>
+        <p>Abre un proyecto para revisar sus lecciones o inicia una importación aislada.</p>
+      </div>
+      <div class="project-list">
+        <article class="project-tile">
+          <p class="eyebrow">Proyecto activo</p>
+          <h3>PHE27 · Student Edition</h3>
+          <p>24 lecciones, patrón humano L01–L03 y auditoría editorial en curso.</p>
+          <a href="?view=project">Abrir proyecto</a>
+        </article>
+      </div>
+      <details class="project-card import-card">
+        <summary>Importar nuevo proyecto</summary>
+        <p>La importación será un asistente independiente: paquete NIMAS original en ZIP, paquete con avance opcional, PDF y recursos nuevos. Preparará el proyecto, sus lecciones y la auditoría sin pedir rutas locales.</p>
+        <p class="hint">Todavía no se ha habilitado la carga de archivos aquí: no se simula una importación ni se crean proyectos incompletos.</p>
+      </details>
+    </section>
+
+    <section id="landing" class="landing" hidden>
+      <div class="landing-intro">
+        <p class="eyebrow">Proyecto NIMAS</p>
+        <h2>Panel de lecciones</h2>
+        <p>Selecciona una lección para revisar su propuesta por página. Las propuestas pendientes se generan desde este mismo proyecto.</p>
+      </div>
+      <section class="editorial-sections" aria-labelledby="editorial-heading">
+        <div><p class="eyebrow">Materia editorial</p><h3 id="editorial-heading">Frontmatter y rear matter</h3><p>Se revisan y aprueban igual que las lecciones; sus fuentes no se aceptan automáticamente.</p></div>
+        <div id="editorial-cards" class="editorial-cards"></div>
+      </section>
+      <div id="lesson-summary" class="summary-grid"></div>
+      <div id="lesson-cards" class="lesson-cards"></div>
+    </section>
+
+    <main id="audit-main">
+      <aside class="rail" aria-label="Páginas de la lección">
+        <section class="lesson-status">
+          <span id="status-dot" aria-hidden="true"></span>
+          <div><strong id="progress">Páginas</strong><small>revisión visual</small></div>
+        </section>
+        <ol id="pages"></ol>
+        <p class="hint">Los cambios se guardan localmente en este navegador. La aprobación no modifica el paquete NIMAS.</p>
+      </aside>
+
+      <section class="workspace">
+        <nav class="breadcrumb" aria-label="Ubicación"><a href="?view=projects">Proyectos</a><span>›</span><a href="?view=project">PHE27</a><span>›</span><span id="breadcrumb-lesson">Lección</span></nav>
+        <div class="page-heading">
+          <div>
+            <p class="eyebrow" id="page-label">Página 37</p>
+            <h2 id="page-title">Revisión editorial</h2>
+          </div>
+          <a id="open-pdf" target="_blank" rel="noreferrer">Abrir PDF completo</a>
+        </div>
+        <nav class="page-nav" aria-label="Navegación de páginas"><button id="page-prev" class="secondary" type="button">← Anterior</button><strong id="page-position">Página</strong><button id="page-next" class="secondary" type="button">Siguiente →</button></nav>
+
+        <section class="image-review" aria-labelledby="images-heading">
+          <div class="image-review-head">
+            <div><p class="eyebrow">Verificación visual</p><h3 id="images-heading">Imágenes adjuntas a esta página</h3></div>
+            <div class="image-controls"><button id="images-prev" class="secondary" type="button" aria-label="Ver imágenes anteriores">←</button><button id="images-next" class="secondary" type="button" aria-label="Ver más imágenes">→</button></div>
+          </div>
+          <p id="images-empty" class="hint">Cargando recursos de la propuesta…</p>
+          <div id="page-images" class="image-strip" aria-live="polite"></div>
+        </section>
+
+        <div class="compare-grid">
+          <article class="panel pdf-panel">
+            <div class="panel-head"><h3>Referencia visual</h3><span>PDF</span></div>
+            <div style="height:515px;overflow:auto;background:#27323d;text-align:center"><img id="pdf" alt="Página de referencia del PDF" style="display:block;max-width:100%;height:auto;margin:auto" /></div>
+          </article>
+          <article class="panel">
+            <div class="panel-head"><h3>XML original</h3><span>solo lectura</span></div>
+            <pre id="source">Cargando XML…</pre>
+          </article>
+          <article class="panel">
+            <div class="panel-head"><h3>Fragmento de revisión</h3><span id="proposal-status">en preparación</span></div>
+            <pre id="proposal">El agente aún no ha generado una propuesta para esta lección.</pre>
+          </article>
+        </div>
+        <p class="hint">El XML mostrado arriba es un recorte por página para comparar y puede depender de niveles abiertos en otra página. No lo copies para ensamblar la lección. Usa la propuesta completa, que conserva el único <code>level1</code> y todos los niveles balanceados.</p>
+        <div class="approval" style="margin-top:12px">
+          <button id="copy-proposal" class="secondary">Copiar XML completo</button>
+          <button id="download-proposal" class="secondary">Descargar XML completo</button>
+          <button id="approve-lesson">Aprobar lección completa</button>
+          <span id="proposal-copy-status" class="hint"></span>
+        </div>
+        <p id="lesson-approval-copy" class="hint" style="margin-top:12px">La aprobación registra la lección completa; no modifica todavía el paquete NIMAS.</p>
+        <section class="adjustment" aria-labelledby="adjustment-heading">
+          <div><p class="eyebrow">Corrección editorial</p><h3 id="adjustment-heading">Solicitar ajuste al agente</h3><p>Describe el cambio en términos visuales y semánticos. Quedará registrado para la siguiente generación de esta lección.</p></div>
+          <textarea id="adjustment-note" placeholder="Ej.: La imagen de ‘gate’ debe permanecer dentro del ítem 1; no debe agruparse antes de la lista."></textarea>
+          <div class="approval"><button id="request-adjustment" class="secondary" type="button">Guardar solicitud de ajuste</button><a id="download-report" class="secondary report-link">Descargar informe editorial</a><span id="adjustment-status" class="hint"></span></div>
+        </section>
+      </section>
+    </main>
+    <main id="editorial-audit" hidden>
+      <aside class="rail" aria-label="Páginas de materia editorial">
+        <section class="lesson-status"><span id="editorial-status-dot" aria-hidden="true"></span><div><strong id="editorial-progress">Páginas</strong><small>revisión visual</small></div></section>
+        <ol id="editorial-pages"></ol>
+        <p class="hint">Cada página se coteja contra el PDF, la fuente y la propuesta. La aprobación se realiza para la sección completa.</p>
+      </aside>
+      <section class="workspace">
+        <nav class="breadcrumb"><a href="?view=projects">Proyectos</a><span>›</span><a href="?view=project">PHE27</a><span>›</span><span id="editorial-title">Materia editorial</span></nav>
+        <div class="page-heading"><div><p class="eyebrow" id="editorial-page-label">Auditoría editorial</p><h2 id="editorial-audit-heading">FM / EM</h2></div><a id="editorial-pdf" target="_blank" rel="noreferrer">Abrir PDF completo</a></div>
+        <nav class="page-nav" aria-label="Navegación de páginas"><button id="editorial-page-prev" class="secondary" type="button">← Anterior</button><strong id="editorial-page-position">Página</strong><button id="editorial-page-next" class="secondary" type="button">Siguiente →</button></nav>
+        <section class="editorial-diagnostic"><strong id="editorial-status">Diagnóstico</strong><p id="editorial-reason"></p></section>
+        <section class="image-review" aria-labelledby="editorial-images-heading"><div class="image-review-head"><div><p class="eyebrow">Verificación visual</p><h3 id="editorial-images-heading">Imágenes adjuntas a esta página</h3></div><div class="image-controls"><button id="editorial-images-prev" class="secondary" type="button">←</button><button id="editorial-images-next" class="secondary" type="button">→</button></div></div><p id="editorial-images-empty" class="hint">Cargando recursos de la propuesta…</p><div id="editorial-page-images" class="image-strip"></div></section>
+        <div class="compare-grid"><article class="panel pdf-panel"><div class="panel-head"><h3>Referencia visual</h3><span>PDF</span></div><div style="height:515px;overflow:auto;background:#27323d;text-align:center"><img id="editorial-pdf-image" alt="Página de referencia del PDF" style="display:block;max-width:100%;height:auto;margin:auto" /></div></article><article class="panel"><div class="panel-head"><h3>XML fuente</h3><span>solo lectura</span></div><pre id="editorial-source"></pre></article><article class="panel"><div class="panel-head"><h3>Propuesta del agente</h3><span id="editorial-proposal-status">pendiente</span></div><pre id="editorial-proposal"></pre></article></div><div class="approval"><button id="rebuild-editorial" disabled>Reconstruir desde PDF</button><button id="accept-editorial-original" class="secondary">Aceptar original con advertencia</button></div>
+      </section>
+    </main>
+    <script src="app.js?v=20261120-20"></script>
+  </body>
+</html>

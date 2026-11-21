@@ -1,0 +1,10 @@
+{
+  "projectName": "Mi proyecto NIMAS",
+  "projectRoot": "C:/NIMAS/proyectos/Mi_proyecto",
+  "pdfFolder": "PDF",
+  "sourcePackage": "9781669952961NIMAS_original",
+  "workingPackage": "9781669952961NIMAS",
+  "agentMode": "codex-cli",
+  "host": "127.0.0.1",
+  "port": 8000
+}
