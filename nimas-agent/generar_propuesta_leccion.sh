@@ -55,6 +55,10 @@ Resultado obligatorio:
   examples, WOL, capturas/captions de imágenes y Decodable Reader. En una
   caption de una transformación mostrada en dos renglones, conserva ambas
   líneas en una sola caption con <br/> (por ejemplo, play + ing<br/>playing).
+- En el panel 8 de cada Decodable Reader, el número es parte del primer
+  párrafo: usa exactamente la secuencia li / p «8. Decodable Words» / p
+  «[banco]» / p «High Frequency Words» / p «Focus: …» / p «Others: …».
+  Nunca dejes el texto «8.» suelto antes del primer p.
 - Mantén el texto del PDF, no inventes contenido y no cambies archivos en
   9781669952961NIMAS, 9781669952961NIMAS_original, lecciones_originales,
   lecciones_remediadas, auditoria-lecciones ni nimas-review.
@@ -81,4 +85,5 @@ Resultado obligatorio:
   completa y no dejes una lección parcial.
 PROMPT
 
+python3 "$root_dir/nimas-agent/validar_propuesta_leccion.py" "$lesson"
 print "Propuesta creada: $output_xml"
