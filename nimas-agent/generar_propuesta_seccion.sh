@@ -42,7 +42,7 @@ Resultado obligatorio:
 - No incluyas declaración XML, doctype, dtbook, book, bodymatter ni rearmatter.
 - Es un fragmento para integrarse más adelante: puede contener varios level1 consecutivos; no inventes un contenedor artificial sólo para que sea un documento autónomo.
 - El PDF es la autoridad visual. Conserva del XML sólo texto, IDs y referencias de recursos que realmente correspondan con el PDF.
-- Reconstruye todas las páginas de rango PDF: para FM i–iv; para EM 287–304. No incorpores páginas fuera de ese rango.
+- Reconstruye todo el contenido editorial visible: para FM i–vii (omite la página viii final en blanco); para EM 287–297 (omite las páginas 298–304 finales en blanco). No incorpores páginas fuera de esos rangos ni imágenes de hojas blancas.
 - Usa jerarquía DTBook semántica y conserva pagenum. Corrige TOC, créditos y listas cuando el PDF lo requiera.
 - No modifiques fuentes, lecciones, propuestas de lecciones ni recursos del paquete.
 - Documenta incertidumbres en nimas-review/agent-runs/${section}-dudas.md, pero entrega siempre la mejor propuesta completa.

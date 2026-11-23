@@ -20,6 +20,8 @@
         </label>
         <button id="generate-current" class="secondary">Generar esta lección</button>
         <button id="generate-pending" class="secondary">Generar pendientes</button>
+        <button id="export-package" class="secondary">Crear ZIP validado</button>
+        <a id="download-package" class="secondary" hidden>Descargar ZIP</a>
         <small id="job-status" style="color:#647287;font-size:.75rem;white-space:nowrap">Gestor local</small>
       </div>
     </header>
@@ -134,9 +136,9 @@
         <nav class="page-nav" aria-label="Navegación de páginas"><button id="editorial-page-prev" class="secondary" type="button">← Anterior</button><strong id="editorial-page-position">Página</strong><button id="editorial-page-next" class="secondary" type="button">Siguiente →</button></nav>
         <section class="editorial-diagnostic"><strong id="editorial-status">Diagnóstico</strong><p id="editorial-reason"></p></section>
         <section class="image-review" aria-labelledby="editorial-images-heading"><div class="image-review-head"><div><p class="eyebrow">Verificación visual</p><h3 id="editorial-images-heading">Imágenes adjuntas a esta página</h3></div><div class="image-controls"><button id="editorial-images-prev" class="secondary" type="button">←</button><button id="editorial-images-next" class="secondary" type="button">→</button></div></div><p id="editorial-images-empty" class="hint">Cargando recursos de la propuesta…</p><div id="editorial-page-images" class="image-strip"></div></section>
-        <div class="compare-grid"><article class="panel pdf-panel"><div class="panel-head"><h3>Referencia visual</h3><span>PDF</span></div><div style="height:515px;overflow:auto;background:#27323d;text-align:center"><img id="editorial-pdf-image" alt="Página de referencia del PDF" style="display:block;max-width:100%;height:auto;margin:auto" /></div></article><article class="panel"><div class="panel-head"><h3>XML fuente</h3><span>solo lectura</span></div><pre id="editorial-source"></pre></article><article class="panel"><div class="panel-head"><h3>Propuesta del agente</h3><span id="editorial-proposal-status">pendiente</span></div><pre id="editorial-proposal"></pre></article></div><div class="approval"><button id="rebuild-editorial" disabled>Reconstruir desde PDF</button><button id="accept-editorial-original" class="secondary">Aceptar original con advertencia</button></div>
+        <div class="compare-grid"><article class="panel pdf-panel"><div class="panel-head"><h3>Referencia visual</h3><span>PDF</span></div><div style="height:515px;overflow:auto;background:#27323d;text-align:center"><img id="editorial-pdf-image" alt="Página de referencia del PDF" style="display:block;max-width:100%;height:auto;margin:auto" /></div></article><article class="panel"><div class="panel-head"><h3>XML fuente</h3><span>solo lectura</span></div><pre id="editorial-source"></pre></article><article class="panel"><div class="panel-head"><h3>Propuesta del agente</h3><span id="editorial-proposal-status">pendiente</span></div><pre id="editorial-proposal"></pre></article></div><div class="approval"><button id="rebuild-editorial" disabled>Reconstruir desde PDF</button><button id="accept-editorial-proposal" disabled>Aceptar propuesta</button><button id="accept-editorial-original" class="secondary">Aceptar original con advertencia</button><span id="editorial-approval-status" class="hint"></span></div>
       </section>
     </main>
-    <script src="app.js?v=20261120-20"></script>
+    <script src="app.js?v=20261123-02"></script>
   </body>
 </html>

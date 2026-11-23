@@ -20,7 +20,7 @@ from lxml import etree
 
 ROOT = Path(os.environ.get("NIMAS_PROJECT_ROOT", Path(__file__).resolve().parent.parent)).resolve()
 NS = {"d": "http://www.daisy.org/z3986/2005/dtbook/"}
-JOBS = {"running": False, "lesson": None, "queue": [], "log": "", "events": [], "followups": [], "stage": None, "startedAt": None}
+JOBS = {"running": False, "lesson": None, "queue": [], "log": "", "events": [], "followups": [], "stage": None, "startedAt": None, "export": None}
 LOCK = threading.Lock()
 
 def pages(path):
@@ -35,6 +35,11 @@ def pages(path):
 def approved():
     record = ROOT / "nimas-review" / "registro-aprobaciones.md"
     return {int(value) for value in re.findall(r"\| L(\d{2}) \|[^|]*\| Aprobada", record.read_text(encoding="utf-8") if record.is_file() else "")}
+
+def approved_editorial():
+    record = ROOT / "nimas-review" / "registro-aprobaciones.md"
+    text = record.read_text(encoding="utf-8") if record.is_file() else ""
+    return set(re.findall(r"\| (FM|EM) \|[^|]*\| Aprobada", text))
 
 def range_audits():
     check = subprocess.run([sys.executable, "nimas-agent/auditar_rangos_editoriales.py"], cwd=ROOT, text=True, capture_output=True)
@@ -66,17 +71,41 @@ def editorial_sections():
     fm_raw = fm.read_text(encoding="utf-8", errors="replace") if fm.is_file() else ""
     fm_pages = re.findall(r'<pagenum\b[^>]*>\s*([^<]+)', fm_raw, re.I)
     em_audit = audits.get("EM", {})
+    editorial_approved = approved_editorial()
     return [
         {"key": "FM", "name": "FM · Frontmatter", "pdf": "../PDF/PHE27_SE_FM_i-iv_hi.pdf",
-         "status": "recovery", "pages": "i–iv", "sourcePages": ", ".join(fm_pages),
-         "reason": "El PDF disponible cubre i–iv, pero el XML fuente continúa hasta viii. Requiere propuesta y decisión editorial; no se acepta el original sin advertencia."},
+         "status": "approved" if "FM" in editorial_approved else "recovery", "approved": "FM" in editorial_approved, "pages": "i–vii", "sourcePages": ", ".join(fm_pages),
+         "reason": "La propuesta cubre todo el contenido editorial i–vii; viii es una página final en blanco y se omite."},
         {"key": "EM", "name": "EM · Rearmatter", "pdf": "../PDF/PHE27_SE_EM_287-304_hi.pdf",
-         "status": "recovery", "pages": "287–304", "sourcePages": "278–295",
-         "reason": em_audit.get("reason", "Se requiere cotejo de rango con el PDF.")},
+         "status": "approved" if "EM" in editorial_approved else "recovery", "approved": "EM" in editorial_approved, "pages": "287–297", "sourcePages": "278–295",
+         "reason": "La propuesta corrige el desfase de nueve folios del XML fuente, conserva el contenido visible 287–297 y omite las páginas finales en blanco 298–304."},
     ]
 
 def editorial_pages(key):
-    return ["i", "ii", "iii", "iv"] if key == "FM" else [str(page) for page in range(287, 305)]
+    return ["i", "ii", "iii", "iv", "v", "vi", "vii"] if key == "FM" else [str(page) for page in range(287, 298)]
+
+def validate_editorial_proposal(key):
+    proposal = ROOT / "secciones_propuestas" / f"{key}.xml"
+    if not proposal.is_file():
+        raise ValueError(f"No existe propuesta para {key}")
+    raw = proposal.read_text(encoding="utf-8")
+    try:
+        root = etree.fromstring(f'<root xmlns="{NS["d"]}">{raw}</root>'.encode("utf-8"))
+    except etree.XMLSyntaxError as error:
+        raise ValueError(f"La propuesta de {key} no es XML bien formado: {error}") from error
+    pages_found = ["".join(node.itertext()).strip() for node in root.iter(f'{{{NS["d"]}}}pagenum')]
+    expected = editorial_pages(key)
+    if pages_found != expected:
+        raise ValueError(f"{key} debe contener exactamente las páginas {', '.join(expected)}; se encontraron {', '.join(pages_found) or 'ninguna'}.")
+    headings = [" ".join("".join(node.itertext()).split()) for node in root.iter(f'{{{NS["d"]}}}h1')]
+    if key == "FM":
+        if not root.findall(f'{{{NS["d"]}}}doctitle') or not root.findall(f'{{{NS["d"]}}}docauthor'):
+            raise ValueError("FM debe conservar doctitle y docauthor.")
+    else:
+        if headings[:2] != ["CREDITS", "INDEX"]:
+            raise ValueError("EM debe iniciar sus unidades con los h1 Credits e Index.")
+        if list(root.iter(f'{{{NS["d"]}}}img')):
+            raise ValueError("EM no debe incluir imágenes para sus páginas finales en blanco.")
 
 def render_editorial(key):
     item = next((section for section in editorial_sections() if section["key"] == key), None)
@@ -247,6 +276,27 @@ def run_editorial_section(key):
     finally:
         with LOCK: JOBS.update(running=False, lesson=None, queue=[], stage=None, startedAt=None)
 
+def run_export():
+    """Build a new package only from approved proposals; never alters sources."""
+    with LOCK:
+        JOBS.update(running=True, lesson="ZIP NIMAS", queue=["ZIP"], log="", stage="Ensamblando XML aprobado y reconstruyendo el manifiesto OPF", startedAt=datetime.now().isoformat(), export=None)
+    try:
+        process = subprocess.run([sys.executable, "nimas-agent/exportar_paquete_nimas.py"], cwd=ROOT, text=True, capture_output=True)
+        output = (process.stdout or "").strip()
+        with LOCK:
+            JOBS["log"] += f"\nEXPORTACIÓN\n{output}\n{process.stderr}"
+        result = json.loads(output.splitlines()[-1]) if output else {}
+        if process.returncode or result.get("status") != "pass":
+            raise ValueError(result.get("error") or process.stderr.strip() or "La validación del paquete no fue satisfactoria")
+        with LOCK:
+            JOBS["export"] = result
+            JOBS["events"].append({"lesson": "ZIP", "ok": True, "message": "ZIP NIMAS validado y listo para descargar.", "export": result})
+    except Exception as error:
+        with LOCK:
+            JOBS["events"].append({"lesson": "ZIP", "ok": False, "message": f"No se creó el ZIP: {error}"})
+    finally:
+        with LOCK: JOBS.update(running=False, lesson=None, queue=[], stage=None, startedAt=None)
+
 class Handler(SimpleHTTPRequestHandler):
     def translate_path(self, path):
         relative = Path(urlparse(path).path.lstrip("/"))
@@ -321,6 +371,21 @@ class Handler(SimpleHTTPRequestHandler):
                 return self.json({"ok": True, "message": f"L{number:02d} quedó aprobada y registrada."})
             except Exception as error:
                 return self.json({"error": str(error)}, 400)
+        if parsed.path == "/api/accept-editorial-proposal":
+            try:
+                key = query.get("section", [""])[0].upper()
+                if key not in {"FM", "EM"}:
+                    raise ValueError("Sección editorial inválida")
+                validate_editorial_proposal(key)
+                entry = next(section for section in editorial_sections() if section["key"] == key)
+                record = ROOT / "nimas-review" / "registro-aprobaciones.md"
+                text = record.read_text(encoding="utf-8")
+                if not re.search(rf"\| {key} \|[^|]*\| Aprobada", text):
+                    line = f"| {key} | {entry['pages']} | Aprobada | Propuesta editorial revisada y aceptada desde el gestor; no modifica todavía el paquete NIMAS. |\n"
+                    record.write_text(text.rstrip() + "\n" + line, encoding="utf-8")
+                return self.json({"ok": True, "message": f"La propuesta de {key} quedó aceptada y registrada."})
+            except Exception as error:
+                return self.json({"error": str(error)}, 400)
         if parsed.path == "/api/request-adjustment":
             try:
                 size = int(self.headers.get("Content-Length", "0"))
@@ -362,6 +427,12 @@ class Handler(SimpleHTTPRequestHandler):
                 if JOBS["running"]: return self.json({"error": "Ya hay una generación en curso"}, 409)
             threading.Thread(target=run_editorial_section, args=(key,), daemon=True).start()
             return self.json({"ok": True, "queue": [key], "message": f"Reconstrucción de {key} iniciada desde PDF."}, 202)
+        if parsed.path == "/api/export-package":
+            with LOCK:
+                if JOBS["running"]:
+                    return self.json({"error": "Hay una tarea en curso; espera a que termine antes de exportar."}, 409)
+            threading.Thread(target=run_export, daemon=True).start()
+            return self.json({"ok": True, "queue": ["ZIP"], "message": "Validando y creando el ZIP NIMAS…"}, 202)
         if parsed.path not in {"/api/generate", "/api/generate-pending"}:
             return self.json({"error": "Ruta no disponible"}, 404)
         with LOCK:

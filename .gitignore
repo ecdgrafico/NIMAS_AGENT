@@ -3,6 +3,7 @@ __pycache__/
 .venv/
 work/
 deliverables/
+nimas-export/
 evidence/raw/
 *.DS_Store
 9781669952961NIMAS_original.zip
