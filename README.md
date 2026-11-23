@@ -20,7 +20,30 @@ Inventario → mapa por página → calibración semántica → revisión → co
 
 El ZIP `9781669952961NIMAS_original.zip` es la fuente y debe permanecer intacto.
 
-## Ejecución en Windows PowerShell 5.1
+## Inicio simple en Windows
+
+1. Mantén este repositorio separado de la carpeta editorial `PHE27_NIMAS` (PDF, fuentes XML e imágenes). No copies esos materiales al repositorio.
+2. En PowerShell, desde la carpeta del repositorio, ejecuta una sola vez:
+
+```powershell
+.\instalar_comando_nimasapp.ps1
+```
+
+3. Cierra y abre de nuevo la terminal integrada de VS Code. A partir de entonces escribe:
+
+```powershell
+NIMASAPP
+```
+
+En el primer inicio pedirá la ruta de `PHE27_NIMAS`, creará `.venv` e instalará automáticamente las dependencias de Python. La ruta queda sólo en `config/project.local.json`, que no se sube a Git. Después abrirá `http://127.0.0.1:8000/auditoria-lecciones/`.
+
+Si prefieres no instalar el comando permanente, desde CMD puedes ejecutar `NIMASAPP.cmd`; desde PowerShell usa `.\NIMASAPP.cmd`.
+
+Para ver las páginas PDF dentro de la app también necesitas Poppler (`pdftoppm`) disponible en `PATH`. La aplicación avisará claramente si no lo encuentra.
+
+El archivo [AGENTS.md](AGENTS.md) contiene el contexto y las reglas que debe seguir Codex, Copilot u otra IA. Las pruebas con Ollama deben generar propuestas auditables, nunca aprobar o exportar de forma automática.
+
+## Ejecución técnica anterior en Windows PowerShell 5.1
 
 Desde `C:\www\NIMAS_AGENT-1`, ejecute sólo una de estas líneas, sin pegar el texto de salida de la consola:
 
