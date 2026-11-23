@@ -34,7 +34,11 @@ referenced = {
     for src in tree.xpath("//d:img/@src", namespaces=ns)
     if src.startswith(f"images/L{lesson:02d}/")
 }
-available = {path.name for path in assets.iterdir() if path.is_file()}
+# Ignore Finder metadata and any non-image byproduct. Only actual visual assets
+# can require an XML reference or a documented decorative omission.
+image_extensions = {".png", ".jpg", ".jpeg", ".gif", ".svg"}
+available = {path.name for path in assets.iterdir()
+             if path.is_file() and path.suffix.lower() in image_extensions}
 pending = sorted(available - referenced - allowed)
 invalid_omissions = sorted(allowed - available)
 if invalid_omissions:
