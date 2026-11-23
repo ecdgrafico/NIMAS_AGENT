@@ -39,15 +39,15 @@
       <div class="project-list">
         <article class="project-tile">
           <p class="eyebrow">Proyecto activo</p>
-          <h3>PHE27 · Student Edition</h3>
-          <p>24 lecciones, patrón humano L01–L03 y auditoría editorial en curso.</p>
-          <a href="?view=project">Abrir proyecto</a>
+          <h3 id="active-project-title">Sin proyecto cargado</h3>
+          <p id="active-project-copy">Importa un paquete NIMAS para crear una auditoría nueva.</p>
+          <a id="active-project-link" href="?view=project" hidden>Abrir proyecto</a>
         </article>
       </div>
       <details class="project-card import-card">
         <summary>Importar nuevo proyecto</summary>
-        <p>La importación será un asistente independiente: paquete NIMAS original en ZIP, paquete con avance opcional, PDF y recursos nuevos. Preparará el proyecto, sus lecciones y la auditoría sin pedir rutas locales.</p>
-        <p class="hint">Todavía no se ha habilitado la carga de archivos aquí: no se simula una importación ni se crean proyectos incompletos.</p>
+        <p>La importación recibirá un ZIP NIMAS original, PDF y recursos nuevos opcionales; preparará una auditoría nueva sin depender de PHE27.</p>
+        <p class="hint">La app abre vacía hasta importar un proyecto. No se carga ni solicita PHE27 de forma automática.</p>
       </details>
     </section>
 
@@ -139,6 +139,6 @@
         <div class="compare-grid"><article class="panel pdf-panel"><div class="panel-head"><h3>Referencia visual</h3><span>PDF</span></div><div style="height:515px;overflow:auto;background:#27323d;text-align:center"><img id="editorial-pdf-image" alt="Página de referencia del PDF" style="display:block;max-width:100%;height:auto;margin:auto" /></div></article><article class="panel"><div class="panel-head"><h3>XML fuente</h3><span>solo lectura</span></div><pre id="editorial-source"></pre></article><article class="panel"><div class="panel-head"><h3>Propuesta del agente</h3><span id="editorial-proposal-status">pendiente</span></div><pre id="editorial-proposal"></pre></article></div><div class="approval"><button id="rebuild-editorial" disabled>Reconstruir desde PDF</button><button id="accept-editorial-proposal" disabled>Aceptar propuesta</button><button id="accept-editorial-original" class="secondary">Aceptar original con advertencia</button><span id="editorial-approval-status" class="hint"></span></div>
       </section>
     </main>
-    <script src="app.js?v=20261123-02"></script>
+    <script src="app.js?v=20261123-03"></script>
   </body>
 </html>

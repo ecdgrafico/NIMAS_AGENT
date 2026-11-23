@@ -41,6 +41,11 @@ def approved_editorial():
     text = record.read_text(encoding="utf-8") if record.is_file() else ""
     return set(re.findall(r"\| (FM|EM) \|[^|]*\| Aprobada", text))
 
+def project_status():
+    required = ["lecciones_originales", "PDF", "9781669952961NIMAS", "9781669952961NIMAS_original"]
+    ready = all((ROOT / path).exists() for path in required)
+    return {"ready": ready, "name": ROOT.name if ready else None}
+
 def range_audits():
     check = subprocess.run([sys.executable, "nimas-agent/auditar_rangos_editoriales.py"], cwd=ROOT, text=True, capture_output=True)
     try:
@@ -65,6 +70,8 @@ def lessons():
     return result
 
 def editorial_sections():
+    if not project_status()["ready"]:
+        return []
     audits = range_audits()
     fm = ROOT / "lecciones_originales" / "FM.xml"
     em = ROOT / "lecciones_originales" / "EM.xml"
@@ -308,6 +315,7 @@ class Handler(SimpleHTTPRequestHandler):
         self.send_header("Cache-Control", "no-store"); self.send_header("Content-Length", str(len(payload))); self.end_headers(); self.wfile.write(payload)
     def do_GET(self):
         parsed = urlparse(self.path)
+        if parsed.path == "/api/project-status": return self.json(project_status())
         if parsed.path == "/api/lessons": return self.json({"lessons": lessons()})
         if parsed.path == "/api/editorial-sections": return self.json({"sections": editorial_sections()})
         if parsed.path == "/api/editorial-detail":

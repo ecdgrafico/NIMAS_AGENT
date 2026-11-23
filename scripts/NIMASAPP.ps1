@@ -7,7 +7,6 @@ param(
 
 $ErrorActionPreference = 'Stop'
 $RepoRoot = Split-Path -Parent $PSScriptRoot
-$ConfigPath = Join-Path $RepoRoot 'config\project.local.json'
 $Venv = Join-Path $RepoRoot '.venv'
 $VenvPython = Join-Path $Venv 'Scripts\python.exe'
 
@@ -25,23 +24,16 @@ function Get-BasePython {
     throw 'No se encontró Python 3. Instálalo desde https://www.python.org/downloads/windows/ y vuelve a ejecutar NIMASAPP.'
 }
 
-if (-not $ProjectRoot -and (Test-Path -LiteralPath $ConfigPath)) {
-    try { $ProjectRoot = (Get-Content -Raw -LiteralPath $ConfigPath | ConvertFrom-Json).projectRoot } catch {}
+if ($ProjectRoot) {
+    if (-not (Test-NimasProject $ProjectRoot)) {
+        throw 'La ruta indicada no contiene un proyecto NIMAS preparado. No se inició la auditoría.'
+    }
+    $ProjectRoot = (Resolve-Path -LiteralPath $ProjectRoot).Path
+} else {
+    # No se carga PHE27 ni una ruta usada anteriormente. Sin un proyecto
+    # explícito, la app abre su landing vacía para importar uno nuevo.
+    $ProjectRoot = $RepoRoot
 }
-if (-not (Test-NimasProject $ProjectRoot)) {
-    Write-Host ''
-    Write-Host 'Indica la carpeta del proyecto editorial PHE27_NIMAS.' -ForegroundColor Yellow
-    Write-Host 'Debe contener: PDF, lecciones_originales, 9781669952961NIMAS y 9781669952961NIMAS_original.' -ForegroundColor DarkYellow
-    $ProjectRoot = Read-Host 'Ruta completa del proyecto'
-}
-if (-not (Test-NimasProject $ProjectRoot)) {
-    throw 'La ruta no contiene un proyecto NIMAS preparado. No se inició la auditoría.'
-}
-$ProjectRoot = (Resolve-Path -LiteralPath $ProjectRoot).Path
-
-# Se guarda sólo una ruta local; config/project.local.json está ignorado por Git.
-New-Item -ItemType Directory -Force -Path (Split-Path -Parent $ConfigPath) | Out-Null
-@{ projectRoot = $ProjectRoot } | ConvertTo-Json | Set-Content -LiteralPath $ConfigPath -Encoding UTF8
 
 if (-not (Test-Path -LiteralPath $VenvPython)) {
     $base = Get-BasePython
@@ -62,7 +54,11 @@ $env:NIMAS_PROJECT_ROOT = $ProjectRoot
 $Url = "http://127.0.0.1:$Port/auditoria-lecciones/"
 Write-Host ''
 Write-Host "NIMASAPP iniciará en $Url" -ForegroundColor Green
-Write-Host "Proyecto editorial: $ProjectRoot" -ForegroundColor DarkGreen
+if ($ProjectRoot -eq $RepoRoot) {
+    Write-Host 'No hay proyecto editorial cargado. Usa la landing para importar un ZIP nuevo.' -ForegroundColor DarkYellow
+} else {
+    Write-Host "Proyecto editorial explícito: $ProjectRoot" -ForegroundColor DarkGreen
+}
 Write-Host 'Para detenerlo, presiona Ctrl+C en esta terminal.' -ForegroundColor DarkGray
 if (-not $NoBrowser) { Start-Process $Url }
 

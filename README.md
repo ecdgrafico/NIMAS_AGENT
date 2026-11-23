@@ -35,7 +35,7 @@ El ZIP `9781669952961NIMAS_original.zip` es la fuente y debe permanecer intacto.
 NIMASAPP
 ```
 
-En el primer inicio pedirá la ruta de `PHE27_NIMAS`, creará `.venv` e instalará automáticamente las dependencias de Python. La ruta queda sólo en `config/project.local.json`, que no se sube a Git. Después abrirá `http://127.0.0.1:8000/auditoria-lecciones/`.
+El primer inicio no carga ni solicita PHE27 ni ningún proyecto anterior: crea `.venv`, instala automáticamente las dependencias de Python y abre la landing vacía. El proyecto nuevo debe importarse desde esa landing. Para abrir de manera excepcional un proyecto local ya preparado, usa `NIMASAPP -ProjectRoot 'C:\ruta\Mi_proyecto_NIMAS'`.
 
 Si prefieres no instalar el comando permanente, desde CMD puedes ejecutar `NIMASAPP.cmd`; desde PowerShell usa `.\NIMASAPP.cmd`.
 
