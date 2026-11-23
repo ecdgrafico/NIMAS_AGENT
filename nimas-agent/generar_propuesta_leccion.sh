@@ -4,12 +4,13 @@
 
 set -euo pipefail
 
-if [[ $# -ne 1 || ! "$1" =~ '^[0-9]+$' || "$1" -lt 4 || "$1" -gt 24 ]]; then
-  print -u2 "Uso: ./nimas-agent/generar_propuesta_leccion.sh NUMERO_DE_LECCION (4-24)"
+if [[ $# -lt 1 || $# -gt 2 || ! "$1" =~ '^[0-9]+$' || "$1" -lt 4 || "$1" -gt 24 || ( $# -eq 2 && ! "$2" =~ '^[0-9]+$' ) ]]; then
+  print -u2 "Uso: ./nimas-agent/generar_propuesta_leccion.sh NUMERO_DE_LECCION (4-24) [PAGINA]"
   exit 64
 fi
 
 lesson=$(printf '%02d' "$1")
+page=${2:-}
 root_dir=${0:A:h:h}
 source_xml="$root_dir/lecciones_originales/L${lesson}.xml"
 pdf=$(find "$root_dir/PDF" -maxdepth 1 -type f -name "PHE27_SE_L${lesson}_*.pdf" -print -quit)
@@ -30,7 +31,8 @@ PATH="$root_dir/nimas-agent/bin:$PATH" "$codex_bin" exec \
   --ephemeral \
   -C "$root_dir" \
   -o "$run_dir/L${lesson}-resultado.md" <<PROMPT
-Remedia por completo la lección ${lesson} como propuesta editorial NIMAS.
+${page:+Corrige únicamente la página ${page} de la propuesta editorial NIMAS de la lección ${lesson}.}
+${page:-Remedia por completo la lección ${lesson} como propuesta editorial NIMAS.}
 
 Fuentes obligatorias:
 - XML original: lecciones_originales/L${lesson}.xml
@@ -39,6 +41,7 @@ Fuentes obligatorias:
 - Manual obligatorio: nimas-review/manual-aprendizaje-agente.md
 - Solicitudes editoriales previas de esta lección, si existen: nimas-review/solicitudes-ajuste/L${lesson}-p*.md
 - Auditoría automática de rango PDF/XML: nimas-review/agent-runs/rangos-editoriales.json
+${page:+- Propuesta existente que debes conservar: lecciones_propuestas/L${lesson}.xml}
 
 Resultado obligatorio:
 - Escribe exactamente un fragmento XML bien formado en
@@ -46,6 +49,7 @@ Resultado obligatorio:
   incluyas declaración XML, doctype, dtbook, book ni bodymatter.
 - Debe contener exactamente un level1 para toda la lección. Los pagenum son
   anclas dentro de ese level1; nunca niveles o documentos por página.
+${page:+- Trabaja sólo desde el pagenum ${page} hasta el pagenum siguiente. Conserva sin cambios el resto de la propuesta, incluidos niveles que se abren o cierran fuera de esa página. No reinterpretes ni regeneres otras páginas.}
 - Consulta el PDF visualmente página por página; no infieras estructura sólo
   desde OCR/XML.
 - Si una utilidad auxiliar de imagen no está disponible, continúa con

@@ -210,6 +210,26 @@ def run_queue(numbers):
         if followups:
                 threading.Thread(target=run_queue, args=(followups,), daemon=True).start()
 
+def run_page_adjustment(number, page):
+    with LOCK:
+        JOBS.update(running=True, lesson=number, queue=[f"L{number:02d}/p{page}"], log="", stage=f"Corrigiendo solo la página {page}", startedAt=datetime.now().isoformat())
+    try:
+        proposal = ROOT / "lecciones_propuestas" / f"L{number:02d}.xml"
+        if not proposal.is_file():
+            raise ValueError("No existe propuesta previa para corregir por página")
+        history = ROOT / "nimas-review" / "historial-propuestas" / f"L{number:02d}"
+        history.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(proposal, history / f"{datetime.now():%Y%m%d-%H%M%S}-antes-de-p{page:03d}.xml")
+        process = subprocess.run(["zsh", "nimas-agent/generar_propuesta_leccion.sh", str(number), str(page)], cwd=ROOT, text=True, capture_output=True)
+        with LOCK:
+            JOBS["log"] += f"\nL{number:02d}/p{page}\n{process.stdout}{process.stderr}"
+            JOBS["events"].append({"lesson": number, "page": page, "ok": process.returncode == 0,
+                "message": f"L{number:02d}, página {page}: ajuste listo para revisión." if process.returncode == 0 else f"L{number:02d}, página {page}: el ajuste requiere revisión técnica."})
+    except Exception as error:
+        with LOCK: JOBS["events"].append({"lesson": number, "page": page, "ok": False, "message": str(error)})
+    finally:
+        with LOCK: JOBS.update(running=False, lesson=None, queue=[], stage=None, startedAt=None)
+
 def run_editorial_section(key):
     with LOCK:
         JOBS.update(running=True, lesson=key, queue=[key], log="", stage="Reconstruyendo desde PDF y cotejando XML", startedAt=datetime.now().isoformat())
@@ -313,12 +333,10 @@ class Handler(SimpleHTTPRequestHandler):
                     f"# Solicitud editorial · L{number:02d}, página {page}\n\n{note}\n", encoding="utf-8")
                 with LOCK:
                     if JOBS["running"]:
-                        if number not in JOBS["followups"]:
-                            JOBS["followups"].append(number)
-                        return self.json({"ok": True, "queued": True, "message": "Solicitud enviada al agente. Quedó en cola tras la generación actual."})
+                        return self.json({"error": "Hay una generación en curso. La solicitud quedó guardada; envíala cuando termine para corregir solo esta página."}, 409)
                     JOBS["events"] = [event for event in JOBS["events"] if event.get("lesson") != number]
-                threading.Thread(target=run_queue, args=([number],), daemon=True).start()
-                return self.json({"ok": True, "queued": True, "message": "Solicitud enviada al agente. Te avisaré aquí cuando exista una nueva propuesta."})
+                threading.Thread(target=run_page_adjustment, args=(number, page), daemon=True).start()
+                return self.json({"ok": True, "queued": True, "message": f"Solicitud enviada. El agente corregirá solo la página {page}."})
             except Exception as error:
                 return self.json({"error": str(error)}, 400)
         if parsed.path == "/api/create-project":
