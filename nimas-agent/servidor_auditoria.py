@@ -355,8 +355,8 @@ def run_ai_all(provider="codex"):
     ids=[str(unit.get('id','')) for unit in units]
     with LOCK: JOBS.update(running=True,lesson="LIBRO",queue=ids.copy(),log="",stage=f"Generando {len(ids)} propuestas DTBook",startedAt=datetime.now().isoformat())
     try:
-        for unit_id in ids:
-            with LOCK: JOBS.update(lesson=unit_id,queue=ids[ids.index(unit_id):],stage=f"Generando propuesta {unit_id}")
+        for position,unit_id in enumerate(ids):
+            with LOCK: JOBS.update(lesson=unit_id,queue=ids[position:],stage=f"Generando propuesta {unit_id}")
             process=subprocess.run([sys.executable,"nimas-agent/generate_ai_proposal.py","--project",str(ROOT),"--unit",unit_id,"--provider",provider],cwd=APP_ROOT,text=True,capture_output=True)
             with LOCK:
                 JOBS["log"]+=f"\n{process.stdout}{process.stderr}"
