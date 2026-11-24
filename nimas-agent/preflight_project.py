@@ -2,6 +2,7 @@
 """Report actionable readiness checks for a NIMAS project."""
 import argparse, json
 from pathlib import Path
+from lxml import etree
 
 def preflight(root: Path):
     metadata=json.loads((root/'metadata/nimac.json').read_text(encoding='utf-8')) if (root/'metadata/nimac.json').is_file() else {}
@@ -13,6 +14,13 @@ def preflight(root: Path):
     approvals=json.loads((root/'revision/approvals.json').read_text(encoding='utf-8')) if (root/'revision/approvals.json').is_file() else {}
     approved_count=sum(1 for u in units if approvals.get(u.get('id')) is True)
     checks.append({'id':'approvals','ok':bool(units) and approved_count==len(units),'message':f'{approved_count}/{len(units)} unidades aprobadas humanamente'})
+    invalid=[]
+    for unit in units:
+        path=root/'revision'/'approved'/f"{unit.get('id')}.xml"
+        if approvals.get(unit.get('id')) is True:
+            try: etree.parse(str(path))
+            except (OSError, etree.XMLSyntaxError): invalid.append(unit.get('id'))
+    checks.append({'id':'approved_xml','ok':not invalid and approved_count==len(units),'message':'XML aprobados disponibles y bien formados' if not invalid else 'XML aprobado ausente o inválido: '+', '.join(invalid)})
     pending=[a.get('file') for a in images.get('assets',[]) if a.get('status')=='detected']
     checks.append({'id':'images','ok':not pending,'message':f'{len(pending)} imágenes pendientes de decisión'})
     return {'status':'pass' if all(x['ok'] for x in checks) else 'pending','checks':checks}
