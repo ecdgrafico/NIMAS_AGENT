@@ -51,6 +51,20 @@ class PdfPipelineTests(unittest.TestCase):
             (package/'__MACOSX'/'._book.xml').write_bytes(b'')
             result=audit_package(root,[xml],[opf]); self.assertEqual(result['status'],'pass'); self.assertEqual(result['xml_count'],1)
 
+    def test_zip_intake_preserves_original_and_seeds_units(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root=Path(folder); source=root/"original.zip"; destination=root/"project"
+            with zipfile.ZipFile(source,"w") as archive:
+                archive.writestr("book/book.xml",'<?xml version="1.0"?><dtbook xmlns="http://www.daisy.org/z3986/2005/dtbook/"><book><bodymatter><level1><h1>L01</h1></level1></bodymatter></book></dtbook>')
+                archive.writestr("book/book.opf",'<package xmlns="http://openebook.org/namespaces/oeb-package/1.0/"><manifest><item href="book.xml"/></manifest></package>')
+            before=source.read_bytes()
+            result=subprocess.run([sys.executable,str(ROOT/"nimas-agent/create_zip_project.py"),"--zip",str(source),"--destino",str(destination),"--nombre","ZIP Test"],capture_output=True,text=True)
+            self.assertEqual(result.returncode,0,result.stderr)
+            self.assertEqual(source.read_bytes(),before)
+            self.assertTrue((destination/"fuentes/nimas-original/original.zip").is_file())
+            units=json.loads((destination/"structure/structure.json").read_text(encoding="utf-8"))["units"]
+            self.assertEqual([u["id"] for u in units],["unit_001"])
+
     def test_preflight_blocks_missing_metadata_and_image_decisions(self):
         with tempfile.TemporaryDirectory() as folder:
             root=Path(folder); (root/'metadata').mkdir(); (root/'structure').mkdir(); (root/'inventario').mkdir()
