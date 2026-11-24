@@ -1,9 +1,15 @@
 #!/usr/bin/env python3
 """Generate a review-only DTBook proposal with an available AI provider."""
-import argparse, shutil, subprocess, sys
+import argparse, re, shutil, subprocess, sys
 from pathlib import Path
 from ai_provider import provider_status, write_prompt
 from ai_provider import find_ollama
+
+def extract_xml_candidate(raw: str) -> str | None:
+    """Keep only a complete XML fragment; never store model prose as DTBook."""
+    text = raw.strip()
+    match = re.search(r"<level1\\b[\\s\\S]*?</level1>", text)
+    return match.group(0).strip() + "\n" if match else None
 
 def main():
     ap=argparse.ArgumentParser(); ap.add_argument('--project',type=Path,required=True); ap.add_argument('--unit',required=True); ap.add_argument('--provider',default='codex'); args=ap.parse_args()
@@ -22,9 +28,11 @@ def main():
         # Send the prompt through stdin so long PDF/XML evidence never hits
         # Windows' command-line length limit.
         result=subprocess.run([executable,'run',model],cwd=root,input=instruction,text=True,encoding='utf-8',capture_output=True)
+        (runlog/(args.unit+'-ollama.md')).write_text(result.stdout,encoding='utf-8')
         if result.returncode==0 and not output.is_file():
-            text=result.stdout.strip(); text=text.removeprefix('```xml').removesuffix('```').strip(); output.write_text(text+'\n',encoding='utf-8')
-            (runlog/(args.unit+'-ollama.md')).write_text(result.stdout,encoding='utf-8')
+            candidate=extract_xml_candidate(result.stdout)
+            if candidate: output.write_text(candidate,encoding='utf-8')
+            else: raise SystemExit(f'Ollama no produjo un fragmento level1 completo. Revisa {runlog/(args.unit+"-ollama.md")}')
     else:
         raise SystemExit('Proveedor no soportado: '+args.provider)
     if result.returncode: raise SystemExit(result.stderr.strip() or result.stdout.strip() or 'Codex no generó la propuesta.')
