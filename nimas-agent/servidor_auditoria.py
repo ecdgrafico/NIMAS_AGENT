@@ -341,7 +341,7 @@ def run_assets():
         with LOCK: JOBS.update(running=False, lesson=None, queue=[], stage=None, startedAt=None)
 
 def run_ai_proposal(unit_id, provider="codex"):
-    with LOCK: JOBS.update(running=True, lesson=unit_id, queue=[unit_id], log="", stage="Generando propuesta DTBook con Codex", startedAt=datetime.now().isoformat())
+    with LOCK: JOBS.update(running=True, lesson=unit_id, queue=[unit_id], log="", stage=f"Generando propuesta DTBook con {provider}", startedAt=datetime.now().isoformat())
     try:
         process=subprocess.run([sys.executable,"nimas-agent/generate_ai_proposal.py","--project",str(ROOT),"--unit",unit_id,"--provider",provider],cwd=APP_ROOT,text=True,capture_output=True)
         with LOCK:
