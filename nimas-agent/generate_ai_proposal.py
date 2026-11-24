@@ -35,8 +35,12 @@ def main():
     ap=argparse.ArgumentParser(); ap.add_argument('--project',type=Path,required=True); ap.add_argument('--unit',required=True); ap.add_argument('--provider',default='codex'); args=ap.parse_args()
     root=args.project.resolve(); prompt=Path(write_prompt(root,args.unit)); output=root/'propuestas'/f'{args.unit}.xml'; runlog=root/'versions'/'ai-runs'; runlog.mkdir(parents=True,exist_ok=True)
     instruction=prompt.read_text(encoding='utf-8')+f'''\n\nEscribe únicamente un fragmento XML DTBook bien formado en {output}. No modifiques fuentes. Si no puedes verificar una parte, conserva la incertidumbre en {runlog/(args.unit+'-dudas.md')}. La salida queda pendiente de auditoría humana.'''
+    structure = json.loads((root/'structure'/'structure.json').read_text(encoding='utf-8'))
+    unit = next((item for item in structure.get('units', []) if item.get('id') == args.unit), {})
+    first, last = (unit.get('pages') or [1, 1])
+    expected_pages = max(1, int(last) - int(first) + 1)
     instruction += "\n\nREGLA DE SALIDA: entrega solo un fragmento XML completo cuya raíz sea level1. No incluyas dtbook, book, frontmatter, bodymatter, rearmatter, package, Markdown ni explicaciones fuera del XML."
-    instruction += "\n\nFORMATO MÍNIMO DE REFERENCIA (sustituye el contenido por el cotejado):\n<level1><h1>Título</h1><p>Texto visible.</p></level1>"
+    instruction += f"\n\nCOBERTURA OBLIGATORIA: la unidad tiene {expected_pages} páginas PDF, del rango {first} al {last}. Debes emitir una etiqueta <pagenum> con cada número de página del rango y transcribir/estructurar el contenido visible de cada página. No entregues un resumen ni un ejemplo abreviado. Si una página no tiene texto, conserva su <pagenum> y marca la incertidumbre para revisión humana."
     if args.provider=='codex':
         executable=shutil.which('codex')
         if not executable: raise SystemExit('Codex CLI no está disponible en PATH.')
