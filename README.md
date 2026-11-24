@@ -85,6 +85,21 @@ La reconstrucción semántica XML/OPF es la prioridad. El proceso de imágenes e
 6. Aprobar manualmente cada propuesta. Solo entonces se copia a `revision/approved/` y se registra en `revision/approvals.json`.
 7. Crear el ZIP validado. El exportador PDF-led genera DTBook, OPF, manifiesto, spine y solo incorpora imágenes referenciadas por XML aprobado.
 
+### Propuestas con Ollama local
+
+La app detecta Ollama instalado en Windows y comprueba que el servicio responda con
+ollama list. El proveedor local usa llama3.2 por defecto, por lo que no requiere
+una API de pago.
+
+```powershell
+ollama list
+$env:NIMAS_OLLAMA_MODEL = "llama3.2"
+.\\NIMASAPP.cmd
+```
+
+La respuesta del modelo nunca se instala directamente: debe producir un fragmento
+level1, pasar el validador y recibir aprobación humana antes de exportar el ZIP.
+
 La exportación se bloquea si faltan unidades clasificadas/aprobadas o si existen referencias de imagen sin resolver. El exportador heredado de PHE27 permanece separado para no alterar su flujo aprobado.
 
 ## Iniciar un proyecto desde PDF
