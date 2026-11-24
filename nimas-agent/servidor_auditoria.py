@@ -481,9 +481,13 @@ class Handler(SimpleHTTPRequestHandler):
                 return self.json({"error": str(error)}, 400)
         if parsed.path == "/api/create-editorial-pdf":
             try:
-                output = ROOT / "working" / "generated-frontmatter.pdf"
+                output = ROOT / "fuentes" / "pdf" / "generated-frontmatter.pdf"
                 process = subprocess.run([sys.executable, "nimas-agent/create_editorial_pdf.py", "--project", str(ROOT), "--output", str(output)], cwd=APP_ROOT, text=True, capture_output=True)
                 if process.returncode: return self.json({"error": process.stderr.strip() or process.stdout.strip()}, 400)
+                project=load_project(ROOT); units=project.get("structure",{}).get("units",[])
+                if not any(unit.get("id")=="generated-frontmatter" for unit in units):
+                    units.append({"id":"generated-frontmatter","name":"Generated frontmatter","section":"frontmatter","file":output.name,"pages":[1,3]})
+                    save_project(ROOT, structure={"units":units})
                 return self.json({"ok": True, "message": "PDF editorial generado; requiere revisión humana.", "path": str(output.relative_to(ROOT)).replace("\\\\","/")})
             except Exception as error:
                 return self.json({"error": str(error)}, 400)
