@@ -55,7 +55,7 @@ def main():
         node=etree.SubElement(metadata_node,Q(DC,name),**attrs); node.text=str(value); return node
     dc('title', metadata.get('title', root.name))
     for key in ('creators','subjects'):
-        values=metadata.get(key) or []; values=values if isinstance(values,list) else [values]
+        values=metadata.get(key) or []; values=values if isinstance(values,list) else [v.strip() for v in str(values).split(';') if v.strip()]
         for value in values:
             if key=='creators' and isinstance(value,dict):
                 name=value.get('name'); role=value.get('role','author')
