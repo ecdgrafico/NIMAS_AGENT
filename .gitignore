@@ -20,3 +20,6 @@ auditoria-lecciones/assets/
 config/project.local.json
 nimas-library/
 NIMAS_AGENT-source-current-*.zip
+NIMAS_AGENT-source-backup-*.zip
+frontend-vue/node_modules/
+frontend-vue/dist/
