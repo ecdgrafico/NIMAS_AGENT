@@ -75,6 +75,16 @@ class PdfPipelineTests(unittest.TestCase):
             self.assertFalse(next(x for x in result['checks'] if x['id']=='approvals')['ok'])
             self.assertFalse(next(x for x in result['checks'] if x['id']=='approved_xml')['ok'])
 
+    def test_preflight_requires_image_inventory_for_pdf_projects(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root=Path(folder)
+            (root/'metadata').mkdir(); (root/'structure').mkdir(); (root/'inventario').mkdir()
+            (root/'metadata/nimac.json').write_text('{}',encoding='utf-8')
+            (root/'structure/structure.json').write_text('{"units":[]}',encoding='utf-8')
+            (root/'inventario/project.json').write_text('{"source_mode":"pdf_only"}',encoding='utf-8')
+            result=preflight(root)
+            self.assertFalse(next(x for x in result['checks'] if x['id']=='image_inventory')['ok'])
+
     def test_preflight_blocks_nimac_subject_and_grade_overflow(self):
         with tempfile.TemporaryDirectory() as folder:
             root=Path(folder)

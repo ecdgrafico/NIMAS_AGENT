@@ -30,6 +30,8 @@ def preflight(root: Path):
     checks.append({'id':'approved_xml','ok':not invalid and approved_count==len(units),'message':'XML aprobados disponibles y bien formados' if not invalid else 'XML aprobado ausente o inválido: '+', '.join(invalid)})
     pending=[a.get('file') for a in images.get('assets',[]) if a.get('status')=='detected' or (a.get('status')=='reviewed' and not a.get('assigned_unit'))]
     checks.append({'id':'images','ok':not pending,'message':f'{len(pending)} imágenes pendientes de decisión'})
+    source_mode=json.loads((root/'inventario/project.json').read_text(encoding='utf-8')).get('source_mode') if (root/'inventario/project.json').is_file() else None
+    checks.append({'id':'image_inventory','ok':source_mode!='pdf_only' or (root/'inventario/images.json').is_file(),'message':'Inventario de imágenes generado' if source_mode!='pdf_only' or (root/'inventario/images.json').is_file() else 'Falta analizar las imágenes del PDF'})
     return {'status':'pass' if all(x['ok'] for x in checks) else 'pending','checks':checks}
 
 def main():
