@@ -70,7 +70,7 @@ $Url = "http://127.0.0.1:$Port/auditoria-lecciones/"
 Write-Host ''
 Write-Host "NIMASAPP iniciará en $Url" -ForegroundColor Green
 if ($ProjectRoot -eq $RepoRoot) {
-    Write-Host 'No hay proyecto editorial cargado. Usa la landing para importar un ZIP nuevo.' -ForegroundColor DarkYellow
+    Write-Host 'No hay proyecto editorial cargado. Usa la landing para importar PDF o ZIP.' -ForegroundColor DarkYellow
 } else {
     Write-Host "Proyecto editorial explícito: $ProjectRoot" -ForegroundColor DarkGreen
 }
