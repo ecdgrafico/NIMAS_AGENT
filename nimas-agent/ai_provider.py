@@ -19,6 +19,13 @@ def write_prompt(root: Path, unit_id: str):
     if not unit: raise ValueError(f'Unidad no encontrada: {unit_id}')
     source = root/'fuentes'/'pdf'/str(unit.get('file',''))
     source_info = {'path': str(source), 'exists': source.is_file()}
+    if context['inventory'].get('source_mode') == 'nimas_zip':
+        original = root / str(context['inventory'].get('xml_source') or '')
+        if original.is_file():
+            source_info['original_xml_path'] = str(original)
+            source_info['original_xml_excerpt'] = original.read_text(encoding='utf-8', errors='replace')[:120000]
+        opf = root / str(context['inventory'].get('opf_source') or '')
+        if opf.is_file(): source_info['original_opf_path'] = str(opf)
     for document in context['inventory'].get('documents',[]):
         if document.get('file') == Path(str(unit.get('file',''))).name:
             first,last=(unit.get('pages') or [1,len(document.get('pages',[]))]); source_info['pages']=document.get('pages',[])[max(0,int(first)-1):int(last)]
