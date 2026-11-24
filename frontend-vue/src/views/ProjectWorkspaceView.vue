@@ -1,0 +1,7 @@
+<script setup>
+import { onMounted, computed } from 'vue'
+import { RouterLink } from 'vue-router'
+import { useProject } from '../composables/useProject'
+const {detail,status,loading,error,load}=useProject();onMounted(load);const units=computed(()=>detail.value?.structure?.units||[])
+</script>
+<template><section class="hero"><span class="eyebrow">PROYECTO NIMAS</span><h2>{{status?.name||'Proyecto actual'}}</h2><p>Trabaja por etapas: genera lecciones, completa metadata y ensambla al final.</p></section><p v-if="loading" class="notice">Cargando proyecto…</p><p v-if="error" class="notice error">{{error}}</p><section v-if="!loading" class="status-card"><span class="eyebrow">UNIDADES</span><strong>{{units.length}} PDF registrados</strong><span>{{status?.mode||'Proyecto activo'}}</span></section><div class="workflow-grid"><RouterLink class="work-card" to="/lessons"><span class="step">01</span><div><h3>Generar y auditar lecciones</h3><p>Propuestas DTBook por unidad y revisión página por página.</p></div></RouterLink><RouterLink class="work-card" to="/metadata"><span class="step">02</span><div><h3>Completar metadata NIMAC</h3><p>Datos editoriales después de aprobar el contenido.</p></div></RouterLink><RouterLink class="work-card" to="/structure"><span class="step">03</span><div><h3>Definir estructura y ensamblar</h3><p>Orden final de Frontmatter, Bodymatter y Rearmatter.</p></div></RouterLink></div></template>
