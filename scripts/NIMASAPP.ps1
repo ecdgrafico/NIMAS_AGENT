@@ -4,7 +4,8 @@ param(
     [int]$Port = 8000,
     [switch]$NoBrowser,
     [switch]$Watch,
-    [switch]$DetailedLogs
+    [switch]$DetailedLogs,
+    [switch]$Check
 )
 
 $ErrorActionPreference = 'Stop'
@@ -46,6 +47,16 @@ if (-not (Test-Path -LiteralPath $VenvPython)) {
 Write-Host 'Comprobando e instalando dependencias Python…' -ForegroundColor Cyan
 & $VenvPython -m pip install --disable-pip-version-check -q -r (Join-Path $RepoRoot 'requirements.txt')
 if ($LASTEXITCODE -ne 0) { throw 'No se pudieron instalar las dependencias de Python.' }
+
+if ($Check) {
+    Write-Host 'Ejecutando pruebas del agente…' -ForegroundColor Cyan
+    & $VenvPython -m unittest discover -s (Join-Path $RepoRoot 'tests') -v
+    if ($LASTEXITCODE -ne 0) { throw 'Fallaron las pruebas del agente.' }
+    Write-Host 'Comprobando proveedores de IA…' -ForegroundColor Cyan
+    $env:PYTHONPATH = Join-Path $RepoRoot 'nimas-agent'
+    & $VenvPython -c "import json; from ai_provider import provider_status; print(json.dumps(provider_status(), ensure_ascii=False, indent=2))"
+    exit $LASTEXITCODE
+}
 
 if (-not (Get-Command pdftoppm -ErrorAction SilentlyContinue)) {
     Write-Warning 'No se encontró pdftoppm (Poppler). La app iniciará, pero para ver páginas PDF instala Poppler y reinicia NIMASAPP.'

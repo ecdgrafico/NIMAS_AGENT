@@ -40,6 +40,7 @@ la terminal, usa:
 
 ```powershell
 NIMASAPP -Watch
+NIMASAPP -Check  # diagnostica dependencias, pruebas y proveedores sin iniciar el servidor
 ```
 
 La ventana queda limpia por defecto. Para diagnosticar solicitudes HTTP usa:
