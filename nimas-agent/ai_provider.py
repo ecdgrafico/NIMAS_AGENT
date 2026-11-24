@@ -5,10 +5,13 @@ import shutil
 import subprocess
 from pathlib import Path
 
+def find_ollama():
+    return shutil.which('ollama') or next((p for p in (Path(os.environ.get('LOCALAPPDATA',''))/'Programs'/'Ollama'/'ollama.exe', Path(os.environ.get('ProgramFiles',''))/'Ollama'/'ollama.exe') if p.is_file()), None)
+
 def provider_status():
-    ollama=shutil.which('ollama')
+    ollama=find_ollama()
     codex=shutil.which('codex')
-    return {'providers':[{'id':'manual','label':'Revisión manual','available':True},{'id':'ollama','label':'Ollama local','available':bool(ollama),'executable':ollama},{'id':'codex','label':'Codex CLI','available':bool(codex),'executable':codex}]}
+    return {'providers':[{'id':'manual','label':'Revisión manual','available':True},{'id':'ollama','label':'Ollama local','available':bool(ollama),'executable':str(ollama) if ollama else None},{'id':'codex','label':'Codex CLI','available':bool(codex),'executable':codex}]}
 
 def build_context(root: Path):
     inventory=root/'inventario'/'project.json'; structure=root/'structure'/'structure.json'; metadata=root/'metadata'/'nimac.json'

@@ -3,6 +3,7 @@
 import argparse, shutil, subprocess, sys
 from pathlib import Path
 from ai_provider import provider_status, write_prompt
+from ai_provider import find_ollama
 
 def main():
     ap=argparse.ArgumentParser(); ap.add_argument('--project',type=Path,required=True); ap.add_argument('--unit',required=True); ap.add_argument('--provider',default='codex'); args=ap.parse_args()
@@ -15,9 +16,9 @@ def main():
         short_instruction=f'Read and follow the complete instructions in {instruction_path}. Create the requested XML proposal and do not modify source files.'
         result=subprocess.run([executable,'exec','--sandbox','workspace-write','--add-dir',str(root),'--skip-git-repo-check','--ephemeral','-C',str(root),'-o',str(runlog/(args.unit+'-codex.md')),short_instruction],cwd=root,text=True,capture_output=True)
     elif args.provider=='ollama':
-        executable=shutil.which('ollama')
+        executable=find_ollama()
         if not executable: raise SystemExit('Ollama no está disponible en PATH.')
-        model = __import__('os').environ.get('NIMAS_OLLAMA_MODEL','llama3.2')
+        model = __import__('os').environ.get('NIMAS_OLLAMA_MODEL','glm-5.3-flash:cloud')
         result=subprocess.run([executable,'run',model,instruction],cwd=root,text=True,capture_output=True)
         if result.returncode==0 and not output.is_file():
             text=result.stdout.strip(); text=text.removeprefix('```xml').removesuffix('```').strip(); output.write_text(text+'\n',encoding='utf-8')
