@@ -104,10 +104,12 @@ class PdfPipelineTests(unittest.TestCase):
             (root/'metadata/nimac.json').write_text('{"title":"Book"}',encoding='utf-8')
             (root/'structure/structure.json').write_text('{"units":[{"id":"L01","name":"Lesson 1","section":"bodymatter","file":"book.pdf","pages":[1,1]}]}',encoding='utf-8')
             (root/'inventario/project.json').write_text('{"documents":[{"file":"book.pdf","pages":[{"page":1,"text":"Visible PDF text"}]}]}',encoding='utf-8')
+            (root/'inventario/images.json').write_text('{"assets":[{"file":"book_p0001_01.png","source_pdf":"book.pdf","page":1,"status":"detected"}]}',encoding='utf-8')
             (root/'fuentes/pdf/book.pdf').write_bytes(b'pdf')
             prompt=Path(write_prompt(root,'L01')).read_text(encoding='utf-8')
             self.assertIn('Visible PDF text',prompt)
             self.assertIn('book.pdf',prompt)
+            self.assertIn('book_p0001_01.png',prompt)
 
     def test_preflight_blocks_missing_metadata_and_image_decisions(self):
         with tempfile.TemporaryDirectory() as folder:
