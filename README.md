@@ -146,3 +146,4 @@ powershell.exe -ExecutionPolicy Bypass -File .\scripts\install_nimasapp.ps1
 
 Cierra y abre una nueva terminal; después podrás ejecutar `NIMASAPP` desde
 cualquier carpeta.
+La biblioteca local de proyectos se guarda en `nimas-library/` dentro del repositorio. Esa carpeta está excluida de Git y contiene únicamente proyectos de trabajo, fuentes cargadas, la base SQLite local y resultados generados.

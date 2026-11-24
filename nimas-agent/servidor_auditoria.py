@@ -28,7 +28,7 @@ from pypdf import PdfReader
 
 APP_ROOT = Path(__file__).resolve().parent.parent
 ROOT = Path(os.environ.get("NIMAS_PROJECT_ROOT", APP_ROOT)).resolve()
-LIBRARY_ROOT = Path(os.environ.get("NIMAS_LIBRARY_ROOT", ROOT.parent / "nimas-library")).resolve()
+LIBRARY_ROOT = Path(os.environ.get("NIMAS_LIBRARY_ROOT", APP_ROOT / "nimas-library")).resolve()
 LIBRARY_DB = LIBRARY_ROOT / "library.db"
 NS = {"d": "http://www.daisy.org/z3986/2005/dtbook/"}
 JOBS = {"running": False, "lesson": None, "queue": [], "log": "", "events": [], "followups": [], "stage": None, "startedAt": None, "export": None}
