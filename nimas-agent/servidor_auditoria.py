@@ -247,11 +247,19 @@ def unit_detail(unit_id):
     assets_path = ROOT / "inventario" / "images.json"
     assets = json.loads(assets_path.read_text(encoding="utf-8")) if assets_path.is_file() else {"assets": []}
     selected_assets = []
+    try:
+        printed_first = int(pages[0])
+        printed_last = int(pages[1])
+    except (TypeError, ValueError):
+        printed_first, printed_last = 1, 0
     for asset in assets.get("assets", []):
         candidates = asset.get("candidate_units", [])
         same_pdf = Path(str(asset.get("source_pdf", ""))).name == Path(str(unit.get("file", ""))).name
-        if str(unit_id) in candidates or (same_pdf and int(pages[0]) <= int(asset.get("page", 0)) <= int(pages[1])):
-            selected_assets.append({**asset, "url": "/working/detected-images/" + str(asset.get("file", ""))})
+        physical_page = int(asset.get("page", 0) or 0)
+        in_unit = printed_first <= physical_page + printed_first - 1 <= printed_last
+        if str(unit_id) in candidates or (same_pdf and in_unit):
+            selected_assets.append({**asset, "display_page": physical_page + printed_first - 1,
+                                    "url": "/working/detected-images/" + str(asset.get("file", ""))})
     decisions_path = ROOT / "revision" / "page-decisions.json"
     decisions = json.loads(decisions_path.read_text(encoding="utf-8")) if decisions_path.is_file() else {}
     return {"unit": unit, "pdf": str(source.relative_to(ROOT)).replace("\\", "/") if source.is_file() else None,
@@ -270,7 +278,11 @@ def render_unit(unit_id, page):
     if not target.is_file():
         import fitz
         with fitz.open(str(source)) as document:
-            index = int(page) - 1
+            try:
+                printed_first = int(detail["pages"][0])
+            except (TypeError, ValueError):
+                printed_first = 1
+            index = int(page) - printed_first
             if index < 0 or index >= len(document):
                 raise ValueError("Página fuera del rango del PDF")
             pixmap = document[index].get_pixmap(matrix=fitz.Matrix(1.5, 1.5), alpha=False)

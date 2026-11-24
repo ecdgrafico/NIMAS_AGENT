@@ -13,7 +13,7 @@ const unit = computed(() => detail.value?.unit)
 const first = computed(() => Number(detail.value?.pages?.[0] || 1))
 const last = computed(() => Number(detail.value?.pages?.[1] || 1))
 const decision = computed(() => detail.value?.decisions?.[String(page.value)]?.status || 'pending')
-const pageAssets = computed(() => detail.value?.assets?.filter(item => Number(item.page) === page.value) || [])
+const pageAssets = computed(() => detail.value?.assets?.filter(item => Number(item.display_page ?? item.page) === page.value) || [])
 
 async function load() {
   detail.value = await api.unitDetail(route.params.unit)
