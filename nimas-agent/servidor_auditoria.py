@@ -401,6 +401,10 @@ class Handler(SimpleHTTPRequestHandler):
         if parsed.path == "/api/project-status": return self.json(project_status())
         if parsed.path == "/api/provider-status": return self.json(provider_status())
         if parsed.path == "/api/project-detail": return self.json(load_project(ROOT))
+        if parsed.path == "/api/project-preflight":
+            process=subprocess.run([sys.executable,str(APP_ROOT/"nimas-agent"/"preflight_project.py"),"--project",str(ROOT)],cwd=APP_ROOT,text=True,capture_output=True)
+            try: return self.json(json.loads(process.stdout.splitlines()[-1]))
+            except Exception: return self.json({"status":"error","message":process.stderr.strip() or process.stdout.strip()},500)
         if parsed.path == "/api/project-assets":
             path = ROOT / "inventario" / "images.json"
             return self.json(json.loads(path.read_text(encoding="utf-8")) if path.is_file() else {"count": 0, "assets": []})
