@@ -41,19 +41,19 @@ if ($ProjectRoot) {
 
 if (-not (Test-Path -LiteralPath $VenvPython)) {
     $base = Get-BasePython
-    Write-Host 'Creando entorno Python local…' -ForegroundColor Cyan
+    Write-Host 'Creando entorno Python local...' -ForegroundColor Cyan
     & $base.File @($base.Args) -m venv $Venv
 }
 
-Write-Host 'Comprobando e instalando dependencias Python…' -ForegroundColor Cyan
+Write-Host 'Comprobando e instalando dependencias Python...' -ForegroundColor Cyan
 & $VenvPython -m pip install --disable-pip-version-check -q -r (Join-Path $RepoRoot 'requirements.txt')
 if ($LASTEXITCODE -ne 0) { throw 'No se pudieron instalar las dependencias de Python.' }
 
 if ($Check) {
-    Write-Host 'Ejecutando pruebas del agente…' -ForegroundColor Cyan
+    Write-Host 'Ejecutando pruebas del agente...' -ForegroundColor Cyan
     & $VenvPython -m unittest discover -s (Join-Path $RepoRoot 'tests') -v
     if ($LASTEXITCODE -ne 0) { throw 'Fallaron las pruebas del agente.' }
-    Write-Host 'Comprobando proveedores de IA…' -ForegroundColor Cyan
+    Write-Host 'Comprobando proveedores de IA...' -ForegroundColor Cyan
     $env:PYTHONPATH = Join-Path $RepoRoot 'nimas-agent'
     & $VenvPython -c "import json; from ai_provider import provider_status; print(json.dumps(provider_status(), ensure_ascii=False, indent=2))"
     exit $LASTEXITCODE
@@ -96,7 +96,7 @@ while ($true) {
             Where-Object { $watchExtensions -contains $_.Extension -and $_.FullName -notmatch '\\.venv\\|\\.git\\|\\work\\|\\nimas-library\\' }
         $currentStamp = ($currentFiles | Sort-Object FullName | ForEach-Object { "$($_.FullName)|$($_.LastWriteTimeUtc.Ticks)|$($_.Length)" }) -join "`n"
         if ($currentStamp -ne $stamp) {
-            Write-Host 'Cambio detectado; reiniciando servidor…' -ForegroundColor Yellow
+            Write-Host 'Cambio detectado; reiniciando servidor...' -ForegroundColor Yellow
             Stop-Process -Id $process.Id -Force -ErrorAction SilentlyContinue
             break
         }
