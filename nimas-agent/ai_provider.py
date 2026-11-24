@@ -8,10 +8,20 @@ from pathlib import Path
 def find_ollama():
     return shutil.which('ollama') or next((p for p in (Path(os.environ.get('LOCALAPPDATA',''))/'Programs'/'Ollama'/'ollama.exe', Path(os.environ.get('ProgramFiles',''))/'Ollama'/'ollama.exe') if p.is_file()), None)
 
+def ollama_models(executable):
+    if not executable: return []
+    try:
+        result=subprocess.run([str(executable),'list'],capture_output=True,text=True,encoding='utf-8',timeout=4)
+        if result.returncode: return []
+        return [line.split()[0] for line in result.stdout.splitlines()[1:] if line.split()]
+    except (OSError, subprocess.SubprocessError):
+        return []
+
 def provider_status():
     ollama=find_ollama()
     codex=shutil.which('codex')
-    return {'providers':[{'id':'manual','label':'Revisión manual','available':True},{'id':'ollama','label':'Ollama local','available':bool(ollama),'executable':str(ollama) if ollama else None},{'id':'codex','label':'Codex CLI','available':bool(codex),'executable':codex}]}
+    models=ollama_models(ollama)
+    return {'providers':[{'id':'manual','label':'Revisión manual','available':True},{'id':'ollama','label':'Ollama local','available':bool(models),'executable':str(ollama) if ollama else None,'models':models},{'id':'codex','label':'Codex CLI','available':bool(codex),'executable':codex}]}
 
 def build_context(root: Path):
     inventory=root/'inventario'/'project.json'; structure=root/'structure'/'structure.json'; metadata=root/'metadata'/'nimac.json'
