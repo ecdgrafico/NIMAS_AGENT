@@ -13,7 +13,7 @@ from create_pdf_project import classify
 from validate_ai_proposal import validate
 from create_zip_project import audit_package
 from preflight_project import preflight
-from generate_ai_proposal import extract_xml_candidate, pdf_completeness_errors
+from generate_ai_proposal import extract_xml_candidate, pdf_completeness_errors, combine_level1_fragments, baseline_fragment
 from project_data import load_project, save_project
 from ai_provider import write_prompt
 
@@ -43,6 +43,18 @@ class PdfPipelineTests(unittest.TestCase):
         raw = "Aquí tienes:\n<level1><h1>L1</h1></level1>\n"
         self.assertEqual(extract_xml_candidate(raw), "<level1><h1>L1</h1></level1>\n")
         self.assertIsNone(extract_xml_candidate("La propuesta quedó incompleta: <level1>"))
+
+    def test_chunked_fragments_recombine_under_one_level1(self):
+        combined=combine_level1_fragments(["<level1><h1>Lesson</h1><pagenum page=\"normal\">1</pagenum></level1>", "<level1><h1>Ignored</h1><pagenum page=\"normal\">2</pagenum></level1>"])
+        self.assertEqual(combined.count("<level1>"), 1)
+        self.assertEqual(combined.count("<pagenum"), 2)
+
+    def test_text_baseline_preserves_requested_pdf_pages(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root=Path(folder); (root/"inventario").mkdir(); (root/"structure").mkdir()
+            (root/"inventario/project.json").write_text(json.dumps({"documents":[{"file":"book.pdf","pages":[{"page":1,"text":"One"},{"page":2,"text":"Two"}]}]}),encoding="utf-8")
+            fragment=baseline_fragment(root,{"id":"L01","name":"Lesson","file":"book.pdf"},1,2)
+            self.assertEqual(fragment.count("<pagenum"),2); self.assertIn("One",fragment); self.assertIn("Two",fragment)
 
     def test_pdf_proposal_rejects_placeholder_or_missing_page_anchors(self):
         with tempfile.TemporaryDirectory() as folder:
