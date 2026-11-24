@@ -29,6 +29,20 @@ def main():
                     except Exception as error:
                         records.append({'source_pdf':pdf.name,'page':page_no,'xref':xref,'status':'error','error':str(error)})
     report={'schema':'nimas-assets/1','source':'pdf','count':len([x for x in records if x.get('status')=='detected']),'assets':records}
+    structure_path=root/'structure'/'structure.json'
+    if structure_path.is_file():
+        try:
+            units=json.loads(structure_path.read_text(encoding='utf-8')).get('units',[])
+            for asset in records:
+                if asset.get('status')!='detected': continue
+                matches=[]
+                for unit in units:
+                    filename=Path(str(unit.get('file',''))).name
+                    pages=unit.get('pages') or [1,0]
+                    if filename==asset.get('source_pdf') and int(pages[0])<=int(asset.get('page',0))<=int(pages[1]): matches.append(unit.get('id'))
+                asset['candidate_units']=matches
+        except Exception:
+            pass
     (root/'inventario'/'images.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
     print(json.dumps({'ok':True,'count':report['count'],'inventory':'inventario/images.json'}))
 
