@@ -23,3 +23,22 @@
   async function approve(){const u=activeUnit();if(!u)return;const d=await (await fetch('/api/approve-ai-proposal',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({unit_id:u.id})})).json();$('ai-status').textContent=d.error||d.message;}
   setTimeout(()=>{$('save-project-setup')?.addEventListener('click',save);$('analyze-project-assets')?.addEventListener('click',assets);$('prepare-ai-context')?.addEventListener('click',prepare);$('generate-ai-proposal')?.addEventListener('click',generate);$('validate-ai-proposal')?.addEventListener('click',validateProposal);$('approve-ai-proposal')?.addEventListener('click',approve);const all=document.createElement('button');all.id='generate-ai-all';all.type='button';all.textContent='Generar todas las unidades';$('generate-ai-proposal')?.after(all);all.addEventListener('click',generateAll);load().then(providers)},120);
 })();
+
+/* Combined-PDF editor: enriches the existing unit rows without changing
+   the legacy lesson review flow. */
+setTimeout(async function(){
+  const host=document.getElementById('project-units'), save=document.getElementById('save-project-setup');
+  if(!host||!save)return;
+  const detail=(await (await fetch('/api/project-detail',{cache:'no-store'})).json());
+  const units=detail.structure?.units||[];
+  function render(){
+    host.innerHTML=units.map((u,i)=>'<div class="unit-row"><label>Nombre<input data-range-name="'+i+'" value="'+String(u.name||u.id).replace(/"/g,'&quot;')+'"></label><label>PDF<input data-range-file="'+i+'" value="'+String(u.file||'').replace(/"/g,'&quot;')+'"></label><label>Desde<input type="number" min="1" data-range-start="'+i+'" value="'+(u.pages?.[0]||1)+'"></label><label>Hasta<input type="number" min="1" data-range-end="'+i+'" value="'+(u.pages?.[1]||1)+'"></label><select data-range-section="'+i+'"><option value="unclassified">Sin clasificar</option><option value="frontmatter">Frontmatter</option><option value="bodymatter">Bodymatter</option><option value="rearmatter">Rearmatter</option></select></div>').join('');
+    units.forEach((u,i)=>{const s=host.querySelector('[data-range-section="'+i+'"]');if(s)s.value=u.section||'unclassified'});
+    const add=document.createElement('button');add.type='button';add.className='secondary';add.textContent='Agregar sección o rango';add.onclick=()=>{const first=detail.inventory?.documents?.[0];units.push({id:'unit-'+Date.now(),name:'Nueva sección',section:'unclassified',file:first?.file||'',pages:[1,first?.pages?.length||1]});render()};host.append(add);
+  }
+  render();
+  save.addEventListener('click',async function(){
+    units.forEach((u,i)=>{u.name=host.querySelector('[data-range-name="'+i+'"]').value.trim()||u.id;u.file=host.querySelector('[data-range-file="'+i+'"]').value.trim();u.pages=[Number(host.querySelector('[data-range-start="'+i+'"]').value||1),Number(host.querySelector('[data-range-end="'+i+'"]').value||1)];u.section=host.querySelector('[data-range-section="'+i+'"]').value});
+    await fetch('/api/save-project-setup',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({metadata:detail.metadata,structure:{units}})});
+  });
+},500);
