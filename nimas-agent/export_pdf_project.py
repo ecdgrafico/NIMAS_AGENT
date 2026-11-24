@@ -40,7 +40,16 @@ def main():
     for src in referenced:
         candidate = candidates.get(Path(src).name)
         if candidate: shutil.copy2(candidate, images / candidate.name)
-    opf_root = etree.Element(Q(OPF, "package"), nsmap={None: OPF, "dc": DC}); metadata_node = etree.SubElement(opf_root, Q(OPF, "metadata")); etree.SubElement(metadata_node, Q(DC, "title")).text = metadata.get("title", root.name); manifest = etree.SubElement(opf_root, Q(OPF, "manifest")); etree.SubElement(manifest, Q(OPF, "item"), id="dtbook", href=xml_path.name, **{"media-type":"application/x-dtbook+xml"})
+    opf_root = etree.Element(Q(OPF, "package"), nsmap={None: OPF, "dc": DC}); metadata_node = etree.SubElement(opf_root, Q(OPF, "metadata"))
+    dc_keys={'copyright_year':'date','publication_year':'date','edition':'relation','content_type':'type','state_edition':'coverage','series':'relation'}
+    for key in ('title','publisher','identifier','language','copyright_year','publication_year','edition','content_type','state_edition','series'):
+        value=metadata.get(key)
+        if value: etree.SubElement(metadata_node, Q(DC, dc_keys.get(key,key))).text=str(value)
+    for key in ('creators','subjects'):
+        values=metadata.get(key) or []; values=values if isinstance(values,list) else [values]
+        for value in values:
+            if value: etree.SubElement(metadata_node, Q(DC, 'creator' if key=='creators' else 'subject')).text=str(value)
+    manifest = etree.SubElement(opf_root, Q(OPF, "manifest")); etree.SubElement(manifest, Q(OPF, "item"), id="dtbook", href=xml_path.name, **{"media-type":"application/x-dtbook+xml"})
     for image in sorted(images.iterdir()): etree.SubElement(manifest, Q(OPF, "item"), id="img_"+image.stem, href="images/"+image.name, **{"media-type":"image/"+image.suffix[1:].lower()})
     spine = etree.SubElement(opf_root, Q(OPF, "spine")); etree.SubElement(spine, Q(OPF, "itemref"), idref="dtbook"); opf_path = package / f"{root.name}.opf"; etree.ElementTree(opf_root).write(str(opf_path), encoding="UTF-8", xml_declaration=True, pretty_print=True)
     checks=[]; parsed=etree.parse(str(xml_path)); xml_root=parsed.getroot()
