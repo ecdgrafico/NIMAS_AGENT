@@ -461,6 +461,17 @@ class Handler(SimpleHTTPRequestHandler):
                 return self.json({"ok": True, "message": "Configuración del proyecto guardada."})
             except Exception as error:
                 return self.json({"error": str(error)}, 400)
+        if parsed.path == "/api/assign-image":
+            try:
+                size=int(self.headers.get("Content-Length","0")); data=json.loads(self.rfile.read(size)); filename=str(data.get("file","")).strip(); unit=str(data.get("unit_id","")).strip(); decision=str(data.get("status","reviewed"))
+                path=ROOT/"inventario"/"images.json"
+                if not path.is_file(): raise ValueError("Primero analiza las imágenes del proyecto")
+                report=json.loads(path.read_text(encoding="utf-8")); asset=next((x for x in report.get("assets",[]) if x.get("file")==filename),None)
+                if not asset: raise ValueError("Imagen no encontrada en el inventario")
+                asset["assigned_unit"]=unit or None; asset["status"]="discarded" if decision=="discarded" else "reviewed"; path.write_text(json.dumps(report,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+                return self.json({"ok":True,"message":"Decisión de imagen guardada."})
+            except Exception as error:
+                return self.json({"error":str(error)},400)
         if parsed.path == "/api/prepare-ai-context":
             try:
                 size=int(self.headers.get("Content-Length","0")); data=json.loads(self.rfile.read(size)); prompt=write_prompt(ROOT,str(data.get("unit_id","")))
