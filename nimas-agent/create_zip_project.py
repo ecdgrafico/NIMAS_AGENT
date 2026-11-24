@@ -14,9 +14,22 @@ def safe_extract(archive, target):
 
 def audit_package(root, xmls, opfs):
     findings=[]
+    referenced=set(); physical=set()
     for path in xmls:
-        try: etree.parse(str(path))
+        try:
+            tree=etree.parse(str(path))
+            for node in tree.xpath('//*[local-name()="img"]'):
+                src=node.get('src')
+                if src:
+                    referenced.add(src)
+                    if not (path.parent/src).is_file(): findings.append({'severity':'error','file':str(path.relative_to(root)),'message':f'Referencia de imagen inexistente: {src}'})
         except Exception as exc: findings.append({'severity':'error','file':str(path.relative_to(root)),'message':f'XML no bien formado: {exc}'})
+    for path in root.rglob('*'):
+        if path.is_file() and path.suffix.lower() in {'.png','.jpg','.jpeg','.gif','.svg'} and '__MACOSX' not in path.parts and not path.name.startswith('._'): physical.add(str(path.relative_to(root)).replace('\\','/'))
+    for src in sorted(referenced):
+        for candidate in (root/src,):
+            if candidate.is_file(): physical.discard(str(candidate.relative_to(root)).replace('\\','/'))
+    for unused in sorted(physical): findings.append({'severity':'warning','file':unused,'message':'Imagen física no referenciada por el XML'})
     for path in opfs:
         try:
             tree=etree.parse(str(path)); base=path.parent
@@ -24,7 +37,8 @@ def audit_package(root, xmls, opfs):
                 href=item.get('href')
                 if href and not (base/href).is_file(): findings.append({'severity':'error','file':str(path.relative_to(root)),'message':f'Recurso OPF inexistente: {href}'})
         except Exception as exc: findings.append({'severity':'error','file':str(path.relative_to(root)),'message':f'OPF no bien formado: {exc}'})
-    return {'status':'pass' if not findings else 'fail','xml_count':len(xmls),'opf_count':len(opfs),'findings':findings}
+    errors=sum(1 for item in findings if item['severity']=='error')
+    return {'status':'pass' if not errors else 'fail','xml_count':len(xmls),'opf_count':len(opfs),'referenced_images':len(referenced),'physical_images':len(physical)+len(referenced),'findings':findings}
 
 def main():
     ap=argparse.ArgumentParser(); ap.add_argument('--zip',type=Path,required=True); ap.add_argument('--destino',type=Path,required=True); ap.add_argument('--nombre',required=True); ap.add_argument('--pdf',type=Path,nargs='*',default=[]); args=ap.parse_args()
