@@ -18,8 +18,10 @@ def main():
     elif args.provider=='ollama':
         executable=find_ollama()
         if not executable: raise SystemExit('Ollama no está disponible en PATH.')
-        model = __import__('os').environ.get('NIMAS_OLLAMA_MODEL','glm-5.3-flash:cloud')
-        result=subprocess.run([executable,'run',model,instruction],cwd=root,text=True,capture_output=True)
+        model = __import__('os').environ.get('NIMAS_OLLAMA_MODEL','llama3.2')
+        # Send the prompt through stdin so long PDF/XML evidence never hits
+        # Windows' command-line length limit.
+        result=subprocess.run([executable,'run',model],cwd=root,input=instruction,text=True,encoding='utf-8',capture_output=True)
         if result.returncode==0 and not output.is_file():
             text=result.stdout.strip(); text=text.removeprefix('```xml').removesuffix('```').strip(); output.write_text(text+'\n',encoding='utf-8')
             (runlog/(args.unit+'-ollama.md')).write_text(result.stdout,encoding='utf-8')
