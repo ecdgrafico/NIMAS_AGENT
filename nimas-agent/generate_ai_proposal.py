@@ -16,6 +16,7 @@ def main():
     root=args.project.resolve(); prompt=Path(write_prompt(root,args.unit)); output=root/'propuestas'/f'{args.unit}.xml'; runlog=root/'versions'/'ai-runs'; runlog.mkdir(parents=True,exist_ok=True)
     instruction=prompt.read_text(encoding='utf-8')+f'''\n\nEscribe únicamente un fragmento XML DTBook bien formado en {output}. No modifiques fuentes. Si no puedes verificar una parte, conserva la incertidumbre en {runlog/(args.unit+'-dudas.md')}. La salida queda pendiente de auditoría humana.'''
     instruction += "\n\nREGLA DE SALIDA: entrega solo un fragmento XML completo cuya raíz sea level1. No incluyas dtbook, book, frontmatter, bodymatter, rearmatter, package, Markdown ni explicaciones fuera del XML."
+    instruction += "\n\nFORMATO MÍNIMO DE REFERENCIA (sustituye el contenido por el cotejado):\n<level1><h1>Título</h1><p>Texto visible.</p></level1>"
     if args.provider=='codex':
         executable=shutil.which('codex')
         if not executable: raise SystemExit('Codex CLI no está disponible en PATH.')
