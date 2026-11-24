@@ -18,6 +18,8 @@ El usuario revisa visualmente y aprueba; el agente propone cambios y nunca debe 
 
 ## Flujo de trabajo
 
+Antes de iniciar un proyecto en Windows, ejecutar NIMASAPP -Check para verificar dependencias, pruebas y proveedores.
+
 1. Abrir la auditoría con `NIMASAPP` en Windows o `python3 nimas-agent/servidor_auditoria.py` en macOS.
 2. Comparar PDF, XML fuente y propuesta por página.
 3. Corregir por página cuando exista una solicitud editorial; no regenerar una lección completa innecesariamente.
