@@ -9,6 +9,7 @@ param(
 )
 
 $ErrorActionPreference = 'Stop'
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 $RepoRoot = Split-Path -Parent $PSScriptRoot
 $Venv = Join-Path $RepoRoot '.venv'
 $VenvPython = Join-Path $Venv 'Scripts\python.exe'
