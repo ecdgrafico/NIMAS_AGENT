@@ -11,6 +11,13 @@ DEFAULT_METADATA = {
     "state_edition": "National ed.", "content_type": "Textbook", "series": "",
 }
 
+def inferred_section(filename: str) -> str:
+    stem = Path(filename).stem.upper()
+    if re.search(r"(^|[_\- ])FM([_\- .]|$)|FRONTMATTER|FRONT_MATTER", stem): return "frontmatter"
+    if re.search(r"(^|[_\- ])EM([_\- .]|$)|REARMATTER|REAR_MATTER", stem): return "rearmatter"
+    if re.search(r"(^|[_\- ])(?:L|U|PL|IU|UI)\d*([_\- .]|$)|LESSON|UNIT|CHAPTER|PRELIMINARY|INTRODUCTORY", stem): return "bodymatter"
+    return "unclassified"
+
 def ensure_pdf_project_layout(root: Path):
     """Backfill the neutral model for projects created by earlier app builds."""
     if not (root / "project.yaml").is_file(): return
@@ -42,6 +49,15 @@ def load_project(root: Path):
     metadata = {**DEFAULT_METADATA, **(json.loads(metadata_path.read_text(encoding="utf-8")) if metadata_path.is_file() else {})}
     structure_path = root / "structure" / "structure.json"
     structure = json.loads(structure_path.read_text(encoding="utf-8")) if structure_path.is_file() else {"units": []}
+    migrated = False
+    for unit in structure.get("units", []):
+        if unit.get("section") == "unclassified":
+            section = inferred_section(unit.get("file", unit.get("name", "")))
+            if section != "unclassified":
+                unit["section"] = section
+                migrated = True
+    if migrated:
+        structure_path.write_text(json.dumps(structure, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     return {"inventory": data, "metadata": metadata, "structure": structure}
 
 def save_project(root: Path, metadata=None, structure=None):

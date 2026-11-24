@@ -151,6 +151,19 @@ class PdfPipelineTests(unittest.TestCase):
             self.assertEqual(loaded["structure"]["units"][0]["pages"], [13,24])
             self.assertEqual(loaded["structure"]["units"][0]["section"], "bodymatter")
 
+    def test_load_project_migrates_unclassified_filename_sections(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder); (root / "metadata").mkdir(); (root / "structure").mkdir()
+            (root / "project.yaml").write_text("name: Legacy\nsource_mode: pdf_only\n", encoding="utf-8")
+            path = root / "structure" / "structure.json"
+            path.write_text(json.dumps({"units": [
+                {"id": "fm", "file": "book_FM.pdf", "section": "unclassified"},
+                {"id": "l01", "file": "book_L01.pdf", "section": "unclassified"},
+                {"id": "em", "file": "book_EM.pdf", "section": "unclassified"},
+            ]}), encoding="utf-8")
+            loaded = load_project(root)
+            self.assertEqual([x["section"] for x in loaded["structure"]["units"]], ["frontmatter", "bodymatter", "rearmatter"])
+
     def test_pdf_export_routes_sections_and_preserves_image_paths(self):
         with tempfile.TemporaryDirectory() as folder:
             root=Path(folder)
