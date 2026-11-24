@@ -40,11 +40,15 @@ def main():
     for src in referenced:
         candidate = candidates.get(Path(src).name)
         if candidate: shutil.copy2(candidate, images / candidate.name)
-    opf_root = etree.Element(Q(OPF, "package"), nsmap={None: OPF, "dc": DC}); metadata_node = etree.SubElement(opf_root, Q(OPF, "metadata"))
+    identifier=str(metadata.get('identifier') or root.name); opf_root = etree.Element(Q(OPF, "package"), version="1.0", **{"unique-identifier":"book-id"}, nsmap={None: OPF, "dc": DC}); metadata_node = etree.SubElement(opf_root, Q(OPF, "metadata"))
     dc_keys={'copyright_year':'date','publication_year':'date','edition':'relation','content_type':'type','state_edition':'coverage','series':'relation'}
     for key in ('title','publisher','identifier','language','copyright_year','publication_year','edition','content_type','state_edition','series'):
         value=metadata.get(key)
-        if value: etree.SubElement(metadata_node, Q(DC, dc_keys.get(key,key))).text=str(value)
+        if value:
+            node=etree.SubElement(metadata_node, Q(DC, dc_keys.get(key,key))); node.text=str(value)
+            if key=='identifier': node.set('id','book-id')
+    if not metadata.get('identifier'):
+        node=etree.SubElement(metadata_node,Q(DC,'identifier'),id='book-id'); node.text=identifier
     for key in ('creators','subjects'):
         values=metadata.get(key) or []; values=values if isinstance(values,list) else [values]
         for value in values:
