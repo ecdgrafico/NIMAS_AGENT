@@ -132,3 +132,15 @@ propuesta del agente, recursos asociados y navegación anterior/siguiente. No
 publica ni instala una propuesta automáticamente. Consulte
 `docs/arquitectura-y-migracion.md` y ejecute `iniciar_auditoria.ps1` en Windows
 para el flujo local portable.
+
+## Comando NIMASAPP en PowerShell
+
+Para registrar `NIMASAPP` como comando del usuario y no tener que escribir `./`,
+ejecuta una vez:
+
+```powershell
+powershell.exe -ExecutionPolicy Bypass -File .\scripts\install_nimasapp.ps1
+```
+
+Cierra y abre una nueva terminal; después podrás ejecutar `NIMASAPP` desde
+cualquier carpeta.
