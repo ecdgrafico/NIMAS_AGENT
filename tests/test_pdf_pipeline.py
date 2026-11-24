@@ -70,7 +70,7 @@ class PdfPipelineTests(unittest.TestCase):
             root=Path(folder); (root/'metadata').mkdir(); (root/'structure').mkdir(); (root/'inventario').mkdir()
             (root/'metadata'/'nimac.json').write_text('{"title":"Test"}',encoding='utf-8')
             (root/'structure'/'structure.json').write_text('{"units":[{"id":"u1","section":"bodymatter"}]}',encoding='utf-8')
-            (root/'inventario'/'images.json').write_text('{"assets":[{"file":"x.png","status":"detected"}]}',encoding='utf-8')
+            (root/'inventario'/'images.json').write_text('{"assets":[{"file":"x.png","status":"detected"},{"file":"y.png","status":"reviewed"}]}',encoding='utf-8')
             result=preflight(root); self.assertEqual(result['status'],'pending'); self.assertTrue(any(not x['ok'] for x in result['checks']))
             self.assertFalse(next(x for x in result['checks'] if x['id']=='approvals')['ok'])
             self.assertFalse(next(x for x in result['checks'] if x['id']=='approved_xml')['ok'])

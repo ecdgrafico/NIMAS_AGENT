@@ -28,7 +28,7 @@ def preflight(root: Path):
             try: etree.parse(str(path))
             except (OSError, etree.XMLSyntaxError): invalid.append(unit.get('id'))
     checks.append({'id':'approved_xml','ok':not invalid and approved_count==len(units),'message':'XML aprobados disponibles y bien formados' if not invalid else 'XML aprobado ausente o inválido: '+', '.join(invalid)})
-    pending=[a.get('file') for a in images.get('assets',[]) if a.get('status')=='detected']
+    pending=[a.get('file') for a in images.get('assets',[]) if a.get('status')=='detected' or (a.get('status')=='reviewed' and not a.get('assigned_unit'))]
     checks.append({'id':'images','ok':not pending,'message':f'{len(pending)} imágenes pendientes de decisión'})
     return {'status':'pass' if all(x['ok'] for x in checks) else 'pending','checks':checks}
 
