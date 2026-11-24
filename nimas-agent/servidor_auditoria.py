@@ -479,6 +479,14 @@ class Handler(SimpleHTTPRequestHandler):
                 return self.json({"ok": True, "message": "Configuración del proyecto guardada."})
             except Exception as error:
                 return self.json({"error": str(error)}, 400)
+        if parsed.path == "/api/create-editorial-pdf":
+            try:
+                output = ROOT / "working" / "generated-frontmatter.pdf"
+                process = subprocess.run([sys.executable, "nimas-agent/create_editorial_pdf.py", "--project", str(ROOT), "--output", str(output)], cwd=APP_ROOT, text=True, capture_output=True)
+                if process.returncode: return self.json({"error": process.stderr.strip() or process.stdout.strip()}, 400)
+                return self.json({"ok": True, "message": "PDF editorial generado; requiere revisión humana.", "path": str(output.relative_to(ROOT)).replace("\\\\","/")})
+            except Exception as error:
+                return self.json({"error": str(error)}, 400)
         if parsed.path == "/api/assign-image":
             try:
                 size=int(self.headers.get("Content-Length","0")); data=json.loads(self.rfile.read(size)); filename=str(data.get("file","")).strip(); unit=str(data.get("unit_id","")).strip(); decision=str(data.get("status","reviewed"))

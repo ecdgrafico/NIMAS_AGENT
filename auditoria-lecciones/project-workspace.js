@@ -42,3 +42,5 @@ setTimeout(async function(){
     await fetch('/api/save-project-setup',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({metadata:detail.metadata,structure:{units}})});
   });
 },500);
+
+setTimeout(()=>{const button=document.getElementById('create-editorial-pdf');if(!button)return;button.onclick=async()=>{const status=document.getElementById('editorial-pdf-status');button.disabled=true;status.textContent='Generando PDF editorial…';try{const r=await fetch('/api/create-editorial-pdf',{method:'POST'}),d=await r.json();status.textContent=d.error||d.message||'PDF generado.'}catch{status.textContent='No se pudo generar el PDF editorial.'}finally{button.disabled=false}}},650);
