@@ -13,7 +13,7 @@ from create_pdf_project import classify
 from validate_ai_proposal import validate
 from create_zip_project import audit_package
 from preflight_project import preflight
-from generate_ai_proposal import extract_xml_candidate
+from generate_ai_proposal import extract_xml_candidate, pdf_completeness_errors
 from project_data import load_project, save_project
 from ai_provider import write_prompt
 
@@ -43,6 +43,16 @@ class PdfPipelineTests(unittest.TestCase):
         raw = "Aquí tienes:\n<level1><h1>L1</h1></level1>\n"
         self.assertEqual(extract_xml_candidate(raw), "<level1><h1>L1</h1></level1>\n")
         self.assertIsNone(extract_xml_candidate("La propuesta quedó incompleta: <level1>"))
+
+    def test_pdf_proposal_rejects_placeholder_or_missing_page_anchors(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder); (root / "structure").mkdir(); (root / "inventario").mkdir()
+            (root / "structure" / "structure.json").write_text(json.dumps({"units": [{"id": "L01", "file": "L01.pdf", "pages": [1, 5]}]}), encoding="utf-8")
+            (root / "inventario" / "project.json").write_text(json.dumps({"documents": []}), encoding="utf-8")
+            proposal = root / "proposal.xml"; proposal.write_text("<level1><h1>Título</h1><p>Texto visible.</p></level1>", encoding="utf-8")
+            errors = pdf_completeness_errors(root, "L01", proposal)
+            self.assertTrue(any("texto de ejemplo" in error for error in errors))
+            self.assertTrue(any("anclas de página" in error for error in errors))
 
     def test_zip_audit_checks_resources_and_ignores_macos_metadata(self):
         with tempfile.TemporaryDirectory() as folder:

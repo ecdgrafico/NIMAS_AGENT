@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Generate a review-only DTBook proposal with an available AI provider."""
-import argparse, re, shutil, subprocess, sys
+import argparse, json, re, shutil, subprocess, sys
 from pathlib import Path
 from ai_provider import provider_status, write_prompt
 from ai_provider import find_ollama
@@ -10,6 +10,26 @@ def extract_xml_candidate(raw: str) -> str | None:
     text = raw.strip()
     match = re.search(r"<level1\b[\s\S]*?</level1>", text)
     return match.group(0).strip() + "\n" if match else None
+
+def pdf_completeness_errors(root: Path, unit_id: str, xml_path: Path) -> list[str]:
+    """Reject a well-formed but obviously incomplete PDF reconstruction."""
+    structure_path = root / "structure" / "structure.json"
+    inventory_path = root / "inventario" / "project.json"
+    if not structure_path.is_file() or not inventory_path.is_file(): return []
+    structure = json.loads(structure_path.read_text(encoding="utf-8"))
+    unit = next((item for item in structure.get("units", []) if item.get("id") == unit_id), None)
+    if not unit: return []
+    expected = max(0, int((unit.get("pages") or [1, 1])[1]) - int((unit.get("pages") or [1, 1])[0]) + 1)
+    if expected < 3: return []
+    text = xml_path.read_text(encoding="utf-8", errors="replace")
+    errors = []
+    if "Texto visible." in text or "Título</h1><p>Texto visible." in text:
+        errors.append("La propuesta contiene el texto de ejemplo del prompt y no una reconstrucción del PDF.")
+    anchors = {int(value) for value in re.findall(r"<pagenum\b[^>]*>\s*(\d+)\s*</pagenum>", text, re.I)}
+    minimum = max(2, int(expected * 0.8))
+    if len(anchors) < minimum:
+        errors.append(f"La propuesta contiene {len(anchors)} anclas de página; se requieren al menos {minimum} para {expected} páginas PDF.")
+    return errors
 
 def main():
     ap=argparse.ArgumentParser(); ap.add_argument('--project',type=Path,required=True); ap.add_argument('--unit',required=True); ap.add_argument('--provider',default='codex'); args=ap.parse_args()
@@ -46,6 +66,11 @@ def main():
         diagnostic=(runlog/(args.unit+'-codex.md')).read_text(encoding='utf-8',errors='replace')[-1000:] if (runlog/(args.unit+'-codex.md')).is_file() else ''
         raise SystemExit(f'Codex terminó sin crear {output}. Diagnóstico: {diagnostic}')
     report = runlog / f'{args.unit}-validation.json'
+    coverage_errors = pdf_completeness_errors(root, args.unit, output)
+    if coverage_errors:
+        report.write_text(json.dumps({'status':'fail','path':str(output),'errors':coverage_errors}, ensure_ascii=False, indent=2), encoding='utf-8')
+        output.unlink(missing_ok=True)
+        raise SystemExit(f'La propuesta quedó incompleta respecto al PDF. Revisa {report}')
     check = subprocess.run([sys.executable, str(Path(__file__).with_name('validate_ai_proposal.py')), str(output), '--report', str(report)], cwd=root, text=True, capture_output=True)
     if check.returncode: raise SystemExit(f'La propuesta quedó pendiente por errores de estructura. Revisa {report}')
     print(f'Propuesta pendiente creada: {output}')
