@@ -352,8 +352,17 @@ def run_ai_proposal(unit_id, provider="codex"):
 
 def run_ai_all(provider="codex"):
     units=load_project(ROOT).get('structure',{}).get('units',[])
-    for unit in units:
-        run_ai_proposal(str(unit.get('id','')),provider)
+    ids=[str(unit.get('id','')) for unit in units]
+    with LOCK: JOBS.update(running=True,lesson="LIBRO",queue=ids.copy(),log="",stage=f"Generando {len(ids)} propuestas DTBook",startedAt=datetime.now().isoformat())
+    try:
+        for unit_id in ids:
+            with LOCK: JOBS.update(lesson=unit_id,queue=ids[ids.index(unit_id):],stage=f"Generando propuesta {unit_id}")
+            process=subprocess.run([sys.executable,"nimas-agent/generate_ai_proposal.py","--project",str(ROOT),"--unit",unit_id,"--provider",provider],cwd=APP_ROOT,text=True,capture_output=True)
+            with LOCK:
+                JOBS["log"]+=f"\n{process.stdout}{process.stderr}"
+                JOBS["events"].append({"lesson":unit_id,"ok":process.returncode==0,"message":process.stdout.strip() if process.returncode==0 else process.stderr.strip() or "La propuesta requiere revisión técnica."})
+    finally:
+        with LOCK: JOBS.update(running=False,lesson=None,queue=[],stage=None,startedAt=None)
 
 class Handler(SimpleHTTPRequestHandler):
     def log_message(self, format, *args):
