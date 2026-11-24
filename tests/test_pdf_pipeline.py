@@ -58,6 +58,7 @@ class PdfPipelineTests(unittest.TestCase):
             (root/'structure'/'structure.json').write_text('{"units":[{"id":"u1","section":"bodymatter"}]}',encoding='utf-8')
             (root/'inventario'/'images.json').write_text('{"assets":[{"file":"x.png","status":"detected"}]}',encoding='utf-8')
             result=preflight(root); self.assertEqual(result['status'],'pending'); self.assertTrue(any(not x['ok'] for x in result['checks']))
+            self.assertFalse(next(x for x in result['checks'] if x['id']=='approvals')['ok'])
 
     def test_project_structure_preserves_combined_pdf_ranges(self):
         with tempfile.TemporaryDirectory() as folder:

@@ -10,6 +10,9 @@ def preflight(root: Path):
     checks=[]; required=('title','identifier','language')
     for key in required: checks.append({'id':'metadata_'+key,'ok':bool(str(metadata.get(key,'')).strip()),'message':f'Metadata {key}'})
     units=structure.get('units',[]); checks.append({'id':'units','ok':bool(units),'message':f'{len(units)} unidades'}); checks.append({'id':'classified','ok':all(u.get('section')!='unclassified' for u in units),'message':'Unidades clasificadas'})
+    approvals=json.loads((root/'revision/approvals.json').read_text(encoding='utf-8')) if (root/'revision/approvals.json').is_file() else {}
+    approved_count=sum(1 for u in units if approvals.get(u.get('id')) is True)
+    checks.append({'id':'approvals','ok':bool(units) and approved_count==len(units),'message':f'{approved_count}/{len(units)} unidades aprobadas humanamente'})
     pending=[a.get('file') for a in images.get('assets',[]) if a.get('status')=='detected']
     checks.append({'id':'images','ok':not pending,'message':f'{len(pending)} imágenes pendientes de decisión'})
     return {'status':'pass' if all(x['ok'] for x in checks) else 'pending','checks':checks}
