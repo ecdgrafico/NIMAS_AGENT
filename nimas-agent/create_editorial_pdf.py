@@ -17,7 +17,10 @@ def main():
     metadata=json.loads((root/"metadata/nimac.json").read_text(encoding="utf-8"))
     title=str(metadata.get("title") or root.name)
     creators=metadata.get("creators") or []
-    creators=", ".join(creators) if isinstance(creators,list) else str(creators)
+    if isinstance(creators,list):
+        creators=", ".join(str(value.get("name", "")) if isinstance(value,dict) else str(value) for value in creators)
+    else:
+        creators=str(creators)
     publisher=str(metadata.get("publisher") or "")
     identifier=str(metadata.get("identifier") or "")
     year=str(metadata.get("copyright_year") or metadata.get("publication_year") or "")
