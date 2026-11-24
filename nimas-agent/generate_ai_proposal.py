@@ -11,7 +11,9 @@ def main():
     if args.provider=='codex':
         executable=shutil.which('codex')
         if not executable: raise SystemExit('Codex CLI no está disponible en PATH.')
-        result=subprocess.run([executable,'exec','--sandbox','workspace-write','--skip-git-repo-check','--ephemeral','-C',str(root),'-o',str(runlog/(args.unit+'-codex.md')),instruction],cwd=root,text=True,capture_output=True)
+        instruction_path=runlog/(args.unit+'-instruction.md'); instruction_path.write_text(instruction,encoding='utf-8')
+        short_instruction=f'Read and follow the complete instructions in {instruction_path}. Create the requested XML proposal and do not modify source files.'
+        result=subprocess.run([executable,'exec','--sandbox','workspace-write','--add-dir',str(root),'--skip-git-repo-check','--ephemeral','-C',str(root),'-o',str(runlog/(args.unit+'-codex.md')),short_instruction],cwd=root,text=True,capture_output=True)
     elif args.provider=='ollama':
         executable=shutil.which('ollama')
         if not executable: raise SystemExit('Ollama no está disponible en PATH.')
@@ -23,7 +25,9 @@ def main():
     else:
         raise SystemExit('Proveedor no soportado: '+args.provider)
     if result.returncode: raise SystemExit(result.stderr.strip() or result.stdout.strip() or 'Codex no generó la propuesta.')
-    if not output.is_file(): raise SystemExit(f'Codex terminó sin crear {output}')
+    if not output.is_file():
+        diagnostic=(runlog/(args.unit+'-codex.md')).read_text(encoding='utf-8',errors='replace')[-1000:] if (runlog/(args.unit+'-codex.md')).is_file() else ''
+        raise SystemExit(f'Codex terminó sin crear {output}. Diagnóstico: {diagnostic}')
     report = runlog / f'{args.unit}-validation.json'
     check = subprocess.run([sys.executable, str(Path(__file__).with_name('validate_ai_proposal.py')), str(output), '--report', str(report)], cwd=root, text=True, capture_output=True)
     if check.returncode: raise SystemExit(f'La propuesta quedó pendiente por errores de estructura. Revisa {report}')
