@@ -122,6 +122,17 @@ class PdfPipelineTests(unittest.TestCase):
             self.assertIn('book.pdf',prompt)
             self.assertIn('book_p0001_01.png',prompt)
 
+    def test_ai_prompt_includes_marked_reference_xml(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root=Path(folder)
+            for name in ("structure", "metadata", "inventario", "propuestas", "revision/approved"): (root/name).mkdir(parents=True, exist_ok=True)
+            (root/"structure/structure.json").write_text(json.dumps({"units":[{"id":"REF","name":"Reference","reference":True},{"id":"L01","name":"Lesson","file":"L01.pdf","pages":[1,1]}]}), encoding="utf-8")
+            (root/"metadata/nimac.json").write_text("{}", encoding="utf-8")
+            (root/"inventario/project.json").write_text(json.dumps({"documents":[]}), encoding="utf-8")
+            (root/"revision/approved/REF.xml").write_text("<level1><h1>Reference pattern</h1></level1>", encoding="utf-8")
+            prompt=Path(write_prompt(root,"L01")).read_text(encoding="utf-8")
+            self.assertIn("Reference pattern", prompt)
+
     def test_preflight_blocks_missing_metadata_and_image_decisions(self):
         with tempfile.TemporaryDirectory() as folder:
             root=Path(folder); (root/'metadata').mkdir(); (root/'structure').mkdir(); (root/'inventario').mkdir()
