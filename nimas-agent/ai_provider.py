@@ -21,7 +21,7 @@ def provider_status():
     ollama=find_ollama()
     codex=shutil.which('codex')
     models=ollama_models(ollama)
-    return {'providers':[{'id':'manual','label':'Revisión manual','available':True},{'id':'ollama','label':'Ollama local','available':bool(models),'executable':str(ollama) if ollama else None,'models':models},{'id':'codex','label':'Codex CLI','available':bool(codex),'executable':codex}]}
+    return {'providers':[{'id':'manual','label':'Revision manual','available':True},{'id':'ollama','label':'Ollama local','available':bool(models),'executable':str(ollama) if ollama else None,'models':models},{'id':'codex','label':'Codex CLI','available':bool(codex),'executable':codex}]}
 
 def build_context(root: Path):
     inventory=root/'inventario'/'project.json'; structure=root/'structure'/'structure.json'; metadata=root/'metadata'/'nimac.json'; images=root/'inventario'/'images.json'
