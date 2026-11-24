@@ -108,6 +108,11 @@ def main():
         # Windows' command-line length limit.
         result = type('Result', (), {'returncode': 0, 'stdout': ollama_generate(executable, model, root, instruction, expected_pages, args.unit), 'stderr': ''})()
         (runlog/(args.unit+'-ollama.md')).write_text(result.stdout,encoding='utf-8')
+        if 'Contenido de página pendiente de revisión visual.' in result.stdout:
+            (runlog/(args.unit+'-fallback.md')).write_text(
+                'Algunos bloques no produjeron XML suficiente con Ollama. '
+                'Se incorporó una transcripción literal del texto extraído del PDF; '
+                'requiere revisión semántica y visual humana.\n', encoding='utf-8')
         if result.returncode==0:
             candidate=extract_xml_candidate(result.stdout)
             if candidate:
