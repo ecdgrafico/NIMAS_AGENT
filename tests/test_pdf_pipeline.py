@@ -79,6 +79,22 @@ class PdfPipelineTests(unittest.TestCase):
             structure=json.loads((destination/"structure/structure.json").read_text(encoding="utf-8"))
             self.assertEqual(structure["units"][0]["section"],"bodymatter")
 
+    def test_pdf_image_detection_writes_inventory_and_asset(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root=Path(folder); pdf_path=root/"lesson_L01.pdf"
+            import fitz
+            from PIL import Image
+            image_path=root/"source.png"; Image.new("RGB",(20,20),(255,0,0)).save(image_path)
+            pdf=fitz.open(); page=pdf.new_page(); page.insert_image(fitz.Rect(50,50,150,150),filename=str(image_path)); pdf.save(pdf_path)
+            destination=root/"project"
+            result=subprocess.run([sys.executable,str(ROOT/"nimas-agent/create_pdf_project.py"),"--pdf",str(pdf_path),"--destino",str(destination),"--nombre","Image Test"],capture_output=True,text=True)
+            self.assertEqual(result.returncode,0,result.stderr)
+            result=subprocess.run([sys.executable,str(ROOT/"nimas-agent/detect_pdf_assets.py"),"--project",str(destination)],capture_output=True,text=True)
+            self.assertEqual(result.returncode,0,result.stderr)
+            report=json.loads((destination/"inventario/images.json").read_text(encoding="utf-8"))
+            self.assertGreaterEqual(len(report["assets"]),1)
+            self.assertTrue(any((destination/"working/detected-images"/asset["file"]).is_file() for asset in report["assets"]))
+
     def test_preflight_blocks_missing_metadata_and_image_decisions(self):
         with tempfile.TemporaryDirectory() as folder:
             root=Path(folder); (root/'metadata').mkdir(); (root/'structure').mkdir(); (root/'inventario').mkdir()
