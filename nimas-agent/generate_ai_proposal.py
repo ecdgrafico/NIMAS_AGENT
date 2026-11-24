@@ -93,7 +93,8 @@ def main():
     first, last = (unit.get('pages') or [1, 1])
     expected_pages = max(1, int(last) - int(first) + 1)
     instruction += "\n\nREGLA DE SALIDA: entrega solo un fragmento XML completo cuya raíz sea level1. No incluyas dtbook, book, frontmatter, bodymatter, rearmatter, package, Markdown ni explicaciones fuera del XML."
-    instruction += f"\n\nCOBERTURA OBLIGATORIA: la unidad tiene {expected_pages} páginas PDF, del rango {first} al {last}. Debes emitir una etiqueta <pagenum> con cada número de página del rango y transcribir/estructurar el contenido visible de cada página. No entregues un resumen ni un ejemplo abreviado. Si una página no tiene texto, conserva su <pagenum> y marca la incertidumbre para revisión humana."
+    printed_range=unit.get('source_page_range') or 'por deducir del PDF'
+    instruction += f"\n\nCOBERTURA OBLIGATORIA: la unidad tiene {expected_pages} páginas físicas PDF. El rango impreso sugerido por el nombre es {printed_range}; debes leer el PDF y deducir los valores reales de pagenum. Conserva páginas impresas que comiencen en 0, como LP 000, y numeración romana de frontmatter cuando aparezca. Emite una etiqueta <pagenum> por cada página física y transcribe/estructura su contenido visible. No entregues un resumen ni un ejemplo abreviado. Si una página no tiene texto, conserva su <pagenum> y marca la incertidumbre para revisión humana."
     if args.provider=='codex':
         executable=shutil.which('codex')
         if not executable: raise SystemExit('Codex CLI no está disponible en PATH.')
