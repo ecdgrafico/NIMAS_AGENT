@@ -15,7 +15,7 @@ def inferred_section(filename: str) -> str:
     stem = Path(filename).stem.upper()
     if re.search(r"(^|[_\- ])FM([_\- .]|$)|FRONTMATTER|FRONT_MATTER", stem): return "frontmatter"
     if re.search(r"(^|[_\- ])EM([_\- .]|$)|REARMATTER|REAR_MATTER", stem): return "rearmatter"
-    if re.search(r"(^|[_\- ])(?:L|U|PL|IU|UI)\d*([_\- .]|$)|LESSON|UNIT|CHAPTER|PRELIMINARY|INTRODUCTORY", stem): return "bodymatter"
+    if re.search(r"(^|[_\- ])(?:L|U|PL|LP|IU|UI)\d*([_\- .]|$)|LESSON|UNIT|CHAPTER|PRELIMINARY|INTRODUCTORY", stem): return "bodymatter"
     return "unclassified"
 
 def ensure_pdf_project_layout(root: Path):

@@ -22,6 +22,7 @@ class PdfPipelineTests(unittest.TestCase):
         self.assertEqual(classify("book_FM.pdf"), "frontmatter")
         self.assertEqual(classify("book_L01.pdf"), "bodymatter")
         self.assertEqual(classify("book_EM.pdf"), "rearmatter")
+        self.assertEqual(classify("book_LP.pdf"), "bodymatter")
         self.assertEqual(classify("book_scan.pdf"), "unclassified")
 
     def test_proposal_validator_accepts_fragment(self):
