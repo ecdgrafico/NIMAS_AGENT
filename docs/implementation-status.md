@@ -7,6 +7,7 @@
 - Inventario de PDF, XML, OPF y recursos.
 - Clasificación inicial FM, bodymatter y EM.
 - Edición de unidades, orden y rangos dentro de un PDF combinado.
+- Carga incremental de PDF en un proyecto ya creado, con inventario y unidades nuevas.
 - Extracción de imágenes del PDF y decisiones humanas de asociación.
 - Metadata NIMAC y mapeo al OPF.
 - Generación revisable de cover, title page y copyright.

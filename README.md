@@ -93,10 +93,15 @@ ollama list. El proveedor local usa llama3.2 por defecto, por lo que no requiere
 una API de pago.
 
 ```powershell
-ollama list
+& "$env:LOCALAPPDATA\Programs\Ollama\ollama.exe" list
 $env:NIMAS_OLLAMA_MODEL = "llama3.2"
 .\\NIMASAPP.cmd
 ```
+
+Si el proyecto ya existe en la biblioteca, se puede abrir desde `Proyectos` y
+agregar posteriormente uno o varios PDF desde `Agregar PDF al proyecto`. La app
+los copia de forma no destructiva, inventaría sus páginas y los incorpora a la
+estructura para su clasificación editorial.
 
 La respuesta del modelo nunca se instala directamente: debe producir un fragmento
 level1, pasar el validador y recibir aprobación humana antes de exportar el ZIP.
