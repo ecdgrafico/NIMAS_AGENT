@@ -17,7 +17,13 @@ def build_context(root: Path):
 def write_prompt(root: Path, unit_id: str):
     context=build_context(root); unit=next((x for x in context['structure'].get('units',[]) if x.get('id')==unit_id),None)
     if not unit: raise ValueError(f'Unidad no encontrada: {unit_id}')
+    source = root/'fuentes'/'pdf'/str(unit.get('file',''))
+    source_info = {'path': str(source), 'exists': source.is_file()}
+    for document in context['inventory'].get('documents',[]):
+        if document.get('file') == Path(str(unit.get('file',''))).name:
+            first,last=(unit.get('pages') or [1,len(document.get('pages',[]))]); source_info['pages']=document.get('pages',[])[max(0,int(first)-1):int(last)]
+            break
     prompt=(root/'propuestas'/f'{unit_id}.prompt.md')
     prompt.parent.mkdir(parents=True,exist_ok=True)
-    prompt.write_text(f'''# Propuesta DTBook · {unit_id}\n\n## Instrucciones\nConstruye una propuesta DTBook NIMAS completa para esta unidad. Usa el PDF como autoridad editorial. No inventes contenido. Conserva pagenum, jerarquía semántica, listas, tablas, captions e imágenes. Entrega solo XML DTBook bien formado y deja cualquier incertidumbre como pendiente de revisión.\n\n## Unidad\n{json.dumps(unit,ensure_ascii=False,indent=2)}\n\n## Metadata\n{json.dumps(context['metadata'],ensure_ascii=False,indent=2)}\n''',encoding='utf-8')
+    prompt.write_text(f'''# Propuesta DTBook · {unit_id}\n\n## Instrucciones\nConstruye una propuesta DTBook NIMAS completa para esta unidad. El PDF indicado y el texto extraído por página son la autoridad editorial. No inventes contenido. Conserva pagenum, jerarquía semántica, listas, tablas, captions e imágenes. Entrega solo XML DTBook bien formado y deja cualquier incertidumbre como pendiente de revisión.\n\n## Unidad\n{json.dumps(unit,ensure_ascii=False,indent=2)}\n\n## Evidencia PDF\n{json.dumps(source_info,ensure_ascii=False,indent=2)}\n\n## Metadata\n{json.dumps(context['metadata'],ensure_ascii=False,indent=2)}\n''',encoding='utf-8')
     return str(prompt)
