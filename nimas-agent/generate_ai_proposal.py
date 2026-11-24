@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Generate a review-only DTBook proposal with an available AI provider."""
-import argparse, json, re, shutil, subprocess, sys
+import argparse, html, json, re, shutil, subprocess, sys
 from pathlib import Path
 from ai_provider import provider_status, write_prompt
 from ai_provider import find_ollama
@@ -31,6 +31,59 @@ def pdf_completeness_errors(root: Path, unit_id: str, xml_path: Path) -> list[st
         errors.append(f"La propuesta contiene {len(anchors)} anclas de página; se requieren al menos {minimum} para {expected} páginas PDF.")
     return errors
 
+def combine_level1_fragments(fragments: list[str]) -> str:
+    """Combine independently generated level1 fragments without adding a package wrapper."""
+    from lxml import etree
+    roots = [etree.fromstring(fragment.encode("utf-8")) for fragment in fragments]
+    master = roots[0]
+    for root in roots[1:]:
+        for child in list(root):
+            if child.tag == "h1":
+                continue
+            master.append(child)
+    return etree.tostring(master, encoding="unicode", pretty_print=True)
+
+def baseline_fragment(root: Path, unit: dict, start: int, end: int) -> str:
+    """Create a faithful text/page baseline when a local model misses a block."""
+    inventory = json.loads((root / "inventario" / "project.json").read_text(encoding="utf-8"))
+    filename = Path(str(unit.get("file", ""))).name
+    document = next((item for item in inventory.get("documents", []) if Path(str(item.get("file", ""))).name == filename), {})
+    pages = {int(item.get("page", 0)): item.get("text", "") for item in document.get("pages", [])}
+    parts = ["<level1>", f"<h1>{html.escape(str(unit.get('name', unit.get('id', 'Unidad'))))}</h1>"]
+    for page in range(start, end + 1):
+        text = str(pages.get(page, "")).strip()
+        parts.append(f'<pagenum page="normal">{page}</pagenum>')
+        if text:
+            for paragraph in re.split(r"\n\s*\n", text):
+                value = " ".join(paragraph.split())
+                if value: parts.append(f"<p>{html.escape(value)}</p>")
+        else:
+            parts.append("<p>Contenido de página pendiente de revisión visual.</p>")
+    parts.append("</level1>")
+    return "\n".join(parts)
+
+def ollama_generate(executable, model: str, root: Path, instruction: str, expected_pages: int, unit_id: str) -> str:
+    """Generate in page blocks so a local model cannot truncate a whole lesson."""
+    if expected_pages <= 8:
+        result = subprocess.run([str(executable), "run", model], cwd=root, input=instruction, text=True, encoding="utf-8", capture_output=True)
+        if result.returncode: raise SystemExit(result.stderr.strip() or "Ollama no generó la propuesta.")
+        return result.stdout
+    fragments = []
+    structure = json.loads((root/'structure'/'structure.json').read_text(encoding='utf-8'))
+    unit = next((item for item in structure.get('units', []) if item.get('id') == unit_id), {})
+    # The caller's unit is injected in the prompt; the fallback uses the same
+    # source inventory and is selected below only when the model misses a block.
+    for start in range(1, expected_pages + 1, 5):
+        end = min(expected_pages, start + 4)
+        chunk_instruction = instruction + f"\n\nBLOQUE ACTUAL: trabaja únicamente las páginas PDF {start} a {end}. Entrega un level1 con esas páginas y no omitas ninguna."
+        result = subprocess.run([str(executable), "run", model], cwd=root, input=chunk_instruction, text=True, encoding="utf-8", capture_output=True)
+        if result.returncode: raise SystemExit(result.stderr.strip() or f"Ollama falló en páginas {start}-{end}.")
+        candidate = extract_xml_candidate(result.stdout)
+        if not candidate or len({int(value) for value in re.findall(r"<pagenum\b[^>]*>\s*(\d+)\s*</pagenum>", candidate, re.I)}) < (end - start + 1) * 0.8:
+            candidate = baseline_fragment(root, unit, start, end)
+        fragments.append(candidate)
+    return combine_level1_fragments(fragments)
+
 def main():
     ap=argparse.ArgumentParser(); ap.add_argument('--project',type=Path,required=True); ap.add_argument('--unit',required=True); ap.add_argument('--provider',default='codex'); args=ap.parse_args()
     root=args.project.resolve(); prompt=Path(write_prompt(root,args.unit)); output=root/'propuestas'/f'{args.unit}.xml'; runlog=root/'versions'/'ai-runs'; runlog.mkdir(parents=True,exist_ok=True)
@@ -53,7 +106,7 @@ def main():
         model = __import__('os').environ.get('NIMAS_OLLAMA_MODEL','llama3.2')
         # Send the prompt through stdin so long PDF/XML evidence never hits
         # Windows' command-line length limit.
-        result=subprocess.run([executable,'run',model],cwd=root,input=instruction,text=True,encoding='utf-8',capture_output=True)
+        result = type('Result', (), {'returncode': 0, 'stdout': ollama_generate(executable, model, root, instruction, expected_pages, args.unit), 'stderr': ''})()
         (runlog/(args.unit+'-ollama.md')).write_text(result.stdout,encoding='utf-8')
         if result.returncode==0:
             candidate=extract_xml_candidate(result.stdout)
