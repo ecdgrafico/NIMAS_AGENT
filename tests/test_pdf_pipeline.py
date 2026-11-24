@@ -15,6 +15,7 @@ from create_zip_project import audit_package
 from preflight_project import preflight
 from generate_ai_proposal import extract_xml_candidate
 from project_data import load_project, save_project
+from ai_provider import write_prompt
 
 class PdfPipelineTests(unittest.TestCase):
     def test_filename_classification(self):
@@ -94,6 +95,17 @@ class PdfPipelineTests(unittest.TestCase):
             report=json.loads((destination/"inventario/images.json").read_text(encoding="utf-8"))
             self.assertGreaterEqual(len(report["assets"]),1)
             self.assertTrue(any((destination/"working/detected-images"/asset["file"]).is_file() for asset in report["assets"]))
+
+    def test_ai_prompt_contains_pdf_page_evidence(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root=Path(folder); (root/'metadata').mkdir(); (root/'structure').mkdir(); (root/'inventario').mkdir(); (root/'fuentes/pdf').mkdir()
+            (root/'metadata/nimac.json').write_text('{"title":"Book"}',encoding='utf-8')
+            (root/'structure/structure.json').write_text('{"units":[{"id":"L01","name":"Lesson 1","section":"bodymatter","file":"book.pdf","pages":[1,1]}]}',encoding='utf-8')
+            (root/'inventario/project.json').write_text('{"documents":[{"file":"book.pdf","pages":[{"page":1,"text":"Visible PDF text"}]}]}',encoding='utf-8')
+            (root/'fuentes/pdf/book.pdf').write_bytes(b'pdf')
+            prompt=Path(write_prompt(root,'L01')).read_text(encoding='utf-8')
+            self.assertIn('Visible PDF text',prompt)
+            self.assertIn('book.pdf',prompt)
 
     def test_preflight_blocks_missing_metadata_and_image_decisions(self):
         with tempfile.TemporaryDirectory() as folder:
