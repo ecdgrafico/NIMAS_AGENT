@@ -10,6 +10,7 @@ sys.path.insert(0, str(ROOT / "nimas-agent"))
 from create_pdf_project import classify
 from validate_ai_proposal import validate
 from create_zip_project import audit_package
+from preflight_project import preflight
 
 class PdfPipelineTests(unittest.TestCase):
     def test_filename_classification(self):
@@ -40,6 +41,14 @@ class PdfPipelineTests(unittest.TestCase):
             opf=package/'book.opf'; opf.write_text('<package xmlns="http://openebook.org/namespaces/oeb-package/1.0/"><manifest><item href="book.xml"/><item href="images/ok.png"/></manifest></package>',encoding='utf-8')
             (package/'__MACOSX'/'._book.xml').write_bytes(b'')
             result=audit_package(root,[xml],[opf]); self.assertEqual(result['status'],'pass'); self.assertEqual(result['xml_count'],1)
+
+    def test_preflight_blocks_missing_metadata_and_image_decisions(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root=Path(folder); (root/'metadata').mkdir(); (root/'structure').mkdir(); (root/'inventario').mkdir()
+            (root/'metadata'/'nimac.json').write_text('{"title":"Test"}',encoding='utf-8')
+            (root/'structure'/'structure.json').write_text('{"units":[{"id":"u1","section":"bodymatter"}]}',encoding='utf-8')
+            (root/'inventario'/'images.json').write_text('{"assets":[{"file":"x.png","status":"detected"}]}',encoding='utf-8')
+            result=preflight(root); self.assertEqual(result['status'],'pending'); self.assertTrue(any(not x['ok'] for x in result['checks']))
 
 if __name__ == "__main__":
     unittest.main()
