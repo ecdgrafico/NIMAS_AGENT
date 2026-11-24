@@ -12,13 +12,22 @@ import sys
 import threading
 from datetime import datetime
 import shutil
+import tempfile
+from email import policy
+from email.parser import BytesParser
 from http import HTTPStatus
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import parse_qs, urlparse
 from lxml import etree
+from library import all_projects, register
+from project_data import load_project, save_project
+from ai_provider import provider_status, write_prompt
 
-ROOT = Path(os.environ.get("NIMAS_PROJECT_ROOT", Path(__file__).resolve().parent.parent)).resolve()
+APP_ROOT = Path(__file__).resolve().parent.parent
+ROOT = Path(os.environ.get("NIMAS_PROJECT_ROOT", APP_ROOT)).resolve()
+LIBRARY_ROOT = Path(os.environ.get("NIMAS_LIBRARY_ROOT", ROOT.parent / "nimas-library")).resolve()
+LIBRARY_DB = LIBRARY_ROOT / "library.db"
 NS = {"d": "http://www.daisy.org/z3986/2005/dtbook/"}
 JOBS = {"running": False, "lesson": None, "queue": [], "log": "", "events": [], "followups": [], "stage": None, "startedAt": None, "export": None}
 LOCK = threading.Lock()
@@ -42,9 +51,14 @@ def approved_editorial():
     return set(re.findall(r"\| (FM|EM) \|[^|]*\| Aprobada", text))
 
 def project_status():
+    if (ROOT / "project.yaml").is_file():
+        return {"ready": True, "name": ROOT.name, "mode": "pdf_only", "projectRoot": str(ROOT)}
     required = ["lecciones_originales", "PDF", "9781669952961NIMAS", "9781669952961NIMAS_original"]
     ready = all((ROOT / path).exists() for path in required)
     return {"ready": ready, "name": ROOT.name if ready else None}
+
+def library_projects():
+    return {"projects": all_projects(LIBRARY_DB)}
 
 def range_audits():
     check = subprocess.run([sys.executable, "nimas-agent/auditar_rangos_editoriales.py"], cwd=ROOT, text=True, capture_output=True)
@@ -70,6 +84,8 @@ def lessons():
     return result
 
 def editorial_sections():
+    if (ROOT / "project.yaml").is_file():
+        return []
     if not project_status()["ready"]:
         return []
     audits = range_audits()
@@ -288,7 +304,10 @@ def run_export():
     with LOCK:
         JOBS.update(running=True, lesson="ZIP NIMAS", queue=["ZIP"], log="", stage="Ensamblando XML aprobado y reconstruyendo el manifiesto OPF", startedAt=datetime.now().isoformat(), export=None)
     try:
-        process = subprocess.run([sys.executable, "nimas-agent/exportar_paquete_nimas.py"], cwd=ROOT, text=True, capture_output=True)
+        exporter = "nimas-agent/export_pdf_project.py" if (ROOT / "project.yaml").is_file() else "nimas-agent/exportar_paquete_nimas.py"
+        command = [sys.executable, exporter]
+        if exporter.endswith("export_pdf_project.py"): command += ["--project", str(ROOT)]
+        process = subprocess.run(command, cwd=ROOT if exporter.endswith("exportar_paquete_nimas.py") else APP_ROOT, text=True, capture_output=True)
         output = (process.stdout or "").strip()
         with LOCK:
             JOBS["log"] += f"\nEXPORTACIÓN\n{output}\n{process.stderr}"
@@ -304,18 +323,76 @@ def run_export():
     finally:
         with LOCK: JOBS.update(running=False, lesson=None, queue=[], stage=None, startedAt=None)
 
+def run_assets():
+    with LOCK:
+        JOBS.update(running=True, lesson="IMÁGENES", queue=["IMÁGENES"], log="", stage="Analizando PDF y extrayendo imágenes", startedAt=datetime.now().isoformat())
+    try:
+        process = subprocess.run([sys.executable, "nimas-agent/detect_pdf_assets.py", "--project", str(ROOT)], cwd=APP_ROOT, text=True, capture_output=True)
+        with LOCK:
+            JOBS["log"] += f"\nIMÁGENES\n{process.stdout}{process.stderr}"
+            if process.returncode == 0:
+                result = json.loads(process.stdout.splitlines()[-1])
+                JOBS["events"].append({"lesson":"IMÁGENES", "ok":True, "message":f"Recursos visuales detectados: {result.get('count',0)}."})
+            else:
+                JOBS["events"].append({"lesson":"IMÁGENES", "ok":False, "message":process.stderr.strip() or "Falló el análisis de imágenes."})
+    finally:
+        with LOCK: JOBS.update(running=False, lesson=None, queue=[], stage=None, startedAt=None)
+
+def run_ai_proposal(unit_id):
+    with LOCK: JOBS.update(running=True, lesson=unit_id, queue=[unit_id], log="", stage="Generando propuesta DTBook con Codex", startedAt=datetime.now().isoformat())
+    try:
+        process=subprocess.run([sys.executable,"nimas-agent/generate_ai_proposal.py","--project",str(ROOT),"--unit",unit_id],cwd=APP_ROOT,text=True,capture_output=True)
+        with LOCK:
+            JOBS["log"]+=f"\n{process.stdout}{process.stderr}"
+            JOBS["events"].append({"lesson":unit_id,"ok":process.returncode==0,"message":process.stdout.strip() if process.returncode==0 else process.stderr.strip() or "La propuesta requiere revisión técnica."})
+    finally:
+        with LOCK: JOBS.update(running=False,lesson=None,queue=[],stage=None,startedAt=None)
+
 class Handler(SimpleHTTPRequestHandler):
+    def log_message(self, format, *args):
+        if os.environ.get("NIMAS_VERBOSE") == "1":
+            super().log_message(format, *args)
+
     def translate_path(self, path):
         relative = Path(urlparse(path).path.lstrip("/"))
-        target = (ROOT / relative).resolve()
-        return str(target if ROOT in target.parents or target == ROOT else ROOT)
+        base = APP_ROOT if relative.parts and relative.parts[0] == "auditoria-lecciones" else ROOT
+        target = (base / relative).resolve()
+        return str(target if base in target.parents or target == base else base)
     def json(self, value, status=200):
         payload = json.dumps(value).encode()
         self.send_response(status); self.send_header("Content-Type", "application/json; charset=utf-8")
         self.send_header("Cache-Control", "no-store"); self.send_header("Content-Length", str(len(payload))); self.end_headers(); self.wfile.write(payload)
+    def multipart_fields(self):
+        content_type = self.headers.get("Content-Type", "")
+        if not content_type.startswith("multipart/form-data"):
+            raise ValueError("Selecciona uno o más archivos PDF")
+        length = int(self.headers.get("Content-Length", "0"))
+        body = self.rfile.read(length)
+        message = BytesParser(policy=policy.default).parsebytes((f"Content-Type: {content_type}\r\nMIME-Version: 1.0\r\n\r\n").encode() + body)
+        fields, files = {}, []
+        for part in message.iter_parts():
+            disposition = part.get("Content-Disposition", "")
+            params = dict(part.get_params(header="Content-Disposition", unquote=True))
+            name = params.get("name")
+            filename = params.get("filename")
+            if filename:
+                files.append((filename, part.get_payload(decode=True) or b""))
+            elif name:
+                fields[name] = part.get_content()
+        return fields, files
     def do_GET(self):
         parsed = urlparse(self.path)
         if parsed.path == "/api/project-status": return self.json(project_status())
+        if parsed.path == "/api/provider-status": return self.json(provider_status())
+        if parsed.path == "/api/project-detail": return self.json(load_project(ROOT))
+        if parsed.path == "/api/project-assets":
+            path = ROOT / "inventario" / "images.json"
+            return self.json(json.loads(path.read_text(encoding="utf-8")) if path.is_file() else {"count": 0, "assets": []})
+        if parsed.path == "/api/proposal-validation":
+            unit = parse_qs(parsed.query).get("unit", [""])[0]
+            report = ROOT / "versions" / "ai-runs" / f"{unit}-validation.json"
+            return self.json(json.loads(report.read_text(encoding="utf-8")) if report.is_file() else {"status": "pending", "errors": []})
+        if parsed.path == "/api/projects": return self.json(library_projects())
         if parsed.path == "/api/lessons": return self.json({"lessons": lessons()})
         if parsed.path == "/api/editorial-sections": return self.json({"sections": editorial_sections()})
         if parsed.path == "/api/editorial-detail":
@@ -362,6 +439,59 @@ class Handler(SimpleHTTPRequestHandler):
         return super().do_GET()
     def do_POST(self):
         parsed = urlparse(self.path); query = parse_qs(parsed.query)
+        if parsed.path == "/api/open-project":
+            try:
+                size = int(self.headers.get("Content-Length", "0")); data = json.loads(self.rfile.read(size))
+                selected = Path(str(data.get("path", ""))).resolve()
+                library_projects_root = (LIBRARY_ROOT / "projects").resolve()
+                if library_projects_root not in selected.parents or not (selected / "project.yaml").is_file():
+                    raise ValueError("Proyecto no válido en la biblioteca")
+                global ROOT
+                ROOT = selected
+                os.environ["NIMAS_PROJECT_ROOT"] = str(selected)
+                return self.json({"ok": True, "name": selected.name, "path": str(selected)})
+            except Exception as error:
+                return self.json({"error": str(error)}, 400)
+        if parsed.path == "/api/save-project-setup":
+            try:
+                size = int(self.headers.get("Content-Length", "0")); data = json.loads(self.rfile.read(size))
+                save_project(ROOT, data.get("metadata"), data.get("structure"))
+                return self.json({"ok": True, "message": "Configuración del proyecto guardada."})
+            except Exception as error:
+                return self.json({"error": str(error)}, 400)
+        if parsed.path == "/api/prepare-ai-context":
+            try:
+                size=int(self.headers.get("Content-Length","0")); data=json.loads(self.rfile.read(size)); prompt=write_prompt(ROOT,str(data.get("unit_id","")))
+                return self.json({"ok":True,"prompt":prompt,"message":"Contexto de IA preparado como propuesta pendiente."})
+            except Exception as error: return self.json({"error":str(error)},400)
+        if parsed.path == "/api/generate-ai-proposal":
+            try:
+                size=int(self.headers.get("Content-Length","0")); data=json.loads(self.rfile.read(size)); unit=str(data.get("unit_id","")).strip()
+                if not unit: raise ValueError("Selecciona una unidad")
+                with LOCK:
+                    if JOBS["running"]: return self.json({"error":"Ya hay una tarea en curso."},409)
+                threading.Thread(target=run_ai_proposal,args=(unit,),daemon=True).start()
+                return self.json({"ok":True,"message":"Generación de propuesta iniciada."},202)
+            except Exception as error: return self.json({"error":str(error)},400)
+        if parsed.path == "/api/approve-ai-proposal":
+            try:
+                size=int(self.headers.get("Content-Length","0")); data=json.loads(self.rfile.read(size)); unit=str(data.get("unit_id","")).strip()
+                source=ROOT/"propuestas"/f"{unit}.xml"
+                if not source.is_file(): raise ValueError("No existe una propuesta XML para esta unidad.")
+                check=subprocess.run([sys.executable, str(APP_ROOT/"nimas-agent"/"validate_ai_proposal.py"), str(source)],cwd=APP_ROOT,text=True,capture_output=True)
+                if check.returncode: raise ValueError("La propuesta no supera la validación estructural.")
+                target=ROOT/"revision"/"approved"/f"{unit}.xml"; target.parent.mkdir(parents=True,exist_ok=True); shutil.copy2(source,target)
+                approvals=ROOT/"revision"/"approvals.json"; current=json.loads(approvals.read_text(encoding="utf-8")) if approvals.is_file() else {}; current[unit]=True; approvals.write_text(json.dumps(current,ensure_ascii=False,indent=2),encoding="utf-8")
+                return self.json({"ok":True,"message":"Propuesta aprobada para exportación."})
+            except Exception as error: return self.json({"error":str(error)},400)
+        if parsed.path == "/api/analyze-project-assets":
+            try:
+                with LOCK:
+                    if JOBS["running"]: return self.json({"error":"Ya hay una tarea en curso."},409)
+                threading.Thread(target=run_assets, daemon=True).start()
+                return self.json({"ok":True,"message":"Análisis de imágenes iniciado."},202)
+            except Exception as error:
+                return self.json({"error": str(error)}, 400)
         if parsed.path == "/api/approve-lesson":
             try:
                 number = int(query.get("lesson", [""])[0])
@@ -416,6 +546,16 @@ class Handler(SimpleHTTPRequestHandler):
             try:
                 size = int(self.headers.get("Content-Length", "0"))
                 data = json.loads(self.rfile.read(size))
+                if isinstance(data.get("pdf"), str) and data.get("pdf").strip() and not data.get("original"):
+                    name = str(data.get("name") or Path(data["pdf"]).stem).strip()
+                    safe = re.sub(r"[^A-Za-z0-9_-]+", "_", name).strip("_") or "proyecto"
+                    project_path = LIBRARY_ROOT / "projects" / safe
+                    command = [sys.executable, "nimas-agent/create_pdf_project.py", "--pdf", data["pdf"], "--destino", str(project_path), "--nombre", name]
+                    process = subprocess.run(command, cwd=ROOT, text=True, capture_output=True)
+                    if process.returncode:
+                        return self.json({"error": process.stderr.strip() or process.stdout.strip()}, 400)
+                    register(LIBRARY_DB, name, project_path)
+                    return self.json({"ok": True, "project": {"name": name, "path": str(project_path)}, "message": process.stdout.strip()})
                 required = ["original", "progreso", "pdf", "destino"]
                 if any(not isinstance(data.get(key), str) or not data[key].strip() for key in required):
                     raise ValueError("Completa las cuatro rutas de carpetas")
@@ -428,6 +568,28 @@ class Handler(SimpleHTTPRequestHandler):
                 return self.json({"ok": True, "message": process.stdout.strip()})
             except Exception as error:
                 return self.json({"error": str(error)}, 400)
+        if parsed.path == "/api/create-project-upload":
+            temp_root = None
+            try:
+                fields, uploaded = self.multipart_fields()
+                name = str(fields.get("name", "")).strip()
+                files = [(filename, data) for filename, data in uploaded if str(filename).lower().endswith(".pdf")]
+                if not name or not files: raise ValueError("Indica el nombre y selecciona al menos un PDF")
+                temp_root = Path(tempfile.mkdtemp(prefix="nimas-upload-"))
+                for filename, data in files:
+                    target = temp_root / Path(filename).name
+                    target.write_bytes(data)
+                safe = re.sub(r"[^A-Za-z0-9_-]+", "_", name).strip("_") or "proyecto"
+                project_path = LIBRARY_ROOT / "projects" / safe
+                command = [sys.executable, "nimas-agent/create_pdf_project.py", "--pdf", str(temp_root), "--destino", str(project_path), "--nombre", name]
+                process = subprocess.run(command, cwd=ROOT, text=True, capture_output=True)
+                if process.returncode: return self.json({"error": process.stderr.strip() or process.stdout.strip()}, 400)
+                register(LIBRARY_DB, name, project_path)
+                return self.json({"ok": True, "project": {"name": name, "path": str(project_path)}, "message": process.stdout.strip()})
+            except Exception as error:
+                return self.json({"error": str(error)}, 400)
+            finally:
+                if temp_root: shutil.rmtree(temp_root, ignore_errors=True)
         if parsed.path == "/api/generate-editorial":
             key = query.get("section", [""])[0].upper()
             if key not in {"FM", "EM"}: return self.json({"error": "Sección editorial inválida"}, 400)

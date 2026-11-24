@@ -35,6 +35,22 @@ El ZIP `9781669952961NIMAS_original.zip` es la fuente y debe permanecer intacto.
 NIMASAPP
 ```
 
+Durante el desarrollo, para que los cambios de código se recarguen sin cerrar
+la terminal, usa:
+
+```powershell
+NIMASAPP -Watch
+```
+
+La ventana queda limpia por defecto. Para diagnosticar solicitudes HTTP usa:
+
+```powershell
+NIMASAPP -Watch -DetailedLogs
+```
+
+WAMP no es necesario: la aplicación usa Python para el servidor local y
+SQLite para la biblioteca de proyectos.
+
 El primer inicio no carga ni solicita PHE27 ni ningún proyecto anterior: crea `.venv`, instala automáticamente las dependencias de Python y abre la landing vacía. El proyecto nuevo debe importarse desde esa landing. Para abrir de manera excepcional un proyecto local ya preparado, usa `NIMASAPP -ProjectRoot 'C:\ruta\Mi_proyecto_NIMAS'`.
 
 Si prefieres no instalar el comando permanente, desde CMD puedes ejecutar `NIMASAPP.cmd`; desde PowerShell usa `.\NIMASAPP.cmd`.
@@ -58,6 +74,35 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\run_agent.ps1 -Book PH
 ```
 
 La reconstrucción semántica XML/OPF es la prioridad. El proceso de imágenes es un módulo separado y puede terminar en revisión humana. El aprendizaje entre títulos se conserva como memoria explícita y versionada; no se aplican reglas nuevas globalmente sin evidencia.
+
+## Flujo PDF-first
+
+1. Crear el proyecto cargando uno o varios PDF desde la aplicación. Los archivos originales se copian a la biblioteca local y nunca se modifican.
+2. Revisar la estructura propuesta: `frontmatter`, `bodymatter`, `rearmatter` o `unclassified`. La detección inicial usa nombres como `FM`, `EM`, `L01`, `U01`, `PL`, `IU` y `UI`, pero la decisión final es humana.
+3. Completar y guardar `metadata/nimac.json` y la estructura editorial.
+4. Ejecutar el inventario visual. Las imágenes extraídas quedan en `working/detected-images` y no entran automáticamente al paquete.
+5. Preparar y generar una propuesta XML por unidad. La propuesta se guarda en `propuestas/` y se valida estructuralmente.
+6. Aprobar manualmente cada propuesta. Solo entonces se copia a `revision/approved/` y se registra en `revision/approvals.json`.
+7. Crear el ZIP validado. El exportador PDF-led genera DTBook, OPF, manifiesto, spine y solo incorpora imágenes referenciadas por XML aprobado.
+
+La exportación se bloquea si faltan unidades clasificadas/aprobadas o si existen referencias de imagen sin resolver. El exportador heredado de PHE27 permanece separado para no alterar su flujo aprobado.
+
+## Iniciar un proyecto desde PDF
+
+La app también puede iniciar un proyecto sin XML, OPF ni lecciones de ejemplo.
+El primer paso crea una copia no destructiva de los PDF y un inventario de
+páginas y texto:
+
+```powershell
+python nimas-agent/create_pdf_project.py `
+  --pdf 'C:\ruta\a\los\PDF' `
+  --destino 'C:\ruta\a\Mi_proyecto_NIMAS' `
+  --nombre 'Mi libro'
+```
+
+El inventario queda en `inventario/project.json`. La siguiente etapa será la
+extracción visual de imágenes y la generación de una propuesta DTBook/OPF por
+un proveedor de IA, siempre como propuesta pendiente de auditoría.
 
 ## Auditoría editorial local
 

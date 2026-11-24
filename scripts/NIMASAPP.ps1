@@ -2,7 +2,9 @@
 param(
     [string]$ProjectRoot = '',
     [int]$Port = 8000,
-    [switch]$NoBrowser
+    [switch]$NoBrowser,
+    [switch]$Watch,
+    [switch]$DetailedLogs
 )
 
 $ErrorActionPreference = 'Stop'
@@ -51,6 +53,7 @@ if (-not (Get-Command pdftoppm -ErrorAction SilentlyContinue)) {
 }
 
 $env:NIMAS_PROJECT_ROOT = $ProjectRoot
+$env:NIMAS_VERBOSE = if ($DetailedLogs) { '1' } else { '0' }
 $Url = "http://127.0.0.1:$Port/auditoria-lecciones/"
 Write-Host ''
 Write-Host "NIMASAPP iniciará en $Url" -ForegroundColor Green
@@ -62,5 +65,29 @@ if ($ProjectRoot -eq $RepoRoot) {
 Write-Host 'Para detenerlo, presiona Ctrl+C en esta terminal.' -ForegroundColor DarkGray
 if (-not $NoBrowser) { Start-Process $Url }
 
-& $VenvPython (Join-Path $RepoRoot 'nimas-agent\servidor_auditoria.py')
-exit $LASTEXITCODE
+$ServerScript = Join-Path $RepoRoot 'nimas-agent\servidor_auditoria.py'
+if (-not $Watch) {
+    & $VenvPython $ServerScript
+    exit $LASTEXITCODE
+}
+
+Write-Host 'Modo Watch activo: los cambios de código reiniciarán el servidor automáticamente.' -ForegroundColor DarkCyan
+$watchExtensions = @('.py', '.js', '.html', '.css', '.ps1')
+while ($true) {
+    $files = Get-ChildItem -LiteralPath $RepoRoot -Recurse -File -ErrorAction SilentlyContinue |
+        Where-Object { $watchExtensions -contains $_.Extension -and $_.FullName -notmatch '\\.venv\\|\\.git\\|\\work\\|\\nimas-library\\' }
+    $stamp = ($files | Sort-Object FullName | ForEach-Object { "$($_.FullName)|$($_.LastWriteTimeUtc.Ticks)|$($_.Length)" }) -join "`n"
+    $process = Start-Process -FilePath $VenvPython -ArgumentList @($ServerScript) -PassThru -NoNewWindow
+    while (-not $process.HasExited) {
+        Start-Sleep -Milliseconds 700
+        $currentFiles = Get-ChildItem -LiteralPath $RepoRoot -Recurse -File -ErrorAction SilentlyContinue |
+            Where-Object { $watchExtensions -contains $_.Extension -and $_.FullName -notmatch '\\.venv\\|\\.git\\|\\work\\|\\nimas-library\\' }
+        $currentStamp = ($currentFiles | Sort-Object FullName | ForEach-Object { "$($_.FullName)|$($_.LastWriteTimeUtc.Ticks)|$($_.Length)" }) -join "`n"
+        if ($currentStamp -ne $stamp) {
+            Write-Host 'Cambio detectado; reiniciando servidor…' -ForegroundColor Yellow
+            Stop-Process -Id $process.Id -Force -ErrorAction SilentlyContinue
+            break
+        }
+    }
+    if ($process.HasExited) { exit $process.ExitCode }
+}
