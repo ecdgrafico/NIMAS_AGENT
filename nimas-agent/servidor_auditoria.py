@@ -14,6 +14,7 @@ import threading
 from datetime import datetime
 import shutil
 import tempfile
+import mimetypes
 from email import policy
 from email.parser import BytesParser
 from http import HTTPStatus
@@ -30,6 +31,7 @@ APP_ROOT = Path(__file__).resolve().parent.parent
 ROOT = Path(os.environ.get("NIMAS_PROJECT_ROOT", APP_ROOT)).resolve()
 LIBRARY_ROOT = Path(os.environ.get("NIMAS_LIBRARY_ROOT", APP_ROOT / "nimas-library")).resolve()
 LIBRARY_DB = LIBRARY_ROOT / "library.db"
+FRONTEND_DIST = APP_ROOT / "frontend-vue" / "dist"
 NS = {"d": "http://www.daisy.org/z3986/2005/dtbook/"}
 JOBS = {"running": False, "lesson": None, "queue": [], "log": "", "events": [], "followups": [], "stage": None, "startedAt": None, "export": None}
 LOCK = threading.Lock()
@@ -400,6 +402,22 @@ class Handler(SimpleHTTPRequestHandler):
             elif name:
                 fields[name] = part.get_content()
         return fields, files
+    def serve_frontend(self, path):
+        """Serve the built Vue SPA and fall back to index.html for client routes."""
+        if not FRONTEND_DIST.is_dir():
+            self.send_error(HTTPStatus.SERVICE_UNAVAILABLE, "frontend-vue/dist no existe; ejecuta npm run build")
+            return
+        relative = Path(urlparse(path).path.lstrip("/"))
+        target = (FRONTEND_DIST / relative).resolve()
+        if FRONTEND_DIST not in target.parents or not target.is_file():
+            target = FRONTEND_DIST / "index.html"
+        payload = target.read_bytes()
+        self.send_response(HTTPStatus.OK)
+        self.send_header("Content-Type", mimetypes.guess_type(str(target))[0] or "application/octet-stream")
+        self.send_header("Cache-Control", "no-cache" if target.name == "index.html" else "public, max-age=31536000, immutable")
+        self.send_header("Content-Length", str(len(payload)))
+        self.end_headers()
+        self.wfile.write(payload)
     def do_GET(self):
         parsed = urlparse(self.path)
         if parsed.path == "/api/nimac-template":
@@ -463,8 +481,8 @@ class Handler(SimpleHTTPRequestHandler):
                 self.send_header("Content-Disposition", f'attachment; filename="informe-L{number:02d}.md"')
                 self.send_header("Content-Length", str(len(payload))); self.end_headers(); self.wfile.write(payload); return
             except Exception as error: return self.json({"error": str(error)}, 400)
-        if parsed.path == "/":
-            self.send_response(HTTPStatus.SEE_OTHER); self.send_header("Location", "/auditoria-lecciones/"); self.end_headers(); return
+        if parsed.path == "/" or (not parsed.path.startswith("/api/") and not parsed.path.startswith("/auditoria-lecciones") and not parsed.path.startswith("/working/")):
+            return self.serve_frontend(parsed.path)
         return super().do_GET()
     def do_POST(self):
         parsed = urlparse(self.path); query = parse_qs(parsed.query)
