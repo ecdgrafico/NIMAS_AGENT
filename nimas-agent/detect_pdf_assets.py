@@ -9,12 +9,21 @@ import fitz
 def sha256(data): return hashlib.sha256(data).hexdigest()
 
 def main():
-    ap=argparse.ArgumentParser(); ap.add_argument('--project',type=Path,required=True); args=ap.parse_args()
+    ap=argparse.ArgumentParser(); ap.add_argument('--project',type=Path,required=True); ap.add_argument('--unit',default=''); args=ap.parse_args()
     root=args.project.resolve(); source=root/'fuentes'/'pdf'; out=root/'working'/'detected-images'; out.mkdir(parents=True,exist_ok=True)
+    selected=None
+    structure_path=root/'structure'/'structure.json'
+    if args.unit and structure_path.is_file():
+        units=json.loads(structure_path.read_text(encoding='utf-8')).get('units',[])
+        selected=next((u for u in units if u.get('id')==args.unit),None)
     records=[]
     for pdf in sorted(source.rglob('*.pdf')):
+        if selected and Path(str(selected.get('file',''))).name != pdf.name: continue
         with fitz.open(str(pdf)) as doc:
             for page_no,page in enumerate(doc,1):
+                if selected:
+                    pages=selected.get('pages') or [1, len(doc)]
+                    if not int(pages[0]) <= page_no <= int(pages[1]): continue
                 seen=set()
                 for index,img in enumerate(page.get_images(full=True),1):
                     xref=img[0]
@@ -28,8 +37,12 @@ def main():
                         records.append({'file':name,'source_pdf':pdf.name,'page':page_no,'xref':xref,'sha256':sha256(data),'width':extracted.get('width'),'height':extracted.get('height'),'ext':ext,'rects':rects,'status':'detected','referenced':False})
                     except Exception as error:
                         records.append({'source_pdf':pdf.name,'page':page_no,'xref':xref,'status':'error','error':str(error)})
-    report={'schema':'nimas-assets/1','source':'pdf','count':len([x for x in records if x.get('status')=='detected']),'assets':records}
-    structure_path=root/'structure'/'structure.json'
+    report={'schema':'nimas-assets/1','source':'pdf','count':0,'assets':records}
+    existing_path=root/'inventario'/'images.json'
+    if args.unit and existing_path.is_file():
+        existing=json.loads(existing_path.read_text(encoding='utf-8'))
+        new_files={asset.get('file') for asset in records}
+        report['assets']=[asset for asset in existing.get('assets',[]) if asset.get('file') not in new_files]+records
     if structure_path.is_file():
         try:
             units=json.loads(structure_path.read_text(encoding='utf-8')).get('units',[])
@@ -43,6 +56,7 @@ def main():
                 asset['candidate_units']=matches
         except Exception:
             pass
+    report['count']=len([x for x in report['assets'] if x.get('status')=='detected'])
     (root/'inventario'/'images.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
     print(json.dumps({'ok':True,'count':report['count'],'inventory':'inventario/images.json'}))
 

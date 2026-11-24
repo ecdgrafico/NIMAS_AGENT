@@ -345,9 +345,10 @@ def run_assets():
 def run_ai_proposal(unit_id, provider="codex"):
     with LOCK: JOBS.update(running=True, lesson=unit_id, queue=[unit_id], log="", stage=f"Generando propuesta DTBook con {provider}", startedAt=datetime.now().isoformat())
     try:
+        assets=subprocess.run([sys.executable,"nimas-agent/detect_pdf_assets.py","--project",str(ROOT),"--unit",unit_id],cwd=APP_ROOT,text=True,capture_output=True)
         process=subprocess.run([sys.executable,"nimas-agent/generate_ai_proposal.py","--project",str(ROOT),"--unit",unit_id,"--provider",provider],cwd=APP_ROOT,text=True,capture_output=True)
         with LOCK:
-            JOBS["log"]+=f"\n{process.stdout}{process.stderr}"
+            JOBS["log"]+=f"\nIMÁGENES DE UNIDAD\n{assets.stdout}{assets.stderr}\n{process.stdout}{process.stderr}"
             JOBS["events"].append({"lesson":unit_id,"ok":process.returncode==0,"message":process.stdout.strip() if process.returncode==0 else process.stderr.strip() or "La propuesta requiere revisión técnica."})
     finally:
         with LOCK: JOBS.update(running=False,lesson=None,queue=[],stage=None,startedAt=None)
@@ -359,9 +360,10 @@ def run_ai_all(provider="codex"):
     try:
         for position,unit_id in enumerate(ids):
             with LOCK: JOBS.update(lesson=unit_id,queue=ids[position:],stage=f"Generando propuesta {unit_id}")
+            assets=subprocess.run([sys.executable,"nimas-agent/detect_pdf_assets.py","--project",str(ROOT),"--unit",unit_id],cwd=APP_ROOT,text=True,capture_output=True)
             process=subprocess.run([sys.executable,"nimas-agent/generate_ai_proposal.py","--project",str(ROOT),"--unit",unit_id,"--provider",provider],cwd=APP_ROOT,text=True,capture_output=True)
             with LOCK:
-                JOBS["log"]+=f"\n{process.stdout}{process.stderr}"
+                JOBS["log"]+=f"\nIMÁGENES DE UNIDAD\n{assets.stdout}{assets.stderr}\n{process.stdout}{process.stderr}"
                 JOBS["events"].append({"lesson":unit_id,"ok":process.returncode==0,"message":process.stdout.strip() if process.returncode==0 else process.stderr.strip() or "La propuesta requiere revisión técnica."})
     finally:
         with LOCK: JOBS.update(running=False,lesson=None,queue=[],stage=None,startedAt=None)
