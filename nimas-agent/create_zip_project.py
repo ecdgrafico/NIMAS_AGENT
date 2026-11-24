@@ -35,7 +35,8 @@ def main():
     with zipfile.ZipFile(args.zip) as archive: safe_extract(archive, root/'fuentes/nimas-original')
     for pdf in args.pdf:
         if pdf.is_file(): shutil.copy2(pdf, root/'fuentes/pdf'/pdf.name)
-    xmls=list((root/'fuentes/nimas-original').rglob('*.xml')); opfs=list((root/'fuentes/nimas-original').rglob('*.opf'))
+    is_system=lambda p: '__MACOSX' in p.parts or p.name.startswith('._') or p.name in {'.DS_Store','Thumbs.db'}
+    xmls=[p for p in (root/'fuentes/nimas-original').rglob('*.xml') if not is_system(p)]; opfs=[p for p in (root/'fuentes/nimas-original').rglob('*.opf') if not is_system(p)]
     inventory={'schema':'nimas-project/1','name':args.nombre,'source_mode':'nimas_zip','created_at':datetime.now(timezone.utc).isoformat(),'xml_source':str(xmls[0].relative_to(root)) if xmls else None,'opf_source':str(opfs[0].relative_to(root)) if opfs else None,'reference_pdfs':[p.name for p in (root/'fuentes/pdf').glob('*.pdf')],'status':'intake_complete'}
     (root/'inventario/project.json').write_text(json.dumps(inventory,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
     (root/'metadata/nimac.json').write_text(json.dumps({'title':args.nombre},ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
