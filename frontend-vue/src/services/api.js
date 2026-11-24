@@ -18,6 +18,7 @@ export const api = {
   generate: body => request('/generate-ai-proposal', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(body) }),
   validate: unit => request(`/proposal-validation?unit=${encodeURIComponent(unit)}`),
   approve: unit => request('/approve-ai-proposal', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ unit_id: unit }) }),
+  approveLesson: lesson => request(`/approve-lesson?lesson=${encodeURIComponent(lesson)}`, { method: 'POST' }),
   preflight: () => request('/project-preflight')
   ,lessons: () => request('/lessons')
   ,job: () => request('/job')
@@ -29,6 +30,8 @@ export const api = {
   ,editorialDetail: key => request(`/editorial-detail?section=${encodeURIComponent(key)}`)
   ,editorialImages: (key,page) => request(`/editorial-images?section=${encodeURIComponent(key)}&page=${encodeURIComponent(page)}`)
   ,exportPackage: () => request('/export-package',{method:'POST'})
+  ,assignImage: body => request('/assign-image',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)})
+  ,requestAdjustment: body => request('/request-adjustment',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)})
 }
 
 export async function uploadProject({ name, pdfs, zip }) {
