@@ -13,6 +13,10 @@ def preflight(root: Path):
         value=metadata.get(key,'')
         ok=bool(value) if isinstance(value,list) else bool(str(value).strip())
         checks.append({'id':'metadata_'+key,'ok':ok,'message':f'Metadata {key}'})
+    subjects=metadata.get('subjects') or []; subjects=subjects if isinstance(subjects,list) else [subjects]
+    grades=metadata.get('grade_levels') or []; grades=grades if isinstance(grades,list) else [grades]
+    checks.append({'id':'subject_limit','ok':len(subjects)<=3,'message':f'{len(subjects)}/3 materias NIMAC'})
+    checks.append({'id':'grade_limit','ok':len(grades)<=7,'message':f'{len(grades)}/7 niveles de grado'})
     units=structure.get('units',[]); checks.append({'id':'units','ok':bool(units),'message':f'{len(units)} unidades'}); checks.append({'id':'classified','ok':all(u.get('section')!='unclassified' for u in units),'message':'Unidades clasificadas'})
     approvals=json.loads((root/'revision/approvals.json').read_text(encoding='utf-8')) if (root/'revision/approvals.json').is_file() else {}
     approved_count=sum(1 for u in units if approvals.get(u.get('id')) is True)
