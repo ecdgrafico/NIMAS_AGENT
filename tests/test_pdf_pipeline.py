@@ -94,6 +94,8 @@ class PdfPipelineTests(unittest.TestCase):
             self.assertEqual(result.returncode,0,result.stderr)
             report=json.loads((destination/"inventario/images.json").read_text(encoding="utf-8"))
             self.assertGreaterEqual(len(report["assets"]),1)
+            self.assertEqual(report["assets"][0]["source_pdf"],"lesson_L01.pdf")
+            self.assertEqual(report["assets"][0]["page"],1)
             self.assertTrue(any((destination/"working/detected-images"/asset["file"]).is_file() for asset in report["assets"]))
 
     def test_ai_prompt_contains_pdf_page_evidence(self):
