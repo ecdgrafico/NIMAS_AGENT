@@ -2,6 +2,7 @@
 import { computed, onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { api } from '../services/api'
+import { config } from '../config'
 
 const route = useRoute()
 const detail = ref(null)
@@ -51,6 +52,6 @@ onMounted(load)
   <section class="hero"><span class="eyebrow">AUDITORÍA DE UNIDAD</span><h2>{{ unit?.name || route.params.unit }}</h2><p>Compara el PDF con el XML fuente, la propuesta DTBook y sus imágenes. La propuesta solo se instala después de aprobar todas las páginas.</p></section>
   <section class="audit-toolbar"><button class="secondary" :disabled="page <= first" @click="page--; render()">← Anterior</button><strong>Página {{ page }} de {{ last }}</strong><button class="secondary" :disabled="page >= last" @click="page++; render()">Siguiente →</button><span class="decision-badge" :class="decision">{{ decision }}</span><button class="secondary" @click="decide('correction')">Marcar corrección</button><button @click="decide('approved')">Aprobar página</button><button @click="approve">Aprobar unidad</button><span class="toolbar-status">{{ status }}</span></section>
   <section class="audit-grid"><article class="audit-panel"><header><strong>PDF</strong><span>Página {{ page }}</span></header><img :src="image" alt="Página del PDF" /></article><article class="audit-panel"><header><strong>XML fuente</strong><span>{{ detail?.source ? 'Solo lectura' : 'No disponible' }}</span></header><pre>{{ detail?.source || 'Este proyecto no contiene un XML fuente asociado a la unidad.' }}</pre></article><article class="audit-panel"><header><strong>DTBook propuesto</strong><span>{{ detail?.hasProposal ? 'Propuesta' : 'Pendiente' }}</span></header><pre>{{ detail?.proposal || 'Aún no hay propuesta.' }}</pre></article></section>
-  <section class="library-card"><h3>Imágenes de esta página <span class="count">{{ pageAssets.length }}</span></h3><div class="image-row"><figure v-for="asset in pageAssets" :key="asset.file"><img :src="asset.url" :alt="asset.file" /><figcaption>{{ asset.file }}</figcaption></figure><p v-if="!pageAssets.length" class="empty-state">No hay imágenes detectadas para esta página.</p></div></section>
+<section class="library-card"><h3>Imágenes de esta página <span class="count">{{ pageAssets.length }}</span></h3><div class="image-row"><figure v-for="asset in pageAssets" :key="asset.file"><img :src="config.static(asset.url)" :alt="asset.file" /><figcaption>{{ asset.file }}</figcaption></figure><p v-if="!pageAssets.length" class="empty-state">No hay imágenes detectadas para esta página.</p></div></section>
   <section class="correction-card"><h3>Solicitar corrección a la IA</h3><textarea v-model="note" placeholder="Describe el ajuste de esta página…"></textarea><button @click="adjust">Guardar solicitud</button></section>
 </template>
