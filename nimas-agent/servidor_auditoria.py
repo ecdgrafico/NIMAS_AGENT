@@ -214,6 +214,49 @@ def proposal_images(number, page):
                       "url": "/9781669952961NIMAS/" + src})
     return found
 
+def project_unit(unit_id):
+    units = load_project(ROOT).get("structure", {}).get("units", [])
+    return next((unit for unit in units if str(unit.get("id")) == str(unit_id)), None)
+
+def unit_detail(unit_id):
+    unit = project_unit(unit_id)
+    if not unit:
+        raise ValueError("Unidad no encontrada")
+    source = ROOT / "fuentes" / "pdf" / str(unit.get("file", ""))
+    if not source.is_file():
+        source = ROOT / "fuentes" / "pdf" / Path(str(unit.get("file", ""))).name
+    pages = unit.get("pages") or [1, 0]
+    proposal = ROOT / "propuestas" / f"{unit_id}.xml"
+    assets_path = ROOT / "inventario" / "images.json"
+    assets = json.loads(assets_path.read_text(encoding="utf-8")) if assets_path.is_file() else {"assets": []}
+    selected_assets = []
+    for asset in assets.get("assets", []):
+        candidates = asset.get("candidate_units", [])
+        same_pdf = Path(str(asset.get("source_pdf", ""))).name == Path(str(unit.get("file", ""))).name
+        if str(unit_id) in candidates or (same_pdf and int(pages[0]) <= int(asset.get("page", 0)) <= int(pages[1])):
+            selected_assets.append({**asset, "url": "/working/detected-images/" + str(asset.get("file", ""))})
+    return {"unit": unit, "pdf": str(source.relative_to(ROOT)).replace("\\", "/") if source.is_file() else None,
+            "pages": pages, "proposal": proposal.read_text(encoding="utf-8", errors="replace") if proposal.is_file() else None,
+            "assets": selected_assets, "hasProposal": proposal.is_file()}
+
+def render_unit(unit_id, page):
+    detail = unit_detail(unit_id)
+    source = ROOT / str(detail["pdf"] or "")
+    if not source.is_file():
+        raise ValueError("PDF de la unidad no encontrado")
+    output = ROOT / "working" / "unit-pages" / re.sub(r"[^A-Za-z0-9_-]+", "_", str(unit_id))
+    output.mkdir(parents=True, exist_ok=True)
+    target = output / f"page-{int(page):04d}.png"
+    if not target.is_file():
+        import fitz
+        with fitz.open(str(source)) as document:
+            index = int(page) - 1
+            if index < 0 or index >= len(document):
+                raise ValueError("Página fuera del rango del PDF")
+            pixmap = document[index].get_pixmap(matrix=fitz.Matrix(1.5, 1.5), alpha=False)
+            pixmap.save(str(target))
+    return "/working/unit-pages/" + re.sub(r"[^A-Za-z0-9_-]+", "_", str(unit_id)) + f"/page-{int(page):04d}.png"
+
 def adjustment_path(number, page):
     folder = ROOT / "nimas-review" / "solicitudes-ajuste"
     folder.mkdir(parents=True, exist_ok=True)
@@ -426,6 +469,18 @@ class Handler(SimpleHTTPRequestHandler):
         if parsed.path == "/api/project-status": return self.json(project_status())
         if parsed.path == "/api/provider-status": return self.json(provider_status())
         if parsed.path == "/api/project-detail": return self.json(load_project(ROOT))
+        if parsed.path == "/api/project-units": return self.json({"units": load_project(ROOT).get("structure", {}).get("units", [])})
+        if parsed.path == "/api/unit-detail":
+            try:
+                unit = parse_qs(parsed.query).get("unit", [""])[0]
+                return self.json(unit_detail(unit))
+            except Exception as error: return self.json({"error": str(error)}, 404)
+        if parsed.path == "/api/unit-render":
+            try:
+                unit = parse_qs(parsed.query).get("unit", [""])[0]
+                page = parse_qs(parsed.query).get("page", ["1"])[0]
+                return self.json({"url": render_unit(unit, page)})
+            except Exception as error: return self.json({"error": str(error)}, 400)
         if parsed.path == "/api/project-preflight":
             process=subprocess.run([sys.executable,str(APP_ROOT/"nimas-agent"/"preflight_project.py"),"--project",str(ROOT)],cwd=APP_ROOT,text=True,capture_output=True)
             try: return self.json(json.loads(process.stdout.splitlines()[-1]))
@@ -642,12 +697,19 @@ class Handler(SimpleHTTPRequestHandler):
             try:
                 size = int(self.headers.get("Content-Length", "0"))
                 data = json.loads(self.rfile.read(size))
-                number, page = int(data.get("lesson")), int(data.get("page"))
+                unit_id = str(data.get("unit_id", "")).strip()
+                page = int(data.get("page"))
                 note = str(data.get("note", "")).strip()
                 if not note:
                     raise ValueError("Escribe la solicitud editorial antes de guardarla")
-                adjustment_path(number, page).write_text(
-                    f"# Solicitud editorial · L{number:02d}, página {page}\n\n{note}\n", encoding="utf-8")
+                if unit_id:
+                    safe = re.sub(r"[^A-Za-z0-9_-]+", "_", unit_id)
+                    target = ROOT / "revision" / "adjustments" / f"{safe}-p{page:04d}.md"
+                    target.parent.mkdir(parents=True, exist_ok=True)
+                    target.write_text(f"# Solicitud editorial · {unit_id}, página {page}\n\n{note}\n", encoding="utf-8")
+                else:
+                    number = int(data.get("lesson"))
+                    adjustment_path(number, page).write_text(f"# Solicitud editorial · L{number:02d}, página {page}\n\n{note}\n", encoding="utf-8")
                 with LOCK:
                     if JOBS["running"]:
                         return self.json({"error": "Hay una generación en curso. La solicitud quedó guardada; envíala cuando termine para corregir solo esta página."}, 409)

@@ -8,6 +8,7 @@ import StructureView from './views/StructureView.vue'
 import EditorialAuditView from './views/EditorialAuditView.vue'
 import AssetsView from './views/AssetsView.vue'
 import PackageView from './views/PackageView.vue'
+import UnitAuditView from './views/UnitAuditView.vue'
 
 export default createRouter({
   history: createWebHistory(),
@@ -22,5 +23,6 @@ export default createRouter({
     ,{ path: '/editorial', component: EditorialAuditView }
     ,{ path: '/assets', component: AssetsView }
     ,{ path: '/package', component: PackageView }
+    ,{ path: '/unit/:unit', component: UnitAuditView }
   ]
 })
