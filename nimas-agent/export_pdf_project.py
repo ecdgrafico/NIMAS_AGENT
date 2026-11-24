@@ -50,6 +50,10 @@ def main():
     if missing: checks.append('Imágenes inexistentes: '+', '.join(sorted(missing)[:5]))
     manifest_refs={node.get('href') for node in etree.parse(str(opf_path)).xpath('//*[local-name()="manifest"]/*[local-name()="item"]') if node.get('href')}
     if missing_manifest:=sorted(refs-manifest_refs): checks.append('Imágenes ausentes del OPF: '+', '.join(missing_manifest[:5]))
+    dtd_path=Path(__file__).with_name('dtbook-2005-3.dtd')
+    if dtd_path.is_file():
+        dtd=etree.DTD(str(dtd_path))
+        if not dtd.validate(parsed): checks.append('El DTBook no valida contra dtbook-2005-3.dtd: '+ '; '.join(str(e) for e in list(dtd.error_log)[:3]))
     if checks: raise SystemExit('Paquete no válido: '+ ' | '.join(checks))
     zip_path = out / f"{root.name}.zip"
     with zipfile.ZipFile(zip_path, "w", zipfile.ZIP_DEFLATED) as z:
