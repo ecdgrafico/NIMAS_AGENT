@@ -31,6 +31,7 @@ export const api = {
   ,editorialImages: (key,page) => request(`/editorial-images?section=${encodeURIComponent(key)}&page=${encodeURIComponent(page)}`)
   ,exportPackage: () => request('/export-package',{method:'POST'})
   ,assignImage: body => request('/assign-image',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)})
+  ,analyzeAssets: () => request('/analyze-project-assets',{method:'POST'})
   ,requestAdjustment: body => request('/request-adjustment',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)})
 }
 
