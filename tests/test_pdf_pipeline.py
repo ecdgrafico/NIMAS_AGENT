@@ -98,7 +98,7 @@ class PdfPipelineTests(unittest.TestCase):
 
     def test_ai_prompt_contains_pdf_page_evidence(self):
         with tempfile.TemporaryDirectory() as folder:
-            root=Path(folder); (root/'metadata').mkdir(); (root/'structure').mkdir(); (root/'inventario').mkdir(); (root/'fuentes/pdf').mkdir()
+            root=Path(folder); (root/'metadata').mkdir(); (root/'structure').mkdir(); (root/'inventario').mkdir(); (root/'fuentes/pdf').mkdir(parents=True)
             (root/'metadata/nimac.json').write_text('{"title":"Book"}',encoding='utf-8')
             (root/'structure/structure.json').write_text('{"units":[{"id":"L01","name":"Lesson 1","section":"bodymatter","file":"book.pdf","pages":[1,1]}]}',encoding='utf-8')
             (root/'inventario/project.json').write_text('{"documents":[{"file":"book.pdf","pages":[{"page":1,"text":"Visible PDF text"}]}]}',encoding='utf-8')
