@@ -8,8 +8,11 @@ def preflight(root: Path):
     metadata=json.loads((root/'metadata/nimac.json').read_text(encoding='utf-8')) if (root/'metadata/nimac.json').is_file() else {}
     structure=json.loads((root/'structure/structure.json').read_text(encoding='utf-8')) if (root/'structure/structure.json').is_file() else {'units':[]}
     images=json.loads((root/'inventario/images.json').read_text(encoding='utf-8')) if (root/'inventario/images.json').is_file() else {'assets':[]}
-    checks=[]; required=('title','identifier','language')
-    for key in required: checks.append({'id':'metadata_'+key,'ok':bool(str(metadata.get(key,'')).strip()),'message':f'Metadata {key}'})
+    checks=[]; required=('title','publisher','identifier','language','source_isbns','subjects','publication_year','copyright_year','state_edition','content_type')
+    for key in required:
+        value=metadata.get(key,'')
+        ok=bool(value) if isinstance(value,list) else bool(str(value).strip())
+        checks.append({'id':'metadata_'+key,'ok':ok,'message':f'Metadata {key}'})
     units=structure.get('units',[]); checks.append({'id':'units','ok':bool(units),'message':f'{len(units)} unidades'}); checks.append({'id':'classified','ok':all(u.get('section')!='unclassified' for u in units),'message':'Unidades clasificadas'})
     approvals=json.loads((root/'revision/approvals.json').read_text(encoding='utf-8')) if (root/'revision/approvals.json').is_file() else {}
     approved_count=sum(1 for u in units if approvals.get(u.get('id')) is True)
