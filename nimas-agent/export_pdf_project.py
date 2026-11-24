@@ -21,6 +21,8 @@ def main():
     ensure_pdf_project_layout(root)
     data = json.loads((root / "structure/structure.json").read_text(encoding="utf-8"))
     metadata = json.loads((root / "metadata/nimac.json").read_text(encoding="utf-8"))
+    missing_metadata=[key for key in ('title','identifier','language') if not str(metadata.get(key,'')).strip()]
+    if missing_metadata: raise SystemExit('Falta metadata NIMAC obligatoria: '+', '.join(missing_metadata))
     units = data.get("units", [])
     if not units: raise SystemExit("No hay unidades en la estructura del proyecto.")
     approved = json.loads((root / "revision/approvals.json").read_text(encoding="utf-8")) if (root / "revision/approvals.json").is_file() else {}
