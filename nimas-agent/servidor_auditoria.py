@@ -490,6 +490,7 @@ class Handler(SimpleHTTPRequestHandler):
         if parsed.path == "/api/assign-image":
             try:
                 size=int(self.headers.get("Content-Length","0")); data=json.loads(self.rfile.read(size)); filename=str(data.get("file","")).strip(); unit=str(data.get("unit_id","")).strip(); decision=str(data.get("status","reviewed"))
+                if decision!="discarded" and not unit: raise ValueError("Selecciona una unidad antes de marcar la imagen como revisada")
                 path=ROOT/"inventario"/"images.json"
                 if not path.is_file(): raise ValueError("Primero analiza las imágenes del proyecto")
                 report=json.loads(path.read_text(encoding="utf-8")); asset=next((x for x in report.get("assets",[]) if x.get("file")==filename),None)
