@@ -75,6 +75,17 @@ class PdfPipelineTests(unittest.TestCase):
             self.assertFalse(next(x for x in result['checks'] if x['id']=='approvals')['ok'])
             self.assertFalse(next(x for x in result['checks'] if x['id']=='approved_xml')['ok'])
 
+    def test_preflight_blocks_nimac_subject_and_grade_overflow(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root=Path(folder)
+            (root/'metadata').mkdir(); (root/'structure').mkdir(); (root/'inventario').mkdir()
+            metadata={"title":"T","publisher":"P","identifier":"I","language":"en","source_isbns":["x"],"subjects":["a","b","c","d"],"publication_year":"2026","copyright_year":"2026","state_edition":"National ed.","content_type":"Textbook","grade_levels":["1","2","3","4","5","6","7","8"]}
+            (root/'metadata/nimac.json').write_text(json.dumps(metadata),encoding='utf-8')
+            (root/'structure/structure.json').write_text('{"units":[]}',encoding='utf-8')
+            result=preflight(root)
+            self.assertFalse(next(x for x in result['checks'] if x['id']=='subject_limit')['ok'])
+            self.assertFalse(next(x for x in result['checks'] if x['id']=='grade_limit')['ok'])
+
     def test_project_structure_preserves_combined_pdf_ranges(self):
         with tempfile.TemporaryDirectory() as folder:
             root=Path(folder)
