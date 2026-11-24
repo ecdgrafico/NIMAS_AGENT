@@ -44,8 +44,13 @@ def main():
     if xmls:
         try:
             tree=etree.parse(str(xmls[0])); body=tree.xpath('//*[local-name()="bodymatter"]')[0]
-            for index,node in enumerate(body.xpath('./*[local-name()="level1"]'),1):
-                heading=' '.join(''.join(node.xpath('./*[local-name()="hd"][1]//text()')).split())
+            candidates=body.xpath('./*[local-name()="level1"]')
+            lesson_nodes=[]
+            for node in candidates:
+                heading=' '.join(''.join(node.xpath('./*[local-name()="h1"][1]//text()')).split())
+                if heading.lower().startswith(('lesson ', 'unit ', 'chapter ')): lesson_nodes.append((node,heading))
+            if len(lesson_nodes) < 5: lesson_nodes=[(node, ' '.join(''.join(node.xpath('./*[local-name()="h1"][1]//text()')).split())) for node in candidates]
+            for index,(node,heading) in enumerate(lesson_nodes,1):
                 units.append({'id':f'unit_{index:03d}','name':heading or f'Unidad {index:03d}','section':'bodymatter','source_xml':str(xmls[0].relative_to(root)),'ordinal':index})
         except Exception: units=[]
     (root/'structure/structure.json').write_text(json.dumps({'units':units,'source':'existing_nimas_zip'},ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
