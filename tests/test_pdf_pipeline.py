@@ -65,6 +65,20 @@ class PdfPipelineTests(unittest.TestCase):
             units=json.loads((destination/"structure/structure.json").read_text(encoding="utf-8"))["units"]
             self.assertEqual([u["id"] for u in units],["unit_001"])
 
+    def test_pdf_intake_copies_source_and_inventories_pages(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root=Path(folder); source=root/"lesson_L01.pdf"; destination=root/"project"
+            import fitz
+            pdf=fitz.open()
+            pdf.new_page(); pdf.new_page(); pdf.save(source)
+            result=subprocess.run([sys.executable,str(ROOT/"nimas-agent/create_pdf_project.py"),"--pdf",str(source),"--destino",str(destination),"--nombre","PDF Test"],capture_output=True,text=True)
+            self.assertEqual(result.returncode,0,result.stderr)
+            self.assertTrue((destination/"fuentes/pdf/lesson_L01.pdf").is_file())
+            inventory=json.loads((destination/"inventario/project.json").read_text(encoding="utf-8"))
+            self.assertEqual(len(inventory["documents"][0]["pages"]),2)
+            structure=json.loads((destination/"structure/structure.json").read_text(encoding="utf-8"))
+            self.assertEqual(structure["units"][0]["section"],"bodymatter")
+
     def test_preflight_blocks_missing_metadata_and_image_decisions(self):
         with tempfile.TemporaryDirectory() as folder:
             root=Path(folder); (root/'metadata').mkdir(); (root/'structure').mkdir(); (root/'inventario').mkdir()
