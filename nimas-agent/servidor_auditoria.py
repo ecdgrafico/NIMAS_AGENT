@@ -350,6 +350,11 @@ def run_ai_proposal(unit_id, provider="codex"):
     finally:
         with LOCK: JOBS.update(running=False,lesson=None,queue=[],stage=None,startedAt=None)
 
+def run_ai_all(provider="codex"):
+    units=load_project(ROOT).get('structure',{}).get('units',[])
+    for unit in units:
+        run_ai_proposal(str(unit.get('id','')),provider)
+
 class Handler(SimpleHTTPRequestHandler):
     def log_message(self, format, *args):
         if os.environ.get("NIMAS_VERBOSE") == "1":
@@ -488,6 +493,15 @@ class Handler(SimpleHTTPRequestHandler):
                 threading.Thread(target=run_ai_proposal,args=(unit,provider),daemon=True).start()
                 return self.json({"ok":True,"message":"Generación de propuesta iniciada."},202)
             except Exception as error: return self.json({"error":str(error)},400)
+        if parsed.path == "/api/generate-ai-all":
+            try:
+                size=int(self.headers.get("Content-Length","0")); data=json.loads(self.rfile.read(size) or b'{}'); provider=str(data.get('provider','codex'))
+                units=load_project(ROOT).get('structure',{}).get('units',[])
+                if not units: raise ValueError('No hay unidades para generar')
+                with LOCK:
+                    if JOBS['running']: return self.json({'error':'Ya hay una tarea en curso.'},409)
+                threading.Thread(target=run_ai_all,args=(provider,),daemon=True).start(); return self.json({'ok':True,'message':f'Cola iniciada para {len(units)} unidades.'},202)
+            except Exception as error: return self.json({'error':str(error)},400)
         if parsed.path == "/api/approve-ai-proposal":
             try:
                 size=int(self.headers.get("Content-Length","0")); data=json.loads(self.rfile.read(size)); unit=str(data.get("unit_id","")).strip()
