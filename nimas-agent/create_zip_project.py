@@ -40,7 +40,15 @@ def main():
     inventory={'schema':'nimas-project/1','name':args.nombre,'source_mode':'nimas_zip','created_at':datetime.now(timezone.utc).isoformat(),'xml_source':str(xmls[0].relative_to(root)) if xmls else None,'opf_source':str(opfs[0].relative_to(root)) if opfs else None,'reference_pdfs':[p.name for p in (root/'fuentes/pdf').glob('*.pdf')],'status':'intake_complete'}
     (root/'inventario/project.json').write_text(json.dumps(inventory,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
     (root/'metadata/nimac.json').write_text(json.dumps({'title':args.nombre},ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
-    (root/'structure/structure.json').write_text(json.dumps({'units':[],'source':'existing_nimas_zip'},ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+    units=[]
+    if xmls:
+        try:
+            tree=etree.parse(str(xmls[0])); body=tree.xpath('//*[local-name()="bodymatter"]')[0]
+            for index,node in enumerate(body.xpath('./*[local-name()="level1"]'),1):
+                heading=' '.join(''.join(node.xpath('./*[local-name()="hd"][1]//text()')).split())
+                units.append({'id':f'unit_{index:03d}','name':heading or f'Unidad {index:03d}','section':'bodymatter','source_xml':str(xmls[0].relative_to(root)),'ordinal':index})
+        except Exception: units=[]
+    (root/'structure/structure.json').write_text(json.dumps({'units':units,'source':'existing_nimas_zip'},ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
     (root/'inventario/zip-audit.json').write_text(json.dumps(audit_package(root,xmls,opfs),ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
     (root/'project.yaml').write_text(f"name: {args.nombre!r}\nsource_mode: nimas_zip\nxml_source: {inventory['xml_source']!r}\nopf_source: {inventory['opf_source']!r}\nstatus: intake_complete\n",encoding='utf-8')
     print(f'Proyecto ZIP creado: {root}')
