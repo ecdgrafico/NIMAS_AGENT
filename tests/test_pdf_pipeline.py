@@ -93,5 +93,17 @@ class PdfPipelineTests(unittest.TestCase):
                 xml=archive.read(next(n for n in names if n.endswith(".xml"))).decode("utf-8")
                 self.assertEqual(xml.count("<level1"), 3)
 
+    def test_editorial_pdf_generation_is_non_destructive(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root=Path(folder); (root/"metadata").mkdir()
+            (root/"metadata/nimac.json").write_text(json.dumps({"title":"Test Book","creators":["Author"],"publisher":"Press","identifier":"isbn","copyright_year":"2026"}), encoding="utf-8")
+            result=subprocess.run([sys.executable,str(ROOT/"nimas-agent/create_editorial_pdf.py"),"--project",str(root)],capture_output=True,text=True)
+            self.assertEqual(result.returncode,0,result.stderr)
+            generated=root/"working/generated-frontmatter.pdf"
+            self.assertTrue(generated.is_file())
+            import fitz
+            self.assertEqual(len(fitz.open(generated)),3)
+            self.assertTrue((generated.with_suffix(".json")).is_file())
+
 if __name__ == "__main__":
     unittest.main()
