@@ -108,6 +108,10 @@ class PdfPipelineTests(unittest.TestCase):
                 self.assertIn("nimas/images/L01/art.png", names)
                 xml=archive.read(next(n for n in names if n.endswith(".xml"))).decode("utf-8")
                 self.assertEqual(xml.count("<level1"), 3)
+                opf=archive.read(next(n for n in names if n.endswith(".opf"))).decode("utf-8")
+                self.assertIn('scheme="NIMAS"',opf)
+                self.assertIn("NIMAS 1.1",opf)
+                self.assertIn("DCTERMS.created",opf)
 
     def test_editorial_pdf_generation_is_non_destructive(self):
         with tempfile.TemporaryDirectory() as folder:

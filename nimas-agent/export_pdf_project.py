@@ -30,7 +30,7 @@ def main():
     if missing: raise SystemExit("Faltan aprobaciones humanas: " + ", ".join(missing))
     stamp = datetime.now().strftime("%Y%m%d-%H%M%S"); out = root / "deliverables" / stamp; package = out / "nimas"
     package.mkdir(parents=True, exist_ok=True); images = package / "images"; images.mkdir()
-    book = etree.Element(Q(DTBOOK, "dtbook"), nsmap={None: DTBOOK}); head = etree.SubElement(book, Q(DTBOOK, "head")); etree.SubElement(head, Q(DTBOOK, "meta"), name="dc:Title", content=metadata.get("title", root.name))
+    book = etree.Element(Q(DTBOOK, "dtbook"), nsmap={None: DTBOOK}); etree.SubElement(book, Q(DTBOOK, "head"))
     book_node = etree.SubElement(book, Q(DTBOOK, "book")); front = etree.SubElement(book_node, Q(DTBOOK, "frontmatter")); etree.SubElement(front, Q(DTBOOK, "doctitle")).text = str(metadata.get("title", root.name)); body = etree.SubElement(book_node, Q(DTBOOK, "bodymatter")); rear = etree.SubElement(book_node, Q(DTBOOK, "rearmatter"))
     for unit in units:
         source = root / "revision/approved" / f"{unit['id']}.xml"
@@ -50,18 +50,25 @@ def main():
             target.parent.mkdir(parents=True, exist_ok=True)
             shutil.copy2(candidate, target)
     identifier=str(metadata.get('identifier') or root.name); opf_root = etree.Element(Q(OPF, "package"), version="1.0", **{"unique-identifier":"book-id"}, nsmap={None: OPF, "dc": DC}); metadata_node = etree.SubElement(opf_root, Q(OPF, "metadata"))
-    dc_keys={'copyright_year':'date','publication_year':'date','edition':'relation','content_type':'type','state_edition':'coverage','series':'relation'}
-    for key in ('title','publisher','identifier','language','copyright_year','publication_year','edition','content_type','state_edition','series'):
-        value=metadata.get(key)
-        if value:
-            node=etree.SubElement(metadata_node, Q(DC, dc_keys.get(key,key))); node.text=str(value)
-            if key=='identifier': node.set('id','book-id')
-    if not metadata.get('identifier'):
-        node=etree.SubElement(metadata_node,Q(DC,'identifier'),id='book-id'); node.text=identifier
+    def dc(name, value, **attrs):
+        node=etree.SubElement(metadata_node,Q(DC,name),**attrs); node.text=str(value); return node
+    dc('title', metadata.get('title', root.name))
     for key in ('creators','subjects'):
         values=metadata.get(key) or []; values=values if isinstance(values,list) else [values]
         for value in values:
-            if value: etree.SubElement(metadata_node, Q(DC, 'creator' if key=='creators' else 'subject')).text=str(value)
+            if value: dc('creator' if key=='creators' else 'subject', value)
+    if metadata.get('publisher'): dc('publisher',metadata['publisher'])
+    dc('format','NIMAS 1.1')
+    dc('rights',metadata.get('rights') or 'The only legal and authorized use of these files is for the production of alternate media materials for blind, visually impaired, or print disabled students as specified in the NIMAC limitation of use agreement. The copyright for these files is the sole property of the original owner.')
+    dc('date',datetime.now().strftime('%Y-%m-%d'),event='DCTERMS.created')
+    dc('identifier',identifier+'NIMAS' if not identifier.endswith('NIMAS') else identifier,id='book-id',scheme='NIMAS')
+    if metadata.get('language'): dc('language',metadata['language'])
+    for value in (metadata.get('source_isbns') or []):
+        dc('source',value)
+    for name,key in (('nimas-SourceDate','publication_year'),('DCTERMS.date.issued','publication_year'),('DCTERMS.date.dateCopyrighted','copyright_year'),('nimas-SourceEdition','edition'),('DCTERMS.format.extent','source_pagination'),('DCTERMS.description.version','state_edition'),('DCTERMS.description.note','content_type'),('DCTERMS.relation.isPartOf','series'),('DCTERMS.description.note','publisher_note')):
+        if metadata.get(key): etree.SubElement(metadata_node,Q(OPF,'meta'),name=name,content=str(metadata[key]))
+    for grade in (metadata.get('grade_levels') or []):
+        etree.SubElement(metadata_node,Q(OPF,'meta'),name='DCTERMS.audience.educationLevel',content=str(grade))
     manifest = etree.SubElement(opf_root, Q(OPF, "manifest")); etree.SubElement(manifest, Q(OPF, "item"), id="dtbook", href=xml_path.name, **{"media-type":"application/x-dtbook+xml"})
     for image in sorted(package.joinpath("images").rglob("*")):
         if image.is_file():
