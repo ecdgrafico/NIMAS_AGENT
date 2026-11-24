@@ -413,7 +413,9 @@ class Handler(SimpleHTTPRequestHandler):
         if parsed.path == "/api/proposal-validation":
             unit = parse_qs(parsed.query).get("unit", [""])[0]
             report = ROOT / "versions" / "ai-runs" / f"{unit}-validation.json"
-            return self.json(json.loads(report.read_text(encoding="utf-8")) if report.is_file() else {"status": "pending", "errors": []})
+            result = json.loads(report.read_text(encoding="utf-8")) if report.is_file() else {"status": "pending", "errors": []}
+            result["text_fallback"] = (ROOT / "versions" / "ai-runs" / f"{unit}-fallback.md").is_file()
+            return self.json(result)
         if parsed.path == "/api/projects": return self.json(library_projects())
         if parsed.path == "/api/lessons": return self.json({"lessons": lessons()})
         if parsed.path == "/api/editorial-sections": return self.json({"sections": editorial_sections()})
