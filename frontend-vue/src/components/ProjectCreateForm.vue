@@ -1,8 +1,9 @@
 <script setup>
 import { ref } from 'vue'
+import { uploadProject } from '../services/api'
 const emit = defineEmits(['created'])
 const mode = ref('pdf'), name = ref(''), pdfs = ref([]), zip = ref(null), message = ref(''), busy = ref(false)
-async function submit() { busy.value = true; message.value = ''; try { await emit('created', { name: name.value.trim(), pdfs: pdfs.value, zip: mode.value === 'zip' ? zip.value : null }); name.value = ''; pdfs.value = []; zip.value = null; message.value = 'Proyecto creado.' } catch (e) { message.value = e.message } finally { busy.value = false } }
+async function submit() { busy.value = true; message.value = ''; try { await uploadProject({ name: name.value.trim(), pdfs: pdfs.value, zip: mode.value === 'zip' ? zip.value : null }); emit('created'); name.value = ''; pdfs.value = []; zip.value = null; message.value = 'Proyecto creado.' } catch (e) { message.value = e.message } finally { busy.value = false } }
 </script>
 <template>
     <section class="library-card">
