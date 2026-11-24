@@ -227,6 +227,23 @@ def unit_detail(unit_id):
         source = ROOT / "fuentes" / "pdf" / Path(str(unit.get("file", ""))).name
     pages = unit.get("pages") or [1, 0]
     proposal = ROOT / "propuestas" / f"{unit_id}.xml"
+    source_xml = None
+    # ZIP projects may expose a source XML either explicitly in the unit
+    # record or under the conventional source folders. Never mutate it.
+    candidates = []
+    if unit.get("xml"):
+        candidates.append(ROOT / str(unit["xml"]))
+    if unit.get("source_xml"):
+        candidates.append(ROOT / str(unit["source_xml"]))
+    candidates.extend([
+        ROOT / "lecciones_originales" / f"{unit_id}.xml",
+        ROOT / "fuentes" / "xml" / f"{unit_id}.xml",
+        ROOT / "xml" / f"{unit_id}.xml",
+    ])
+    for candidate in candidates:
+        if candidate.is_file() and (ROOT in candidate.resolve().parents or candidate.resolve() == ROOT):
+            source_xml = candidate.read_text(encoding="utf-8", errors="replace")
+            break
     assets_path = ROOT / "inventario" / "images.json"
     assets = json.loads(assets_path.read_text(encoding="utf-8")) if assets_path.is_file() else {"assets": []}
     selected_assets = []
@@ -238,7 +255,8 @@ def unit_detail(unit_id):
     decisions_path = ROOT / "revision" / "page-decisions.json"
     decisions = json.loads(decisions_path.read_text(encoding="utf-8")) if decisions_path.is_file() else {}
     return {"unit": unit, "pdf": str(source.relative_to(ROOT)).replace("\\", "/") if source.is_file() else None,
-            "pages": pages, "proposal": proposal.read_text(encoding="utf-8", errors="replace") if proposal.is_file() else None,
+            "pages": pages, "source": source_xml,
+            "proposal": proposal.read_text(encoding="utf-8", errors="replace") if proposal.is_file() else None,
             "assets": selected_assets, "hasProposal": proposal.is_file(), "decisions": decisions.get(str(unit_id), {})}
 
 def render_unit(unit_id, page):
@@ -730,6 +748,12 @@ class Handler(SimpleHTTPRequestHandler):
                 else:
                     number = int(data.get("lesson"))
                     adjustment_path(number, page).write_text(f"# Solicitud editorial · L{number:02d}, página {page}\n\n{note}\n", encoding="utf-8")
+                if unit_id:
+                    # Generic PDF units are intentionally queued as a durable
+                    # human request. The legacy page-adjustment worker only
+                    # understands numbered lessons and must not be invoked.
+                    return self.json({"ok": True, "queued": False,
+                                      "message": f"Solicitud guardada para la unidad {unit_id}, página {page}."})
                 with LOCK:
                     if JOBS["running"]:
                         return self.json({"error": "Hay una generación en curso. La solicitud quedó guardada; envíala cuando termine para corregir solo esta página."}, 409)
