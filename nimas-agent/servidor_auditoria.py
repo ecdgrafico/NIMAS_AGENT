@@ -338,10 +338,10 @@ def run_assets():
     finally:
         with LOCK: JOBS.update(running=False, lesson=None, queue=[], stage=None, startedAt=None)
 
-def run_ai_proposal(unit_id):
+def run_ai_proposal(unit_id, provider="codex"):
     with LOCK: JOBS.update(running=True, lesson=unit_id, queue=[unit_id], log="", stage="Generando propuesta DTBook con Codex", startedAt=datetime.now().isoformat())
     try:
-        process=subprocess.run([sys.executable,"nimas-agent/generate_ai_proposal.py","--project",str(ROOT),"--unit",unit_id],cwd=APP_ROOT,text=True,capture_output=True)
+        process=subprocess.run([sys.executable,"nimas-agent/generate_ai_proposal.py","--project",str(ROOT),"--unit",unit_id,"--provider",provider],cwd=APP_ROOT,text=True,capture_output=True)
         with LOCK:
             JOBS["log"]+=f"\n{process.stdout}{process.stderr}"
             JOBS["events"].append({"lesson":unit_id,"ok":process.returncode==0,"message":process.stdout.strip() if process.returncode==0 else process.stderr.strip() or "La propuesta requiere revisión técnica."})
@@ -470,7 +470,9 @@ class Handler(SimpleHTTPRequestHandler):
                 if not unit: raise ValueError("Selecciona una unidad")
                 with LOCK:
                     if JOBS["running"]: return self.json({"error":"Ya hay una tarea en curso."},409)
-                threading.Thread(target=run_ai_proposal,args=(unit,),daemon=True).start()
+                provider=str(data.get("provider", "codex"))
+                if provider not in {"codex", "ollama"}: raise ValueError("Proveedor no soportado")
+                threading.Thread(target=run_ai_proposal,args=(unit,provider),daemon=True).start()
                 return self.json({"ok":True,"message":"Generación de propuesta iniciada."},202)
             except Exception as error: return self.json({"error":str(error)},400)
         if parsed.path == "/api/approve-ai-proposal":
