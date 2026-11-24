@@ -12,6 +12,7 @@ from validate_ai_proposal import validate
 from create_zip_project import audit_package
 from preflight_project import preflight
 from generate_ai_proposal import extract_xml_candidate
+from project_data import load_project, save_project
 
 class PdfPipelineTests(unittest.TestCase):
     def test_filename_classification(self):
@@ -55,6 +56,15 @@ class PdfPipelineTests(unittest.TestCase):
             (root/'structure'/'structure.json').write_text('{"units":[{"id":"u1","section":"bodymatter"}]}',encoding='utf-8')
             (root/'inventario'/'images.json').write_text('{"assets":[{"file":"x.png","status":"detected"}]}',encoding='utf-8')
             result=preflight(root); self.assertEqual(result['status'],'pending'); self.assertTrue(any(not x['ok'] for x in result['checks']))
+
+    def test_project_structure_preserves_combined_pdf_ranges(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root=Path(folder)
+            structure={"units":[{"id":"L01","name":"Lesson 1","section":"bodymatter","file":"book.pdf","pages":[13,24]}]}
+            save_project(root, {"title":"Book"}, structure)
+            loaded=load_project(root)
+            self.assertEqual(loaded["structure"]["units"][0]["pages"], [13,24])
+            self.assertEqual(loaded["structure"]["units"][0]["section"], "bodymatter")
 
 if __name__ == "__main__":
     unittest.main()
