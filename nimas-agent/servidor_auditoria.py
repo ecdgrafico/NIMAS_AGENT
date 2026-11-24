@@ -7,6 +7,7 @@ for proposal generation. It never installs a proposal into the NIMAS package.
 import json
 import os
 import re
+import hashlib
 import subprocess
 import sys
 import threading
@@ -23,6 +24,7 @@ from lxml import etree
 from library import all_projects, register
 from project_data import load_project, save_project
 from ai_provider import provider_status, write_prompt
+from pypdf import PdfReader
 
 APP_ROOT = Path(__file__).resolve().parent.parent
 ROOT = Path(os.environ.get("NIMAS_PROJECT_ROOT", APP_ROOT)).resolve()
@@ -477,6 +479,38 @@ class Handler(SimpleHTTPRequestHandler):
                 size = int(self.headers.get("Content-Length", "0")); data = json.loads(self.rfile.read(size))
                 save_project(ROOT, data.get("metadata"), data.get("structure"))
                 return self.json({"ok": True, "message": "Configuración del proyecto guardada."})
+            except Exception as error:
+                return self.json({"error": str(error)}, 400)
+        if parsed.path == "/api/add-project-pdfs":
+            try:
+                fields, files = self.multipart_fields()
+                pdf_files = [(name, content) for name, content in files if Path(name).suffix.lower() == ".pdf"]
+                if not pdf_files: raise ValueError("Selecciona uno o más archivos PDF")
+                destination = ROOT / "fuentes" / "pdf"; destination.mkdir(parents=True, exist_ok=True)
+                project = load_project(ROOT); inventory = project.get("inventory", {}); documents = inventory.setdefault("documents", [])
+                units = project.get("structure", {}).setdefault("units", []); added = []
+                for original_name, content in pdf_files:
+                    safe_name = Path(original_name).name
+                    target = destination / safe_name
+                    if target.exists():
+                        digest = hashlib.sha256(content).hexdigest()[:10]
+                        target = destination / f"{Path(safe_name).stem}-{digest}{Path(safe_name).suffix.lower()}"
+                    target.write_bytes(content)
+                    reader = PdfReader(str(target)); pages = []
+                    for number, page in enumerate(reader.pages, 1):
+                        text = (page.extract_text() or "").strip()
+                        pages.append({"page": number, "text": text, "text_length": len(text)})
+                    relative = str(target.relative_to(destination)).replace("\\", "/")
+                    documents.append({"file": relative, "sha256": hashlib.sha256(content).hexdigest(), "pages": pages})
+                    stem = Path(relative).stem
+                    from create_pdf_project import classify
+                    unit = {"id": stem, "name": stem, "section": classify(relative), "file": relative, "pages": [1, len(pages)]}
+                    if any(existing.get("id") == unit["id"] for existing in units): unit["id"] = f"{stem}-{len(units)+1}"
+                    units.append(unit); added.append(unit)
+                inventory["documents"] = documents; inventory["status"] = "intake_complete"; inventory["next"] = "classify_and_generate_auditable_dtbook_proposal"
+                (ROOT / "inventario" / "project.json").write_text(json.dumps(inventory, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+                save_project(ROOT, structure={"units": units})
+                return self.json({"ok": True, "message": f"{len(added)} PDF agregado(s) al proyecto.", "units": added})
             except Exception as error:
                 return self.json({"error": str(error)}, 400)
         if parsed.path == "/api/create-editorial-pdf":
