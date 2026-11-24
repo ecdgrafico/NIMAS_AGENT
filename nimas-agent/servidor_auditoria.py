@@ -400,6 +400,9 @@ class Handler(SimpleHTTPRequestHandler):
         return fields, files
     def do_GET(self):
         parsed = urlparse(self.path)
+        if parsed.path == "/api/nimac-template":
+            template = APP_ROOT / "nimas-agent" / "nimac_metadata_template.json"
+            return self.json(json.loads(template.read_text(encoding="utf-8")))
         if parsed.path == "/api/project-status": return self.json(project_status())
         if parsed.path == "/api/provider-status": return self.json(provider_status())
         if parsed.path == "/api/project-detail": return self.json(load_project(ROOT))

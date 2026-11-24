@@ -3,6 +3,7 @@ import json
 import re
 from pathlib import Path
 from pypdf import PdfReader
+from pdf_naming import source_page_range, physical_page_range
 
 DEFAULT_METADATA = {
     "title": "", "creators": [], "publisher": "", "identifier": "",
@@ -36,7 +37,8 @@ def ensure_pdf_project_layout(root: Path):
         elif re.search(r"(^|[_\- ])EM([_\- .]|$)|REARMATTER|REAR_MATTER", stem): section = "rearmatter"
         elif re.search(r"(^|[_\- ])(?:L|U|PL|IU|UI)\d*([_\- .]|$)|LESSON|UNIT|CHAPTER|PRELIMINARY|INTRODUCTORY", stem): section = "bodymatter"
         else: section = "unclassified"
-        units.append({"id": pdf.stem, "name": pdf.stem, "section": section, "file": str(pdf.relative_to(pdf_root)), "pages": [1, pages]})
+        relative = str(pdf.relative_to(pdf_root)).replace("\\", "/")
+        units.append({"id": pdf.stem, "name": pdf.stem, "section": section, "file": relative, "pages": physical_page_range(relative, pages), "source_page_range": source_page_range(relative)})
     structure_path.write_text(json.dumps({"units": units}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
 def load_project(root: Path):

@@ -13,6 +13,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from pypdf import PdfReader
+from pdf_naming import source_page_range, physical_page_range
 
 def classify(filename: str) -> str:
     stem = Path(filename).stem.upper()
@@ -78,7 +79,7 @@ def main() -> int:
     }
     (root / "inventario" / "project.json").write_text(json.dumps(inventory, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     (root / "metadata" / "nimac.json").write_text(json.dumps({"title": args.nombre}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    units = [{"id": Path(item["file"]).stem, "name": Path(item["file"]).stem, "section": classify(item["file"]), "file": item["file"], "pages": [1, len(item["pages"])]} for item in documents]
+    units = [{"id": Path(item["file"]).stem, "name": Path(item["file"]).stem, "section": classify(item["file"]), "file": item["file"], "pages": physical_page_range(item["file"], len(item["pages"])), "source_page_range": source_page_range(item["file"])} for item in documents]
     units.sort(key=unit_sort)
     (root / "structure" / "structure.json").write_text(json.dumps({"units": units}, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     (root / "project.yaml").write_text(

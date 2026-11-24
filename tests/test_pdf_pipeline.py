@@ -16,6 +16,7 @@ from preflight_project import preflight
 from generate_ai_proposal import extract_xml_candidate, pdf_completeness_errors, combine_level1_fragments, baseline_fragment
 from project_data import load_project, save_project
 from ai_provider import write_prompt
+from pdf_naming import source_page_range
 
 class PdfPipelineTests(unittest.TestCase):
     def test_filename_classification(self):
@@ -24,6 +25,11 @@ class PdfPipelineTests(unittest.TestCase):
         self.assertEqual(classify("book_EM.pdf"), "rearmatter")
         self.assertEqual(classify("book_LP.pdf"), "bodymatter")
         self.assertEqual(classify("book_scan.pdf"), "unclassified")
+
+    def test_pdf_filename_preserves_printed_page_ranges(self):
+        self.assertEqual(source_page_range("BOOK_LP_000-025_hi.pdf"), [0, 25])
+        self.assertEqual(source_page_range("BOOK_FM_i-xxix_hi.pdf"), ["i", "xxix"])
+        self.assertEqual(source_page_range("BOOK_L05_192-233_hi.pdf"), [192, 233])
 
     def test_proposal_validator_accepts_fragment(self):
         with tempfile.TemporaryDirectory() as folder:
