@@ -235,9 +235,11 @@ def unit_detail(unit_id):
         same_pdf = Path(str(asset.get("source_pdf", ""))).name == Path(str(unit.get("file", ""))).name
         if str(unit_id) in candidates or (same_pdf and int(pages[0]) <= int(asset.get("page", 0)) <= int(pages[1])):
             selected_assets.append({**asset, "url": "/working/detected-images/" + str(asset.get("file", ""))})
+    decisions_path = ROOT / "revision" / "page-decisions.json"
+    decisions = json.loads(decisions_path.read_text(encoding="utf-8")) if decisions_path.is_file() else {}
     return {"unit": unit, "pdf": str(source.relative_to(ROOT)).replace("\\", "/") if source.is_file() else None,
             "pages": pages, "proposal": proposal.read_text(encoding="utf-8", errors="replace") if proposal.is_file() else None,
-            "assets": selected_assets, "hasProposal": proposal.is_file()}
+            "assets": selected_assets, "hasProposal": proposal.is_file(), "decisions": decisions.get(str(unit_id), {})}
 
 def render_unit(unit_id, page):
     detail = unit_detail(unit_id)
@@ -652,6 +654,24 @@ class Handler(SimpleHTTPRequestHandler):
                 target=ROOT/"revision"/"approved"/f"{unit}.xml"; target.parent.mkdir(parents=True,exist_ok=True); shutil.copy2(source,target)
                 approvals=ROOT/"revision"/"approvals.json"; current=json.loads(approvals.read_text(encoding="utf-8")) if approvals.is_file() else {}; current[unit]=True; approvals.write_text(json.dumps(current,ensure_ascii=False,indent=2),encoding="utf-8")
                 return self.json({"ok":True,"message":"Propuesta aprobada para exportación."})
+            except Exception as error: return self.json({"error":str(error)},400)
+        if parsed.path == "/api/unit-page-decision":
+            try:
+                size=int(self.headers.get("Content-Length", "0")); data=json.loads(self.rfile.read(size)); unit=str(data.get("unit_id", "")).strip(); page=str(int(data.get("page"))); state=str(data.get("status", "pending"))
+                if not unit or state not in {"pending", "approved", "correction"}: raise ValueError("Decisión de página inválida")
+                path=ROOT / "revision" / "page-decisions.json"; current=json.loads(path.read_text(encoding="utf-8")) if path.is_file() else {}; current.setdefault(unit, {})[page]={"status":state,"note":str(data.get("note", "")).strip(),"updated_at":datetime.now().isoformat()}; path.parent.mkdir(parents=True, exist_ok=True); path.write_text(json.dumps(current, ensure_ascii=False, indent=2)+"\n", encoding="utf-8")
+                return self.json({"ok":True,"message":"Estado de página guardado."})
+            except Exception as error: return self.json({"error":str(error)},400)
+        if parsed.path == "/api/approve-unit":
+            try:
+                size=int(self.headers.get("Content-Length", "0")); data=json.loads(self.rfile.read(size)); unit_id=str(data.get("unit_id", "")).strip(); unit=project_unit(unit_id)
+                if not unit: raise ValueError("Unidad no encontrada")
+                detail=unit_detail(unit_id); first,last=map(int,detail["pages"]); decisions=detail.get("decisions", {}); missing=[str(page) for page in range(first,last+1) if decisions.get(str(page),{}).get("status")!="approved"]
+                if missing: raise ValueError("Faltan páginas por aprobar: "+", ".join(missing[:12]))
+                source=ROOT/"propuestas"/f"{unit_id}.xml"; check=subprocess.run([sys.executable,str(APP_ROOT/"nimas-agent"/"validate_ai_proposal.py"),str(source)],cwd=APP_ROOT,text=True,capture_output=True)
+                if check.returncode: raise ValueError("La propuesta no supera la validación estructural.")
+                target=ROOT/"revision"/"approved"/f"{unit_id}.xml"; target.parent.mkdir(parents=True,exist_ok=True); shutil.copy2(source,target); approvals=ROOT/"revision"/"approvals.json"; current=json.loads(approvals.read_text(encoding="utf-8")) if approvals.is_file() else {}; current[unit_id]=True; approvals.write_text(json.dumps(current,ensure_ascii=False,indent=2),encoding="utf-8")
+                return self.json({"ok":True,"message":"Unidad aprobada para exportación."})
             except Exception as error: return self.json({"error":str(error)},400)
         if parsed.path == "/api/analyze-project-assets":
             try:

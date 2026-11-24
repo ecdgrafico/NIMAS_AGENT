@@ -22,6 +22,8 @@ export const api = {
   validate: unit => request(`/proposal-validation?unit=${encodeURIComponent(unit)}`),
   approve: unit => request('/approve-ai-proposal', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ unit_id: unit }) }),
   approveLesson: lesson => request(`/approve-lesson?lesson=${encodeURIComponent(lesson)}`, { method: 'POST' }),
+  pageDecision: body => request('/unit-page-decision',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)}),
+  approveUnit: unit => request('/approve-unit',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({unit_id:unit})}),
   preflight: () => request('/project-preflight')
   ,lessons: () => request('/lessons')
   ,job: () => request('/job')
