@@ -23,7 +23,7 @@ def classify(filename: str) -> str:
 
 def unit_sort(item):
     section_order = {"frontmatter": 0, "bodymatter": 1, "rearmatter": 2, "unclassified": 3}
-    match = re.search(r"(?:L|U|PL|IU|UI)(\d+)", item["file"].upper())
+    match = re.search(r"(?:L|U|PL|LP|IU|UI)(\d+)", item["file"].upper())
     return (section_order.get(item["section"], 9), int(match.group(1)) if match else 999, item["file"].lower())
 
 
