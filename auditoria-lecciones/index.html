@@ -54,6 +54,13 @@
           <label>PDF de lecciones<input id="new-project-pdfs" type="file" accept="application/pdf,.pdf" multiple required></label>
           <button type="submit">Cargar PDF y crear proyecto</button>
         </form>
+        <form id="zip-project-form" class="project-form">
+          <h3>Proyecto desde ZIP NIMAS existente</h3>
+          <label>Nombre del proyecto<input id="zip-project-name" required placeholder="Mi proyecto NIMAS"></label>
+          <label>ZIP NIMAS<input id="zip-project-file" type="file" accept=".zip,application/zip" required></label>
+          <label>PDFs de cotejo opcionales<input id="zip-project-pdfs" type="file" accept="application/pdf,.pdf" multiple></label>
+          <button type="submit">Cargar ZIP y crear proyecto</button><span id="zip-project-status" class="hint"></span>
+        </form>
         <p id="new-project-status" class="hint">Las fuentes quedan fuera de Git y no se modifica el PDF original.</p>
         <div id="project-library"></div>
       </details>

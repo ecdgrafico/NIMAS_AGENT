@@ -3,7 +3,7 @@
   let detail=null;
   async function load(){
     const status=await (await fetch('/api/project-status',{cache:'no-store'})).json();
-    if(!status.ready||status.mode!=='pdf_only') return;
+    if(!status.ready||!['pdf_only','nimas_zip'].includes(status.mode)) return;
     const r=await fetch('/api/project-detail',{cache:'no-store'}); if(!r.ok)return; detail=await r.json();
     document.getElementById('projects').hidden=true;document.getElementById('landing').hidden=true;document.getElementById('audit-main').hidden=true;document.getElementById('editorial-audit').hidden=true;document.getElementById('pdf-project-workspace').hidden=false;$('pdf-project-title').textContent=status.name||'Proyecto desde PDF';
     renderUnits();renderMetadata();

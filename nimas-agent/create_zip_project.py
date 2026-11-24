@@ -1,0 +1,31 @@
+#!/usr/bin/env python3
+"""Create a non-destructive library project from an existing NIMAS ZIP."""
+import argparse, json, shutil, zipfile
+from datetime import datetime, timezone
+from pathlib import Path
+
+def safe_extract(archive, target):
+    target = target.resolve()
+    for info in archive.infolist():
+        destination = (target / info.filename).resolve()
+        if target not in destination.parents and destination != target: raise ValueError("ZIP contiene una ruta insegura")
+        archive.extract(info, target)
+
+def main():
+    ap=argparse.ArgumentParser(); ap.add_argument('--zip',type=Path,required=True); ap.add_argument('--destino',type=Path,required=True); ap.add_argument('--nombre',required=True); ap.add_argument('--pdf',type=Path,nargs='*',default=[]); args=ap.parse_args()
+    if not args.zip.is_file(): raise SystemExit('No existe el ZIP')
+    root=args.destino.resolve(); root.mkdir(parents=True,exist_ok=True)
+    for folder in ('fuentes/nimas-original','fuentes/pdf','metadata','structure','inventario','working','propuestas','revision','versions','deliverables'): (root/folder).mkdir(parents=True,exist_ok=True)
+    shutil.copy2(args.zip, root/'fuentes/nimas-original'/args.zip.name)
+    with zipfile.ZipFile(args.zip) as archive: safe_extract(archive, root/'fuentes/nimas-original')
+    for pdf in args.pdf:
+        if pdf.is_file(): shutil.copy2(pdf, root/'fuentes/pdf'/pdf.name)
+    xmls=list((root/'fuentes/nimas-original').rglob('*.xml')); opfs=list((root/'fuentes/nimas-original').rglob('*.opf'))
+    inventory={'schema':'nimas-project/1','name':args.nombre,'source_mode':'nimas_zip','created_at':datetime.now(timezone.utc).isoformat(),'xml_source':str(xmls[0].relative_to(root)) if xmls else None,'opf_source':str(opfs[0].relative_to(root)) if opfs else None,'reference_pdfs':[p.name for p in (root/'fuentes/pdf').glob('*.pdf')],'status':'intake_complete'}
+    (root/'inventario/project.json').write_text(json.dumps(inventory,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+    (root/'metadata/nimac.json').write_text(json.dumps({'title':args.nombre},ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+    (root/'structure/structure.json').write_text(json.dumps({'units':[],'source':'existing_nimas_zip'},ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+    (root/'project.yaml').write_text(f"name: {args.nombre!r}\nsource_mode: nimas_zip\nxml_source: {inventory['xml_source']!r}\nopf_source: {inventory['opf_source']!r}\nstatus: intake_complete\n",encoding='utf-8')
+    print(f'Proyecto ZIP creado: {root}')
+
+if __name__=='__main__': main()

@@ -52,7 +52,9 @@ def approved_editorial():
 
 def project_status():
     if (ROOT / "project.yaml").is_file():
-        return {"ready": True, "name": ROOT.name, "mode": "pdf_only", "projectRoot": str(ROOT)}
+        raw = (ROOT / "project.yaml").read_text(encoding="utf-8", errors="replace")
+        mode = "nimas_zip" if "source_mode: nimas_zip" in raw else "pdf_only"
+        return {"ready": True, "name": ROOT.name, "mode": mode, "projectRoot": str(ROOT)}
     required = ["lecciones_originales", "PDF", "9781669952961NIMAS", "9781669952961NIMAS_original"]
     ready = all((ROOT / path).exists() for path in required)
     return {"ready": ready, "name": ROOT.name if ready else None}
@@ -592,6 +594,22 @@ class Handler(SimpleHTTPRequestHandler):
                 return self.json({"error": str(error)}, 400)
             finally:
                 if temp_root: shutil.rmtree(temp_root, ignore_errors=True)
+        if parsed.path == "/api/create-zip-project-upload":
+            temp_root = None
+            try:
+                fields, uploaded = self.multipart_fields(); name=str(fields.get('name','')).strip()
+                zips=[(n,d) for n,d in uploaded if str(n).lower().endswith('.zip')]; pdfs=[(n,d) for n,d in uploaded if str(n).lower().endswith('.pdf')]
+                if not name or len(zips)!=1: raise ValueError('Indica el nombre y selecciona un ZIP NIMAS')
+                temp_root=Path(tempfile.mkdtemp(prefix='nimas-zip-upload-')); zip_path=temp_root/Path(zips[0][0]).name; zip_path.write_bytes(zips[0][1]); pdf_paths=[]
+                for filename,data_bytes in pdfs: target=temp_root/Path(filename).name; target.write_bytes(data_bytes); pdf_paths.append(str(target))
+                safe=re.sub(r'[^A-Za-z0-9_-]+','_',name).strip('_') or 'proyecto'; project_path=LIBRARY_ROOT/'projects'/safe
+                command=[sys.executable,'nimas-agent/create_zip_project.py','--zip',str(zip_path),'--destino',str(project_path),'--nombre',name,'--pdf',*pdf_paths]
+                process=subprocess.run(command,cwd=ROOT,text=True,capture_output=True)
+                if process.returncode: return self.json({'error':process.stderr.strip() or process.stdout.strip()},400)
+                register(LIBRARY_DB,name,project_path,mode='nimas_zip'); return self.json({'ok':True,'project':{'name':name,'path':str(project_path)},'message':process.stdout.strip()})
+            except Exception as error: return self.json({'error':str(error)},400)
+            finally:
+                if temp_root: shutil.rmtree(temp_root,ignore_errors=True)
         if parsed.path == "/api/generate-editorial":
             key = query.get("section", [""])[0].upper()
             if key not in {"FM", "EM"}: return self.json({"error": "Sección editorial inválida"}, 400)
