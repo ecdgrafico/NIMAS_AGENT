@@ -133,6 +133,8 @@ publica ni instala una propuesta automáticamente. Consulte
 `docs/arquitectura-y-migracion.md` y ejecute `iniciar_auditoria.ps1` en Windows
 para el flujo local portable.
 
+Para validar un título nuevo paso a paso, usa la [lista de verificación de título real](docs/real-title-verification.md).
+
 ## Comando NIMASAPP en PowerShell
 
 Para registrar `NIMASAPP` como comando del usuario y no tener que escribir `./`,
