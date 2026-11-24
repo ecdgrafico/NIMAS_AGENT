@@ -57,7 +57,10 @@ def main():
     for key in ('creators','subjects'):
         values=metadata.get(key) or []; values=values if isinstance(values,list) else [values]
         for value in values:
-            if value: dc('creator' if key=='creators' else 'subject', value)
+            if key=='creators' and isinstance(value,dict):
+                name=value.get('name'); role=value.get('role','author')
+                if name: dc('creator',name,role=role)
+            elif value: dc('creator' if key=='creators' else 'subject', value, **({'role':'author'} if key=='creators' else {}))
     if metadata.get('publisher'): dc('publisher',metadata['publisher'])
     dc('format','NIMAS 1.1')
     dc('rights',metadata.get('rights') or 'The only legal and authorized use of these files is for the production of alternate media materials for blind, visually impaired, or print disabled students as specified in the NIMAC limitation of use agreement. The copyright for these files is the sole property of the original owner.')

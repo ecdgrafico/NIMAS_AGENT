@@ -89,7 +89,7 @@ class PdfPipelineTests(unittest.TestCase):
             root=Path(folder)
             for name in ("metadata","structure","revision/approved","working/detected-images"):
                 (root/name).mkdir(parents=True, exist_ok=True)
-            (root/"metadata/nimac.json").write_text(json.dumps({"title":"Book","publisher":"Press","identifier":"id-1","language":"en","source_isbns":["9780000000000"],"subjects":["Reading"],"publication_year":"2026","copyright_year":"2026","state_edition":"National ed.","content_type":"Textbook"}), encoding="utf-8")
+            (root/"metadata/nimac.json").write_text(json.dumps({"title":"Book","creators":["Author"],"publisher":"Press","identifier":"id-1","language":"en","source_isbns":["9780000000000"],"subjects":["Reading"],"publication_year":"2026","copyright_year":"2026","state_edition":"National ed.","content_type":"Textbook"}), encoding="utf-8")
             units=[
                 {"id":"FM","section":"frontmatter","file":"book.pdf","pages":[1,1]},
                 {"id":"L01","section":"bodymatter","file":"book.pdf","pages":[2,3]},
@@ -112,6 +112,7 @@ class PdfPipelineTests(unittest.TestCase):
                 self.assertIn('scheme="NIMAS"',opf)
                 self.assertIn("NIMAS 1.1",opf)
                 self.assertIn("DCTERMS.created",opf)
+                self.assertIn('role="author"',opf)
 
     def test_editorial_pdf_generation_is_non_destructive(self):
         with tempfile.TemporaryDirectory() as folder:
