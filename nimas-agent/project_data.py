@@ -36,6 +36,8 @@ def load_project(root: Path):
     ensure_pdf_project_layout(root)
     inventory_path = root / "inventario" / "project.json"
     data = json.loads(inventory_path.read_text(encoding="utf-8")) if inventory_path.is_file() else {}
+    audit_path = root / "inventario" / "zip-audit.json"
+    if audit_path.is_file(): data["zip_audit"] = json.loads(audit_path.read_text(encoding="utf-8"))
     metadata_path = root / "metadata" / "nimac.json"
     metadata = {**DEFAULT_METADATA, **(json.loads(metadata_path.read_text(encoding="utf-8")) if metadata_path.is_file() else {})}
     structure_path = root / "structure" / "structure.json"

@@ -3,6 +3,7 @@
 import argparse, json, shutil, zipfile
 from datetime import datetime, timezone
 from pathlib import Path
+from lxml import etree
 
 def safe_extract(archive, target):
     target = target.resolve()
@@ -10,6 +11,20 @@ def safe_extract(archive, target):
         destination = (target / info.filename).resolve()
         if target not in destination.parents and destination != target: raise ValueError("ZIP contiene una ruta insegura")
         archive.extract(info, target)
+
+def audit_package(root, xmls, opfs):
+    findings=[]
+    for path in xmls:
+        try: etree.parse(str(path))
+        except Exception as exc: findings.append({'severity':'error','file':str(path.relative_to(root)),'message':f'XML no bien formado: {exc}'})
+    for path in opfs:
+        try:
+            tree=etree.parse(str(path)); base=path.parent
+            for item in tree.xpath('//*[local-name()="manifest"]/*[local-name()="item"]'):
+                href=item.get('href')
+                if href and not (base/href).is_file(): findings.append({'severity':'error','file':str(path.relative_to(root)),'message':f'Recurso OPF inexistente: {href}'})
+        except Exception as exc: findings.append({'severity':'error','file':str(path.relative_to(root)),'message':f'OPF no bien formado: {exc}'})
+    return {'status':'pass' if not findings else 'fail','xml_count':len(xmls),'opf_count':len(opfs),'findings':findings}
 
 def main():
     ap=argparse.ArgumentParser(); ap.add_argument('--zip',type=Path,required=True); ap.add_argument('--destino',type=Path,required=True); ap.add_argument('--nombre',required=True); ap.add_argument('--pdf',type=Path,nargs='*',default=[]); args=ap.parse_args()
@@ -25,6 +40,7 @@ def main():
     (root/'inventario/project.json').write_text(json.dumps(inventory,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
     (root/'metadata/nimac.json').write_text(json.dumps({'title':args.nombre},ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
     (root/'structure/structure.json').write_text(json.dumps({'units':[],'source':'existing_nimas_zip'},ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+    (root/'inventario/zip-audit.json').write_text(json.dumps(audit_package(root,xmls,opfs),ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
     (root/'project.yaml').write_text(f"name: {args.nombre!r}\nsource_mode: nimas_zip\nxml_source: {inventory['xml_source']!r}\nopf_source: {inventory['opf_source']!r}\nstatus: intake_complete\n",encoding='utf-8')
     print(f'Proyecto ZIP creado: {root}')
 
