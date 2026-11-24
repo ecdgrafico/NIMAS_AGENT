@@ -31,17 +31,24 @@ def main():
     stamp = datetime.now().strftime("%Y%m%d-%H%M%S"); out = root / "deliverables" / stamp; package = out / "nimas"
     package.mkdir(parents=True, exist_ok=True); images = package / "images"; images.mkdir()
     book = etree.Element(Q(DTBOOK, "dtbook"), nsmap={None: DTBOOK}); head = etree.SubElement(book, Q(DTBOOK, "head")); etree.SubElement(head, Q(DTBOOK, "meta"), name="dc:Title", content=metadata.get("title", root.name))
-    book_node = etree.SubElement(book, Q(DTBOOK, "book")); etree.SubElement(book_node, Q(DTBOOK, "frontmatter")); body = etree.SubElement(book_node, Q(DTBOOK, "bodymatter")); etree.SubElement(book_node, Q(DTBOOK, "rearmatter"))
+    book_node = etree.SubElement(book, Q(DTBOOK, "book")); front = etree.SubElement(book_node, Q(DTBOOK, "frontmatter")); etree.SubElement(front, Q(DTBOOK, "doctitle")).text = str(metadata.get("title", root.name)); body = etree.SubElement(book_node, Q(DTBOOK, "bodymatter")); rear = etree.SubElement(book_node, Q(DTBOOK, "rearmatter"))
     for unit in units:
         source = root / "revision/approved" / f"{unit['id']}.xml"
         node = etree.fromstring(source.read_bytes())
-        body.append(node)
+        if etree.QName(node).namespace is None:
+            for element in node.iter():
+                element.tag = Q(DTBOOK, etree.QName(element).localname)
+        target = front if unit.get("section") == "frontmatter" else rear if unit.get("section") == "rearmatter" else body
+        target.append(node)
     xml_path = package / f"{root.name}.xml"; etree.ElementTree(book).write(str(xml_path), encoding="UTF-8", xml_declaration=True, pretty_print=True)
     referenced = {node.get("src") for node in book.iter(Q(DTBOOK, "img")) if node.get("src")}
     candidates = {item.name: item for item in (root / "working/detected-images").rglob("*") if item.is_file()} if (root / "working/detected-images").is_dir() else {}
     for src in referenced:
         candidate = candidates.get(Path(src).name)
-        if candidate: shutil.copy2(candidate, images / candidate.name)
+        if candidate:
+            target = package / src
+            target.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(candidate, target)
     identifier=str(metadata.get('identifier') or root.name); opf_root = etree.Element(Q(OPF, "package"), version="1.0", **{"unique-identifier":"book-id"}, nsmap={None: OPF, "dc": DC}); metadata_node = etree.SubElement(opf_root, Q(OPF, "metadata"))
     dc_keys={'copyright_year':'date','publication_year':'date','edition':'relation','content_type':'type','state_edition':'coverage','series':'relation'}
     for key in ('title','publisher','identifier','language','copyright_year','publication_year','edition','content_type','state_edition','series'):
@@ -56,7 +63,10 @@ def main():
         for value in values:
             if value: etree.SubElement(metadata_node, Q(DC, 'creator' if key=='creators' else 'subject')).text=str(value)
     manifest = etree.SubElement(opf_root, Q(OPF, "manifest")); etree.SubElement(manifest, Q(OPF, "item"), id="dtbook", href=xml_path.name, **{"media-type":"application/x-dtbook+xml"})
-    for image in sorted(images.iterdir()): etree.SubElement(manifest, Q(OPF, "item"), id="img_"+image.stem, href="images/"+image.name, **{"media-type":"image/"+image.suffix[1:].lower()})
+    for image in sorted(package.joinpath("images").rglob("*")):
+        if image.is_file():
+            href=str(image.relative_to(package)).replace("\\","/")
+            etree.SubElement(manifest, Q(OPF, "item"), id="img_"+image.stem, href=href, **{"media-type":"image/"+image.suffix[1:].lower()})
     spine = etree.SubElement(opf_root, Q(OPF, "spine")); etree.SubElement(spine, Q(OPF, "itemref"), idref="dtbook"); opf_path = package / f"{root.name}.opf"; etree.ElementTree(opf_root).write(str(opf_path), encoding="UTF-8", xml_declaration=True, pretty_print=True)
     checks=[]; parsed=etree.parse(str(xml_path)); xml_root=parsed.getroot()
     if etree.QName(xml_root).localname != 'dtbook': checks.append('La raíz no es dtbook')
@@ -74,7 +84,8 @@ def main():
     with zipfile.ZipFile(zip_path, "w", zipfile.ZIP_DEFLATED) as z:
         for file in package.rglob("*"):
             if file.is_file(): z.write(file, file.relative_to(out))
-    report = {"status":"pass", "package":str(package.relative_to(root)), "zip":str(zip_path.relative_to(root)), "units":len(units), "images":len(list(images.iterdir())), "imageCandidates":len(candidates), "unmatchedImageReferences":sorted(referenced - {"images/"+p.name for p in images.iterdir()})}
+    packaged_images=[p for p in package.joinpath("images").rglob("*") if p.is_file()]
+    report = {"status":"pass", "package":str(package.relative_to(root)), "zip":str(zip_path.relative_to(root)), "units":len(units), "images":len(packaged_images), "imageCandidates":len(candidates), "unmatchedImageReferences":sorted(referenced - {str(p.relative_to(package)).replace("\\","/") for p in packaged_images})}
     (out / "validacion.json").write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8"); print(json.dumps(report, ensure_ascii=False))
 
 if __name__ == "__main__": main()

@@ -1,6 +1,8 @@
 import json
+import subprocess
 import tempfile
 import unittest
+import zipfile
 from pathlib import Path
 import sys
 
@@ -65,6 +67,31 @@ class PdfPipelineTests(unittest.TestCase):
             loaded=load_project(root)
             self.assertEqual(loaded["structure"]["units"][0]["pages"], [13,24])
             self.assertEqual(loaded["structure"]["units"][0]["section"], "bodymatter")
+
+    def test_pdf_export_routes_sections_and_preserves_image_paths(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root=Path(folder)
+            for name in ("metadata","structure","revision/approved","working/detected-images"):
+                (root/name).mkdir(parents=True, exist_ok=True)
+            (root/"metadata/nimac.json").write_text(json.dumps({"title":"Book","identifier":"id-1","language":"en"}), encoding="utf-8")
+            units=[
+                {"id":"FM","section":"frontmatter","file":"book.pdf","pages":[1,1]},
+                {"id":"L01","section":"bodymatter","file":"book.pdf","pages":[2,3]},
+                {"id":"EM","section":"rearmatter","file":"book.pdf","pages":[4,4]},
+            ]
+            (root/"structure/structure.json").write_text(json.dumps({"units":units}), encoding="utf-8")
+            (root/"revision/approvals.json").write_text(json.dumps({"FM":True,"L01":True,"EM":True}), encoding="utf-8")
+            for unit in units:
+                (root/"revision/approved"/f"{unit['id']}.xml").write_text(f"<level1><h1>{unit['id']}</h1><img src=\"images/L01/art.png\" alt=\"art\"/></level1>", encoding="utf-8")
+            (root/"working/detected-images/art.png").write_bytes(b"png")
+            result=subprocess.run([sys.executable, str(ROOT/"nimas-agent/export_pdf_project.py"), "--project", str(root)], capture_output=True, text=True)
+            self.assertEqual(result.returncode, 0, result.stderr+result.stdout)
+            zip_path=next((root/"deliverables").rglob("*.zip"))
+            with zipfile.ZipFile(zip_path) as archive:
+                names=set(archive.namelist())
+                self.assertIn("nimas/images/L01/art.png", names)
+                xml=archive.read(next(n for n in names if n.endswith(".xml"))).decode("utf-8")
+                self.assertEqual(xml.count("<level1"), 3)
 
 if __name__ == "__main__":
     unittest.main()
