@@ -29,9 +29,13 @@ def main():
         # Windows' command-line length limit.
         result=subprocess.run([executable,'run',model],cwd=root,input=instruction,text=True,encoding='utf-8',capture_output=True)
         (runlog/(args.unit+'-ollama.md')).write_text(result.stdout,encoding='utf-8')
-        if result.returncode==0 and not output.is_file():
+        if result.returncode==0:
             candidate=extract_xml_candidate(result.stdout)
-            if candidate: output.write_text(candidate,encoding='utf-8')
+            if candidate:
+                if output.is_file():
+                    previous=runlog/(args.unit+'-previous.xml')
+                    previous.write_text(output.read_text(encoding='utf-8'),encoding='utf-8')
+                output.write_text(candidate,encoding='utf-8')
             else: raise SystemExit(f'Ollama no produjo un fragmento level1 completo. Revisa {runlog/(args.unit+"-ollama.md")}')
     else:
         raise SystemExit('Proveedor no soportado: '+args.provider)

@@ -11,6 +11,7 @@ from create_pdf_project import classify
 from validate_ai_proposal import validate
 from create_zip_project import audit_package
 from preflight_project import preflight
+from generate_ai_proposal import extract_xml_candidate
 
 class PdfPipelineTests(unittest.TestCase):
     def test_filename_classification(self):
@@ -32,6 +33,11 @@ class PdfPipelineTests(unittest.TestCase):
             result = validate(path)
             self.assertEqual(result["status"], "fail")
             self.assertTrue(result["errors"])
+
+    def test_ai_output_extracts_only_complete_level1_fragment(self):
+        raw = "Aquí tienes:\n<level1><h1>L1</h1></level1>\n"
+        self.assertEqual(extract_xml_candidate(raw), "<level1><h1>L1</h1></level1>\n")
+        self.assertIsNone(extract_xml_candidate("La propuesta quedó incompleta: <level1>"))
 
     def test_zip_audit_checks_resources_and_ignores_macos_metadata(self):
         with tempfile.TemporaryDirectory() as folder:
