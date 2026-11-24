@@ -8,7 +8,7 @@ from ai_provider import find_ollama
 def extract_xml_candidate(raw: str) -> str | None:
     """Keep only a complete XML fragment; never store model prose as DTBook."""
     text = raw.strip()
-    match = re.search(r"<level1\\b[\\s\\S]*?</level1>", text)
+    match = re.search(r"<level1\b[\s\S]*?</level1>", text)
     return match.group(0).strip() + "\n" if match else None
 
 def main():
