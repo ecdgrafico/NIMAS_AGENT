@@ -19,6 +19,16 @@ export const api = {
   validate: unit => request(`/proposal-validation?unit=${encodeURIComponent(unit)}`),
   approve: unit => request('/approve-ai-proposal', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ unit_id: unit }) }),
   preflight: () => request('/project-preflight')
+  ,lessons: () => request('/lessons')
+  ,job: () => request('/job')
+  ,assets: () => request('/project-assets')
+  ,pageImages: (lesson,page) => request(`/page-images?lesson=${encodeURIComponent(lesson)}&page=${encodeURIComponent(page)}`)
+  ,renderLesson: lesson => request(`/render?lesson=${encodeURIComponent(lesson)}`)
+  ,report: lesson => `${config.api('/report')}?lesson=${encodeURIComponent(lesson)}`
+  ,editorialSections: () => request('/editorial-sections')
+  ,editorialDetail: key => request(`/editorial-detail?section=${encodeURIComponent(key)}`)
+  ,editorialImages: (key,page) => request(`/editorial-images?section=${encodeURIComponent(key)}&page=${encodeURIComponent(page)}`)
+  ,exportPackage: () => request('/export-package',{method:'POST'})
 }
 
 export async function uploadProject({ name, pdfs, zip }) {

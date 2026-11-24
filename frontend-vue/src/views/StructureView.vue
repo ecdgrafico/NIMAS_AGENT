@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref } from 'vue'; import { api } from '../services/api'; const detail = ref({ structure: { units: [] } }), status = ref(''); const sections = [['frontmatter', 'Frontmatter'], ['bodymatter', 'Bodymatter'], ['rearmatter', 'Rearmatter']]; onMounted(async () => { detail.value = await api.projectDetail() }); function move(unit, section) { unit.section = section } async function save() { await api.saveSetup({ metadata: detail.value.metadata, structure: detail.value.structure }); status.value = 'Estructura guardada.' }
+import { onMounted, ref } from 'vue'; import { api } from '../services/api'; const detail = ref({ structure: { units: [] } }), status = ref(''); const sections = [['frontmatter', 'Frontmatter'], ['bodymatter', 'Bodymatter'], ['rearmatter', 'Rearmatter']]; onMounted(async () => { detail.value = await api.projectDetail() }); function move(unit, section) { unit.section = section } async function save() { await api.saveSetup({ metadata: detail.value.metadata, structure: detail.value.structure }); status.value = 'Estructura guardada.' } async function preflight() { status.value = JSON.stringify(await api.preflight()) } async function exportPackage() { status.value = (await api.exportPackage()).message || 'Exportación iniciada.' }
 </script>
 <template>
     <section class="hero"><span class="eyebrow">PASO 3 · ESTRUCTURA</span>
@@ -19,5 +19,5 @@ import { onMounted, ref } from 'vue'; import { api } from '../services/api'; con
                     </select></article>
             </div>
         </section>
-    </div><button @click="save">Guardar estructura</button><span class="hint">{{ status }}</span>
+    </div><div class="button-row"><button @click="save">Guardar estructura</button><button class="secondary" @click="preflight">Ejecutar preflight</button><button @click="exportPackage">Crear ZIP validado</button></div><span class="hint">{{ status }}</span>
 </template>

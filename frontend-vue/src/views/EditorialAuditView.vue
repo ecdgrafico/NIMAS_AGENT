@@ -1,0 +1,8 @@
+<script setup>
+import { onMounted, ref } from 'vue'; import { api } from '../services/api'
+const sections=ref([]),selected=ref(null),page=ref(null),status=ref('')
+async function load(){sections.value=(await api.editorialSections()).sections||[];if(sections.value[0])open(sections.value[0].key)}
+async function open(key){selected.value=await api.editorialDetail(key);page.value=selected.value.pageIds?.[0];status.value=''}
+onMounted(load)
+</script>
+<template><section class="hero"><span class="eyebrow">FRONTMATTER Y REARMATTER</span><h2>Auditoría editorial</h2><p>FM y EM se auditan como unidades completas antes del ensamblaje.</p></section><div class="editorial-layout"><aside class="section-list"><button v-for="item in sections" :class="{active:selected?.key===item.key}" @click="open(item.key)">{{item.key}} · {{item.name}}</button></aside><section v-if="selected" class="editorial-audit-vue"><div class="audit-toolbar"><strong>{{selected.name}}</strong><select v-model="page"><option v-for="item in selected.pageIds" :value="item">Página {{item}}</option></select></div><div class="audit-grid"><article class="audit-panel"><header><strong>PDF</strong></header><img :src="`/auditoria-lecciones/assets/${selected.key}/page-${String(selected.pageIds.indexOf(page)+1).padStart(2,'0')}.png`" alt="Página editorial"/></article><article class="audit-panel"><header><strong>XML fuente</strong></header><pre>{{selected.source}}</pre></article><article class="audit-panel"><header><strong>Propuesta</strong></header><pre>{{selected.proposal||'Pendiente de reconstrucción.'}}</pre></article></div></section></div><p class="notice">{{status}}</p></template>
