@@ -6,18 +6,18 @@ import { onMounted, ref } from 'vue'; import { api } from '../services/api'; con
         <h2>Ensamblar el paquete</h2>
         <p>Esta etapa solo define cómo se unirán las unidades aprobadas.</p>
     </section>
-    <div class="structure-lanes-vue">
-        <section v-for="[key, title] in sections" :key="key" class="structure-lane">
-            <header><strong>{{ title }}</strong><small>{{detail.structure.units.filter(u => u.section === key).length}}
+    <div class="structure-lanes-vue row g-3">
+        <section v-for="[key, title] in sections" :key="key" class="structure-lane col-12 col-lg-4">
+            <div class="structure-lane-card card h-100 shadow-sm"><header class="card-header d-flex justify-content-between align-items-center"><strong>{{ title }}</strong><small>{{detail.structure.units.filter(u => u.section === key).length}}
                     unidades</small></header>
-            <div class="structure-dropzone" @dragover.prevent @drop="drop(key)">
+            <div class="structure-dropzone card-body" @dragover.prevent @drop="drop(key)">
                 <article v-for="unit in detail.structure.units.filter(u => u.section === key)" :key="unit.id"
                     class="structure-block" draggable="true" @dragstart="dragStart(unit)" @dragover.prevent @drop.stop="drop(key, unit)"><span class="drag-handle" title="Arrastrar para ordenar">⋮⋮</span><span
                         class="unit-file-label">{{ unit.file || unit.name }}</span><select :value="unit.section"
                         @change="move(unit, $event.target.value)">
                         <option v-for="[section, label] in sections" :value="section">{{ label }}</option>
                     </select></article>
-            </div>
+            </div></div>
         </section>
-    </div><div class="button-row"><button @click="save">Guardar estructura</button><button class="secondary" @click="preflight">Ejecutar preflight</button><button @click="exportPackage">Crear ZIP validado</button></div><span class="hint">{{ status }}</span>
+    </div><div class="button-row d-flex flex-wrap gap-2"><button class="btn btn-primary" @click="save">Guardar estructura</button><button class="btn btn-outline-secondary" @click="preflight">Ejecutar preflight</button><button class="btn btn-primary" @click="exportPackage">Crear ZIP validado</button></div><span class="hint">{{ status }}</span>
 </template>
