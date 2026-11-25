@@ -5,7 +5,7 @@ import { useProjects } from '../composables/useProjects'
 import ProjectList from '../components/ProjectList.vue'
 import ProjectCreateForm from '../components/ProjectCreateForm.vue'
 import { api } from '../services/api'
-const router=useRouter();const {projects,loading,error,load,create}=useProjects();onMounted(load)
+const router=useRouter();const {projects,loading,error,load,create}=useProjects();onMounted(async()=>{try{await api.closeProject()}finally{await load()}})
 async function created(){await load()}
 async function open(item){await api.openProject(item.path);router.push('/workspace')}
 async function rename(item){const name=window.prompt('Nuevo nombre del proyecto:',item.name);if(!name||name.trim()===item.name)return;try{await api.renameProject({path:item.path,name:name.trim()});await load()}catch(e){window.alert(e.message)}}

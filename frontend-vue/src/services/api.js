@@ -15,6 +15,7 @@ export const api = {
   unitDetail: (unit,page) => request(`/unit-detail?unit=${encodeURIComponent(unit)}${page == null ? '' : `&page=${encodeURIComponent(page)}`}`),
   unitRender: (unit,page) => request(`/unit-render?unit=${encodeURIComponent(unit)}&page=${encodeURIComponent(page)}`),
   openProject: path => request('/open-project', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ path }) }),
+  closeProject: () => request('/close-project', { method: 'POST' }),
   renameProject: body => request('/rename-project', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(body) }),
   deleteProject: path => request('/delete-project', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ path }) }),
   nimacTemplate: () => request('/nimac-template'),

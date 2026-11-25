@@ -55,13 +55,15 @@ def approved_editorial():
     return set(re.findall(r"\| (FM|EM) \|[^|]*\| Aprobada", text))
 
 def project_status():
+    if ROOT.resolve() == APP_ROOT.resolve():
+        return {"ready": False, "active": False, "name": None, "mode": None}
     if (ROOT / "project.yaml").is_file():
         raw = (ROOT / "project.yaml").read_text(encoding="utf-8", errors="replace")
         mode = "nimas_zip" if "source_mode: nimas_zip" in raw else "pdf_only"
-        return {"ready": True, "name": ROOT.name, "mode": mode, "projectRoot": str(ROOT)}
+        return {"ready": True, "active": True, "name": ROOT.name, "mode": mode, "projectRoot": str(ROOT)}
     required = ["lecciones_originales", "PDF", "9781669952961NIMAS", "9781669952961NIMAS_original"]
     ready = all((ROOT / path).exists() for path in required)
-    return {"ready": ready, "name": ROOT.name if ready else None}
+    return {"ready": ready, "active": ready, "name": ROOT.name if ready else None}
 
 def library_projects():
     return {"projects": all_projects(LIBRARY_DB)}
@@ -589,6 +591,7 @@ class Handler(SimpleHTTPRequestHandler):
             return self.serve_frontend(parsed.path)
         return super().do_GET()
     def do_POST(self):
+        global ROOT
         parsed = urlparse(self.path); query = parse_qs(parsed.query)
         if parsed.path == "/api/open-project":
             try:
@@ -597,12 +600,17 @@ class Handler(SimpleHTTPRequestHandler):
                 library_projects_root = (LIBRARY_ROOT / "projects").resolve()
                 if library_projects_root not in selected.parents or not (selected / "project.yaml").is_file():
                     raise ValueError("Proyecto no válido en la biblioteca")
-                global ROOT
                 ROOT = selected
                 os.environ["NIMAS_PROJECT_ROOT"] = str(selected)
                 return self.json({"ok": True, "name": selected.name, "path": str(selected)})
             except Exception as error:
                 return self.json({"error": str(error)}, 400)
+        if parsed.path == "/api/close-project":
+            ROOT = APP_ROOT.resolve()
+            os.environ.pop("NIMAS_PROJECT_ROOT", None)
+            with LOCK:
+                if not JOBS["running"]: JOBS.update(lesson=None, queue=[], stage=None, export=None)
+            return self.json({"ok": True, "message": "Proyecto cerrado. Biblioteca activa."})
         if parsed.path == "/api/rename-project":
             try:
                 size = int(self.headers.get("Content-Length", "0")); data = json.loads(self.rfile.read(size))
