@@ -744,6 +744,31 @@ class Handler(SimpleHTTPRequestHandler):
                 path=ROOT / "revision" / "page-decisions.json"; current=json.loads(path.read_text(encoding="utf-8")) if path.is_file() else {}; current.setdefault(unit, {})[page]={"status":state,"note":str(data.get("note", "")).strip(),"updated_at":datetime.now().isoformat()}; path.parent.mkdir(parents=True, exist_ok=True); path.write_text(json.dumps(current, ensure_ascii=False, indent=2)+"\n", encoding="utf-8")
                 return self.json({"ok":True,"message":"Estado de página guardado."})
             except Exception as error: return self.json({"error":str(error)},400)
+        if parsed.path == "/api/manual-image-crop":
+            try:
+                size = int(self.headers.get("Content-Length", "0")); data = json.loads(self.rfile.read(size))
+                unit_id = str(data.get("unit_id", "")).strip(); page_number = int(data.get("page")); detail = unit_detail(unit_id, page_number)
+                source = ROOT / str(detail.get("pdf") or "")
+                if not source.is_file(): raise ValueError("PDF de la unidad no encontrado")
+                values = [float(data.get(key)) for key in ("x0", "y0", "x1", "y1")]
+                x0, y0, x1, y1 = min(values[0], values[2]), min(values[1], values[3]), max(values[0], values[2]), max(values[1], values[3])
+                if x1 - x0 < 0.02 or y1 - y0 < 0.02 or max(x1, y1) > 1.01 or min(x0, y0) < -0.01: raise ValueError("El rectángulo es demasiado pequeño o está fuera de la página")
+                import fitz
+                try: printed_first = int(detail["pages"][0])
+                except (TypeError, ValueError): printed_first = 1
+                with fitz.open(str(source)) as document:
+                    index = page_number - printed_first
+                    if index < 0 or index >= len(document): raise ValueError("Página fuera del rango del PDF")
+                    pdf_page = document[index]; rect = pdf_page.rect
+                    clip = fitz.Rect(rect.x0 + x0 * rect.width, rect.y0 + y0 * rect.height, rect.x0 + x1 * rect.width, rect.y0 + y1 * rect.height)
+                    pixmap = pdf_page.get_pixmap(matrix=fitz.Matrix(4.1667, 4.1667), clip=clip, alpha=False)
+                    output = ROOT / "working" / "detected-images"; output.mkdir(parents=True, exist_ok=True)
+                    safe = re.sub(r"[^A-Za-z0-9_-]+", "_", unit_id); filename = f"{safe}_p{page_number:04d}_manual_{datetime.now():%H%M%S%f}.png"; target = output / filename; pixmap.save(str(target))
+                inventory_path = ROOT / "inventario" / "images.json"; inventory = json.loads(inventory_path.read_text(encoding="utf-8")) if inventory_path.is_file() else {"schema":"nimas-assets/1","assets":[]}
+                inventory.setdefault("assets", []).append({"file": filename, "source_pdf": Path(str(detail["unit"].get("file", ""))).name, "page": page_number, "display_page": page_number, "status":"reviewed", "assigned_unit":unit_id, "candidate_units":[unit_id], "manual":True, "rect":[x0,y0,x1,y1], "referenced":False})
+                inventory["count"] = len([asset for asset in inventory["assets"] if asset.get("status") != "discarded"]); inventory_path.parent.mkdir(parents=True, exist_ok=True); inventory_path.write_text(json.dumps(inventory, ensure_ascii=False, indent=2)+"\n", encoding="utf-8")
+                return self.json({"ok":True,"message":"Imagen manual extraída y asociada a la página.","asset":{"file":filename,"page":page_number,"url":"/working/detected-images/"+filename}})
+            except Exception as error: return self.json({"error":str(error)},400)
         if parsed.path == "/api/approve-unit":
             try:
                 size=int(self.headers.get("Content-Length", "0")); data=json.loads(self.rfile.read(size)); unit_id=str(data.get("unit_id", "")).strip(); unit=project_unit(unit_id)
