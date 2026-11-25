@@ -86,7 +86,9 @@ def ollama_generate(executable, model: str, root: Path, instruction: str, expect
 
 def main():
     ap=argparse.ArgumentParser(); ap.add_argument('--project',type=Path,required=True); ap.add_argument('--unit',required=True); ap.add_argument('--provider',default='codex'); args=ap.parse_args()
-    root=args.project.resolve(); prompt=Path(write_prompt(root,args.unit)); output=root/'propuestas'/f'{args.unit}.xml'; runlog=root/'versions'/'ai-runs'; runlog.mkdir(parents=True,exist_ok=True)
+    root=args.project.resolve(); metadata_path=root/'metadata'/'nimac.json'; metadata=json.loads(metadata_path.read_text(encoding='utf-8')) if metadata_path.is_file() else {}; language=str(metadata.get('language') or '').strip()
+    if not language: raise SystemExit('Confirma primero el idioma principal del libro en Metadata NIMAC antes de generar una propuesta.')
+    prompt=Path(write_prompt(root,args.unit)); output=root/'propuestas'/f'{args.unit}.xml'; runlog=root/'versions'/'ai-runs'; runlog.mkdir(parents=True,exist_ok=True)
     instruction=prompt.read_text(encoding='utf-8')+f'''\n\nEscribe únicamente un fragmento XML DTBook bien formado en {output}. No modifiques fuentes. Si no puedes verificar una parte, conserva la incertidumbre en {runlog/(args.unit+'-dudas.md')}. La salida queda pendiente de auditoría humana.'''
     structure = json.loads((root/'structure'/'structure.json').read_text(encoding='utf-8'))
     unit = next((item for item in structure.get('units', []) if item.get('id') == args.unit), {})

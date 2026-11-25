@@ -7,7 +7,7 @@ from pdf_naming import source_page_range, physical_page_range
 
 DEFAULT_METADATA = {
     "title": "", "creators": [], "publisher": "", "identifier": "",
-    "source_isbns": [], "language": "en", "subjects": [], "grade_levels": [],
+    "source_isbns": [], "language": "", "subjects": [], "grade_levels": [],
     "copyright_year": "", "publication_year": "", "edition": "",
     "state_edition": "National ed.", "content_type": "Textbook", "series": "",
 }
