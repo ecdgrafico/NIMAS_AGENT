@@ -12,11 +12,7 @@ import { onMounted, ref } from 'vue'; import { api } from '../services/api'; con
                     unidades</small></header>
             <div class="structure-dropzone card-body" @dragover.prevent @drop="drop(key)">
                 <article v-for="unit in detail.structure.units.filter(u => u.section === key)" :key="unit.id"
-                    class="structure-block" draggable="true" @dragstart="dragStart(unit)" @dragover.prevent @drop.stop="drop(key, unit)"><span class="drag-handle" title="Arrastrar para ordenar">⋮⋮</span><span
-                        class="unit-file-label">{{ unit.file || unit.name }}</span><select :value="unit.section"
-                        @change="move(unit, $event.target.value)">
-                        <option v-for="[section, label] in sections" :value="section">{{ label }}</option>
-                    </select></article>
+                    class="structure-block" draggable="true" @dragstart="dragStart(unit)" @dragover.prevent @drop.stop="drop(key, unit)"><span class="drag-handle" title="Arrastrar para ordenar">⋮⋮</span><span class="unit-file-label" :title="unit.file || unit.name">{{ unit.file || unit.name }}</span><small v-if="unit.source_page_range" class="unit-page-range">{{ unit.source_page_range[0] }}–{{ unit.source_page_range[1] }}</small></article>
             </div></div>
         </section>
     </div><div class="button-row d-flex flex-wrap gap-2"><button class="btn btn-primary" @click="save">Guardar estructura</button><button class="btn btn-outline-secondary" @click="preflight">Ejecutar preflight</button><button class="btn btn-primary" @click="exportPackage">Crear ZIP validado</button></div><span class="hint">{{ status }}</span>
