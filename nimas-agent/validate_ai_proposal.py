@@ -13,6 +13,9 @@ def validate(path: Path):
     except (OSError, etree.XMLSyntaxError) as exc:
         return {"status": "fail", "path": str(path), "errors": [f"XML no bien formado: {exc}"]}
     if root.tag != "level1": errors.append(f"La raíz debe ser level1 y es {root.tag}")
+    raw = path.read_text(encoding="utf-8", errors="replace")
+    for marker in ("El contenido de la página", "Contenido de página pendiente de revisión", '<page content=', 'Texto visible.'):
+        if marker.lower() in raw.lower(): errors.append(f"La propuesta contiene un placeholder o contenido genérico: {marker}")
     levels = {f"level{i}": i for i in range(1, 7)}
     for element in root.iter():
         if element.tag in FORBIDDEN and element is not root:
