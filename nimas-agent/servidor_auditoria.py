@@ -22,7 +22,7 @@ from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import parse_qs, urlparse
 from lxml import etree
-from library import all_projects, register
+from library import all_projects, register, rename_project, remove_project
 from project_data import load_project, save_project
 from ai_provider import provider_status, write_prompt
 from pypdf import PdfReader
@@ -218,7 +218,19 @@ def project_unit(unit_id):
     units = load_project(ROOT).get("structure", {}).get("units", [])
     return next((unit for unit in units if str(unit.get("id")) == str(unit_id)), None)
 
-def unit_detail(unit_id):
+def proposal_page_fragment(raw, page):
+    """Return the evidence window for one PDF page, never the full proposal."""
+    if not raw:
+        return None
+    marker = re.compile(r"<pagenum\b[^>]*>\s*" + re.escape(str(page)) + r"\s*</pagenum>", re.I)
+    found = marker.search(raw)
+    if not found:
+        return None
+    next_page = re.search(r"<pagenum\b", raw[found.end():], re.I)
+    end = found.end() + next_page.start() if next_page else len(raw)
+    return raw[found.start():end].strip()
+
+def unit_detail(unit_id, requested_page=None):
     unit = project_unit(unit_id)
     if not unit:
         raise ValueError("Unidad no encontrada")
@@ -262,9 +274,13 @@ def unit_detail(unit_id):
                                     "url": "/working/detected-images/" + str(asset.get("file", ""))})
     decisions_path = ROOT / "revision" / "page-decisions.json"
     decisions = json.loads(decisions_path.read_text(encoding="utf-8")) if decisions_path.is_file() else {}
-    return {"unit": unit, "pdf": str(source.relative_to(ROOT)).replace("\\", "/") if source.is_file() else None,
+    proposal_text = proposal.read_text(encoding="utf-8", errors="replace") if proposal.is_file() else None
+    proposal_page = proposal_page_fragment(proposal_text, requested_page if requested_page is not None else (pages[0] if pages else None)) if proposal_text and pages else None
+    project_yaml = ROOT / "project.yaml"
+    source_mode = "pdf_only" if project_yaml.is_file() and "source_mode: pdf_only" in project_yaml.read_text(encoding="utf-8", errors="replace") else "nimas_zip"
+    return {"unit": unit, "mode": source_mode, "pdf": str(source.relative_to(ROOT)).replace("\\", "/") if source.is_file() else None,
             "pages": pages, "source": source_xml,
-            "proposal": proposal.read_text(encoding="utf-8", errors="replace") if proposal.is_file() else None,
+            "proposal": proposal_text, "proposal_page": proposal_page,
             "assets": selected_assets, "hasProposal": proposal.is_file(), "decisions": decisions.get(str(unit_id), {})}
 
 def render_unit(unit_id, page):
@@ -505,7 +521,8 @@ class Handler(SimpleHTTPRequestHandler):
         if parsed.path == "/api/unit-detail":
             try:
                 unit = parse_qs(parsed.query).get("unit", [""])[0]
-                return self.json(unit_detail(unit))
+                requested_page = parse_qs(parsed.query).get("page", [None])[0]
+                return self.json(unit_detail(unit, requested_page))
             except Exception as error: return self.json({"error": str(error)}, 404)
         if parsed.path == "/api/unit-render":
             try:
@@ -586,6 +603,27 @@ class Handler(SimpleHTTPRequestHandler):
                 return self.json({"ok": True, "name": selected.name, "path": str(selected)})
             except Exception as error:
                 return self.json({"error": str(error)}, 400)
+        if parsed.path == "/api/rename-project":
+            try:
+                size = int(self.headers.get("Content-Length", "0")); data = json.loads(self.rfile.read(size))
+                selected = Path(str(data.get("path", ""))).resolve(); name = str(data.get("name", "")).strip()
+                library_projects_root = (LIBRARY_ROOT / "projects").resolve()
+                if library_projects_root not in selected.parents or not (selected / "project.yaml").is_file(): raise ValueError("Proyecto no válido en la biblioteca")
+                if not name: raise ValueError("El nombre del proyecto no puede estar vacío")
+                yaml = selected / "project.yaml"; raw = yaml.read_text(encoding="utf-8", errors="replace")
+                raw = re.sub(r"(?m)^name:.*$", f"name: {name!r}", raw, count=1)
+                yaml.write_text(raw, encoding="utf-8"); rename_project(LIBRARY_DB, selected, name)
+                return self.json({"ok": True, "name": name})
+            except Exception as error: return self.json({"error": str(error)}, 400)
+        if parsed.path == "/api/delete-project":
+            try:
+                size = int(self.headers.get("Content-Length", "0")); data = json.loads(self.rfile.read(size))
+                selected = Path(str(data.get("path", ""))).resolve(); library_projects_root = (LIBRARY_ROOT / "projects").resolve()
+                if library_projects_root not in selected.parents or not (selected / "project.yaml").is_file(): raise ValueError("Proyecto no válido en la biblioteca")
+                if selected == ROOT.resolve(): raise ValueError("Cierra el proyecto activo antes de eliminarlo")
+                shutil.rmtree(selected); remove_project(LIBRARY_DB, selected)
+                return self.json({"ok": True, "message": "Proyecto eliminado de la biblioteca."})
+            except Exception as error: return self.json({"error": str(error)}, 400)
         if parsed.path == "/api/save-project-setup":
             try:
                 size = int(self.headers.get("Content-Length", "0")); data = json.loads(self.rfile.read(size))

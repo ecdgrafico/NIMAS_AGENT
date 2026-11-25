@@ -20,3 +20,14 @@ def register(db_path: Path, name: str, project_path: Path, mode="pdf_only", stat
 def all_projects(db_path: Path):
     with connect(db_path) as db:
         return [dict(row) for row in db.execute("SELECT * FROM projects ORDER BY updated_at DESC")]
+
+def rename_project(db_path: Path, project_path: Path, name: str):
+    now = datetime.now(timezone.utc).isoformat()
+    with connect(db_path) as db:
+        db.execute("UPDATE projects SET name=?, updated_at=? WHERE path=?", (name, now, str(project_path)))
+        db.commit()
+
+def remove_project(db_path: Path, project_path: Path):
+    with connect(db_path) as db:
+        db.execute("DELETE FROM projects WHERE path=?", (str(project_path),))
+        db.commit()
