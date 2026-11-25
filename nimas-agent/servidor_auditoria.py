@@ -278,9 +278,15 @@ def unit_detail(unit_id, requested_page=None):
     decisions = json.loads(decisions_path.read_text(encoding="utf-8")) if decisions_path.is_file() else {}
     proposal_text = proposal.read_text(encoding="utf-8", errors="replace") if proposal.is_file() else None
     proposal_page = proposal_page_fragment(proposal_text, requested_page if requested_page is not None else (pages[0] if pages else None)) if proposal_text and pages else None
+    provider = None
+    runs = ROOT / "versions" / "ai-runs"
+    for candidate in ("ollama", "codex"):
+        if (runs / f"{unit_id}-{candidate}.md").is_file():
+            provider = candidate
+            break
     project_yaml = ROOT / "project.yaml"
     source_mode = "pdf_only" if project_yaml.is_file() and "source_mode: pdf_only" in project_yaml.read_text(encoding="utf-8", errors="replace") else "nimas_zip"
-    return {"unit": unit, "mode": source_mode, "pdf": str(source.relative_to(ROOT)).replace("\\", "/") if source.is_file() else None,
+    return {"unit": unit, "mode": source_mode, "provider": provider, "pdf": str(source.relative_to(ROOT)).replace("\\", "/") if source.is_file() else None,
             "pages": pages, "source": source_xml,
             "proposal": proposal_text, "proposal_page": proposal_page,
             "assets": selected_assets, "hasProposal": proposal.is_file(), "decisions": decisions.get(str(unit_id), {})}
